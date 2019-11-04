@@ -90,7 +90,7 @@
 		      <th scope="row">1004</th>
 		      <td>Lupani, Cecilia</td>
 		      <td>Avenida 999</td>
-		      <td>chechulaprofe@profesor.com</td>
+		      <td>cecilialaprofe@profesor.com</td>
 		      <td>159594567</td>
 		                  <td>
               <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>

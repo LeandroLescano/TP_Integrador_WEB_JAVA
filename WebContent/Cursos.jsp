@@ -23,7 +23,7 @@
 <div id="Titulo">
 	<h2>Cursos</h2>
 </div>
-<div id="PanelFiltros" style="height: 75px">
+<div id="PanelFiltros" style="height: 62px">
   <div class="row">
     <div class="col colName">Busqueda:</div>
     <div class="col colName">Materia:</div>
@@ -32,7 +32,7 @@
     <div class="col colName">Docente:</div>
     <div class="col colName"></div>
     <div class="w-100"></div>
-    <div class="col"><input type="text" class="form-control border" placeholder="Progr..." style="width: 160px;padding: 2px 4px; margin: 0;"></div>
+    <div class="col"><input type="text" id="txtBusqueda" class="form-control border" style="width: 160px;padding: 2px 4px; margin: 0;"></div>
     <div class="col"><select name="slMateria" class="custom-select">
 	 		 	<option value="0" class="dropdown-item">Todas</option> 
 	 			 </select></div>
@@ -45,11 +45,11 @@
     <div class="col"><select name="slDocente" class="custom-select">
 	 		 	<option value="0" class="dropdown-item">Todos</option> 
 	 			 </select></div>
-      <div class="col"><button class="btn btn-primary" style="float: right">Añadir curso</button></div>	 			 
-  </div>
-</div>
+	 			  <div class="col"><button class="btn btn-primary btn-add" >Añadir curso</button></div>	
+	</div>
+</div> 
  <table id="Gridview" class="table table-hover">
-        <thead class="thead-dark">
+       <thead class="thead-dark">
             <tr>
                 <th scope="col">Nro</th>
                 <th scope="col">Materia</th>
@@ -82,6 +82,26 @@
 </div>
 </body>
 <script type="text/javascript">
+$.fn.dataTable.ext.search.push(
+	    function( settings, data, dataIndex ) {
+	        var texto = $('#txtBusqueda').val()
+	 		var materia = data[1];
+	 		var semestre = data[2];
+	 		var año = data[3];
+	 		var docente = data[4];      
+	        
+	        if ( materia.toUpperCase().includes(texto.toUpperCase()) ||
+        		semestre.toUpperCase().includes(texto.toUpperCase()) || 
+        		año.toUpperCase().includes(texto.toUpperCase()) || 
+        		docente.toUpperCase().includes(texto.toUpperCase()))
+	        {
+	            return true;
+	        }
+	        return false;
+	    }
+	);
+
+
 $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;
@@ -105,7 +125,7 @@ $(document).ready(function(){
 		"bInfo": false,
 		"lengthChange": false,
 		"pageLength": cantPags,
-		"dom":'frtip',
+		"dom": 'rtip',
 		"oLanguage": {
 			   "sSearch": "Busqueda:",
 			 },
@@ -117,7 +137,13 @@ $(document).ready(function(){
 				},
 	 	}
 	});
+	
+	$("#txtBusqueda").on( 'keyup', function () {
+		$('#Gridview').DataTable().search( this.value ).draw();
+	});
 });
+
+
 
 function cantidadPaginas(){
 	var screenH = window.innerHeight;
