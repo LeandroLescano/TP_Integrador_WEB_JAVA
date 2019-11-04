@@ -26,37 +26,60 @@
 		</div>
 	</div>
 </div>
-<div class="wrapper fadeInDown">
+    <!--<div class="wrapper fadeInDown">
   <div id="formContent">
-    <!-- Tabs Titles -->
 
-    <!-- Icon -->
     <div class="fadeIn first">
       <h3>Ingreso</h3>
     </div>
 
-    <!-- Login Form -->
     <form>
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
       <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
       <input type="submit" class="fadeIn fourth" value="Ingresar">
     </form>
 
-    <!-- Remind Passowrd -->
     <div id="formFooter">
     </div>
 
   </div>
-</div>
+  </div>-->
+  
+      <div class="fadeInDown" id="login">
+        <div class="container" style="width: 30%;background-color:white;" >
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" style="padding: 0px;" class="col-md-6">
+                    <div id="login-box" style="padding: 0px;" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center fadeIn second">Iniciar sesión</h3>
+                            <div class="form-group  fadeIn third">
+                                <label for="username">Mail:</label><br>
+                                <input type="text" name="username" id="username" class="form-control">
+                            </div>
+                            <div class="form-group  fadeIn fourth">
+                                <label for="password">Contraseña:</label><br>
+                                <input type="text" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group  fadeIn fourth">
+                                <input type="submit" name="submit" class="btn btn-primary btn-md" value="Ingresar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  
+  
 </body>
 <script type="text/javascript">
-//If(Profesor)
-//{
-//  document.getElementById("Menu").innerMTML = '<jsp:include page="NavBarProfesor.html"></jsp:include>'
-//}
-// else{
-//  document.getElementById("Menu").innerMTML = '<jsp:include page="NavBarAdmin.html"></jsp:include>'
-//}
+$(document).ready(function(){
+
+
+});
+
+
 
 </script>
 </html>

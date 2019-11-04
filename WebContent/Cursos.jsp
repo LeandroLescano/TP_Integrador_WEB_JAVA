@@ -4,6 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="styles.css">
+<script type="text/javascript" src="js/funciones.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -32,18 +33,19 @@
     <div class="col colName">Docente:</div>
     <div class="col colName"></div>
     <div class="w-100"></div>
-    <div class="col"><input type="text" id="txtBusqueda" class="form-control border" style="width: 160px;padding: 2px 4px; margin: 0;"></div>
-    <div class="col"><select name="slMateria" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todas</option> 
+    <div class="col"><input type="text" id="txtBusqueda" class="form-control"  style="width: 160px;padding: 2px 4px; margin: 0;"></div>
+    <div class="col"><select id="slMateria" name="slMateria" class="custom-select">
+	 		 	<option value="-1" class="dropdown-item">Todas</option> 
+	 		 	<option value="0" class="dropdown-item">Laboratorio IV</option>
 	 			 </select></div>
     <div class="col"><select name="slSemestre" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todos</option> 
+	 		 	<option value="-1" class="dropdown-item">Todos</option> 
 	 			 </select></div>
     <div class="col"><select name="slAño" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">2019</option> 
+	 		 	<option value="-1" class="dropdown-item">Todos</option> 
 	 			 </select></div>
     <div class="col"><select name="slDocente" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todos</option> 
+	 		 	<option value="-1" class="dropdown-item">Todos</option> 
 	 			 </select></div>
 	 			  <div class="col"><button class="btn btn-primary btn-add" >Añadir curso</button></div>	
 	</div>
@@ -82,26 +84,6 @@
 </div>
 </body>
 <script type="text/javascript">
-$.fn.dataTable.ext.search.push(
-	    function( settings, data, dataIndex ) {
-	        var texto = $('#txtBusqueda').val()
-	 		var materia = data[1];
-	 		var semestre = data[2];
-	 		var año = data[3];
-	 		var docente = data[4];      
-	        
-	        if ( materia.toUpperCase().includes(texto.toUpperCase()) ||
-        		semestre.toUpperCase().includes(texto.toUpperCase()) || 
-        		año.toUpperCase().includes(texto.toUpperCase()) || 
-        		docente.toUpperCase().includes(texto.toUpperCase()))
-	        {
-	            return true;
-	        }
-	        return false;
-	    }
-	);
-
-
 $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;
@@ -138,52 +120,18 @@ $(document).ready(function(){
 	 	}
 	});
 	
+	$("#slMateria").on( 'change', function () {
+		if($("#slMateria").val() > -1){
+			$('#Gridview').DataTable().column(1).search( $("#slMateria option:selected").text() ).draw();	
+		}
+		else{
+			$('#Gridview').DataTable().column(1).search("").draw();		
+		}
+	});
+	
 	$("#txtBusqueda").on( 'keyup', function () {
 		$('#Gridview').DataTable().search( this.value ).draw();
 	});
 });
-
-
-
-function cantidadPaginas(){
-	var screenH = window.innerHeight;
-	var cantPags;
-	if(screenH < 615){
-		$('#Gridview').DataTable().page.len(4).draw();
-	}
-	else if(screenH < 680){
-		$('#Gridview').DataTable().page.len(5).draw();
-	}
-	else if(screenH < 740){
-		$('#Gridview').DataTable().page.len(6).draw();
-	}
-	else{
-		$('#Gridview').DataTable().page.len(7).draw();
-	}
-}
-
-function filtrarTabla(){
-	// Variables
-	var input, filter, table, tr, td, i ;
-	input = document.getElementById("txtBusqueda");
-	filter = input.value.toUpperCase();
-	table = document.getElementById("Gridview");
-	tr = table.getElementsByTagName("tr"),
-	th = table.getElementsByTagName("th");
-	
-	// Iteración entre las filas y columnas
-	for (i = 1; i < tr.length; i++) {
-	            tr[i].style.display = "none";
-	            for(var j=0; j<th.length; j++){
-	        td = tr[i].getElementsByTagName("td")[j];      
-	        if (td) {
-	            if (td.innerHTML.toUpperCase().indexOf(filter.toUpperCase()) > -1)                               {
-	                tr[i].style.display = "";
-	                break;
-	            }
-	        }
-	    }
-}
-}
 </script>
 </html>

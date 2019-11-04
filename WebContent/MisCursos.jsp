@@ -26,23 +26,28 @@
 <div id="Titulo">
 	<h2 id="TituloCursos">Mis cursos</h2>
 </div>
-<div id="PanelFiltros" style="height: 75px">
+<div id="PanelFiltros" style="height: 62px">
   <div class="row">
+    <div class="col colName">Busqueda:</div>
     <div class="col colName">Materia:</div>
     <div class="col colName">Semestre:</div>
     <div class="col colName">Año:</div>
+    <div class="col colName"></div>
     <div class="w-100"></div>
-    <div class="col"><select id="slMateria" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todas</option> 
+    <div class="col"><input type="text" id="txtBusqueda" class="form-control"></div>
+    <div class="col"><select id="slMateria" name="slMateria" class="custom-select">
+	 		 	<option value="-1" class="dropdown-item">Todas</option> 
+	 		 	<option value="0" class="dropdown-item">Laboratorio IV</option>
 	 			 </select></div>
-    <div class="col"><select id="slSemestre" class="custom-select">
+    <div class="col"><select name="slSemestre" class="custom-select">
 	 		 	<option value="0" class="dropdown-item">Todos</option> 
 	 			 </select></div>
-    <div class="col"><select id="slAño" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">2019</option>
-	 			 </select></div>			 
-  </div>
-</div>
+    <div class="col"><select name="slDocente" class="custom-select">
+	 		 	<option value="0" class="dropdown-item">Todos</option> 
+	 			 </select></div>
+	 			  <div class="col"><button class="btn btn-primary btn-add" >Añadir curso</button></div>	
+	</div>
+</div> 
 	<div id="TableCursos">
 	 <table id="Gridview" class="table table-hover">
 	        <thead class="thead-dark">
@@ -59,6 +64,13 @@
 			      <th scope="row">1</th>
 			      <td>Materia1</td>
 			      <td>Semestre1</td>
+			      <td>2019</td>
+			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
+	   			 </tr>
+ 	             <tr>
+			      <th scope="row">2</th>
+			      <td>Materia2</td>
+			      <td>Semestre2</td>
 			      <td>2019</td>
 			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
 	   			 </tr>
@@ -96,7 +108,7 @@
 			"bInfo": false,
 			"lengthChange": false,
 			"pageLength": cantPags,
-			"dom":'frtip',
+			"dom":'rtip',
 			"oLanguage": {
 				   "sSearch": "Busqueda:",
 				 },
@@ -126,49 +138,6 @@
 		 	}
 		});
 	});
-
-	function cantidadPaginas(){
-		var screenH = window.innerHeight;
-		var cantPags;
-		if(screenH < 615){
-			$('#Gridview').DataTable().page.len(4).draw();
-		}
-		else if(screenH < 680){
-			$('#Gridview').DataTable().page.len(5).draw();
-		}
-		else if(screenH < 740){
-			$('#Gridview').DataTable().page.len(6).draw();
-		}
-		else{
-			$('#Gridview').DataTable().page.len(7).draw();
-		}
-	}
-
-	function filtrarTabla(){
-		// Variables
-		var input, filter, table, tr, td, i ;
-		input = document.getElementById("txtBusqueda");
-		filter = input.value.toUpperCase();
-		table = document.getElementById("Gridview");
-		tr = table.getElementsByTagName("tr"),
-		th = table.getElementsByTagName("th");
-		
-		// Iteración entre las filas y columnas
-		for (i = 1; i < tr.length; i++) {
-		            tr[i].style.display = "none";
-		            for(var j=0; j<th.length; j++){
-		        td = tr[i].getElementsByTagName("td")[j];      
-		        if (td) {
-		            if (td.innerHTML.toUpperCase().indexOf(filter.toUpperCase()) > -1)                               {
-		                tr[i].style.display = "";
-		                break;
-		            }
-		        }
-		    }
-		}
-	}
-	
-	
 	
 	function mostrarAlumnos(){
 		TablaCurso = document.getElementById("TableCursos");
@@ -195,7 +164,7 @@
 	}
 	
 	function cambiarEstadoFiltros(estado){
-		$('#slmMateria').attr('disabled', estado)
+		$('#slMateria').attr('disabled', estado)
 	}
 
 </script>
