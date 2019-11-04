@@ -1,0 +1,65 @@
+ <!--    MODAL   -->
+        <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModal">Añadir profesor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtNombre" class="col-form-label">Legajo:</label>
+                                            <input type="text" readonly class="form-control" id="txtNombre" placeholder="1000">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="txtMail" class="col-form-label">Mail:</label>
+                                            <input type="email" aria-describedby="emailHelp" class="form-control" id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtMail" class="col-form-label">Dirección:</label>
+                                            <input type="text" class="form-control" id="txtDireccion" placeholder="Calle 123" tabindex="6">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtApellido" class="col-form-label">Apellido:</label>
+                                            <input type="text" class="form-control" id="txtApellido" placeholder="Gomez" tabindex="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtTelefono" class="col-form-label">Telefono:</label>
+                                            <input type="number" class="form-control" id="txtTelefono" placeholder="12345678" tabindex="4" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtTelefono" class="col-form-label">Localidad:</label>
+                                            <input type="number" class="form-control" id="txtLocalidad" placeholder="Tigre" tabindex="7" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtNombre" class="col-form-label">Nombre:</label>
+                                            <input type="text" class="form-control" id="txtNombre" placeholder="Juan" tabindex="2">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtDNI" class="col-form-label">Fecha de nacimiento:</label>
+                                            <input type='text' class="form-control" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtDNI" class="col-form-label">Provincia:</label>
+                                            <input type="number" class="form-control" id="txtProvincia" placeholder="Buenos Aires" tabindex="8" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnIngresarU" class="btn btn-primary" disabled tabindex="9">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  FIN MODAL  -->
