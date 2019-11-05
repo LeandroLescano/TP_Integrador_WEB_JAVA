@@ -125,7 +125,7 @@
 			"bInfo": false,
 			"lengthChange": false,
 			"pageLength": cantPags,
-			"dom":'frtip',
+			"dom":'rtip',
 			"oLanguage": {
 				   "sSearch": "Busqueda:",
 				 },

@@ -17,7 +17,6 @@ function cantidadPaginas(){
 
 function mostrarModal(){
 	$("#ModalRegistro").modal('show');
-	document.getElementById("txtApellido").focus();
 }
 
 function filtrarTabla(){

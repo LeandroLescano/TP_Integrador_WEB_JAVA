@@ -1,0 +1,105 @@
+ <!--    MODAL   -->
+        <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModal">Añadir curso</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#curso" role="tab" data-toggle="tab">Curso</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="tabR" class="nav-link" href="#alumnos" role="tab" data-toggle="tab">Alumnos</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">  
+                        <!-- PESTAÑA CURSO --> 
+                        <div role="tabpanel" class="tab-pane fade in active show" id="curso">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtNombre" class="col-form-label">Número:</label>
+                                            <input type="text" disabled class="form-control" id="txtNombre" placeholder="1000">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="txtMail" class="col-form-label">Año:</label>
+                                            <input type="text" class="form-control" id="txtAño" placeholder="2019" tabindex="3" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtApellido" class="col-form-label">Materia:</label>
+                                            <select name="slMateria" class="custom-select">
+									 		 	<option value="-1" class="dropdown-item">Laboratorio III</option> 
+									 		 	<option value="0" class="dropdown-item">Segundo</option>
+								 			 </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtTelefono" class="col-form-label">Docente:</label>
+                                             <select name="slMateria" class="custom-select">
+									 		 	<option value="-1" class="dropdown-item">Fernandez, Claudio</option> 
+									 		 	<option value="0" class="dropdown-item">Segundo</option>
+								 			 </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="txtNombre" class="col-form-label">Semestre:</label>
+                                            <select name="slMateria" class="custom-select">
+									 		 	<option value="-1" class="dropdown-item">Primer</option> 
+									 		 	<option value="0" class="dropdown-item">Segundo</option>
+								 			 </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtDNI" class="col-form-label">Alumnos:</label>
+                                            <input type="text" class="form-control" id="txtAlumnos" disabled value="0" tabindex="3" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- PESTAÑA ALUMNOS -->
+                            <div role="tabpanel" class="tab-pane fade" id="alumnos" style="margin-top: 5px;">
+							    <table id="GridAlumnos" class="table table-hover">
+							        <thead class="thead-dark">
+							            <tr>
+							                <th scope="col">Legajo</th>
+							                <th scope="col">Apellido y nombre</th>
+							            </tr>
+							        </thead>
+							        <tbody id="grilla">
+							            <tr>
+									      <th scope="row">1000</th>
+									      <td>Perez, Mario</td>
+							   			 </tr>
+ 							            <tr>
+									      <th scope="row">1001</th>
+									      <td>Rodriguez, Maria</td>
+							   			 </tr>
+							   			 <tr>
+									      <th scope="row">1002</th>
+									      <td>Gomez, Juan</td>
+							   			 </tr>
+							        </tbody>
+							    </table>
+							    <div>
+							    	<label id="CantAlumnos">Cantidad: 0</label>
+							    </div>
+                            </div>
+                           </div>
+                       </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnIngresarU" class="btn btn-primary" disabled tabindex="9">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  FIN MODAL  -->

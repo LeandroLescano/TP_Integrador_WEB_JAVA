@@ -17,6 +17,7 @@
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
+<jsp:include page="ModalCurso.html"></jsp:include>
 <body>
 <jsp:include page="NavBarAdmin.html"></jsp:include>
 <div style="height: 85vh">
@@ -47,7 +48,7 @@
     <div class="col"><select name="slDocente" class="custom-select">
 	 		 	<option value="-1" class="dropdown-item">Todos</option> 
 	 			 </select></div>
-	 			  <div class="col"><button class="btn btn-primary btn-add" >Añadir curso</button></div>	
+	 			  <div class="col"><button class="btn btn-primary btn-add" onclick="mostrarModal()" >Añadir curso</button></div>	
 	</div>
 </div> 
  <table id="Gridview" class="table table-hover">
@@ -120,6 +121,32 @@ $(document).ready(function(){
 	 	}
 	});
 	
+    $('#GridAlumnos').DataTable( {
+		"ordering":false,
+		"bInfo": false,
+		"lengthChange": false,
+		"pageLength": 100,
+		"dom": 'frti',
+		"oLanguage": {
+			   "sSearch": "Busqueda:",
+			 },
+	 	"language": {
+			   "zeroRecords": "No se encontraron registros coincidentes",
+				"paginate": {
+				       "next": "Siguiente",
+					   "previous": "Previo"
+				}
+	 	}
+    } );
+	
+    var table = $('#GridAlumnos').DataTable();
+    
+    $('#GridAlumnos tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+        $("#CantAlumnos").html("Cantidad: " + table.rows('.selected').data().length);
+        $("#txtAlumnos").val(table.rows('.selected').data().length);
+    } );
+    
 	$("#slMateria").on( 'change', function () {
 		if($("#slMateria").val() > -1){
 			$('#Gridview').DataTable().column(1).search( $("#slMateria option:selected").text() ).draw();	
