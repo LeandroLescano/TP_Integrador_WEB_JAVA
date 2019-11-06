@@ -18,6 +18,7 @@
 <title>Gestor educativo</title>
 </head>
 <jsp:include page="ModalCurso.html"></jsp:include>
+<jsp:include page="ModalAlumnosCurso.html"></jsp:include>
 <body>
 <jsp:include page="NavBarAdmin.html"></jsp:include>
 <div style="height: 85vh">

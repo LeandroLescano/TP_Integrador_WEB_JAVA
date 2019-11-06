@@ -53,7 +53,7 @@
                         <form id="login-form" class="form" action="" method="post">
                             <h3 class="text-center fadeIn second">Iniciar sesión</h3>
                             <div class="form-group  fadeIn third">
-                                <label for="username">Mail:</label><br>
+                                <label for="username">E-mail:</label><br>
                                 <input type="text" name="username" id="username" class="form-control">
                             </div>
                             <div class="form-group  fadeIn fourth">

@@ -32,7 +32,6 @@
     <div class="col colName">Materia:</div>
     <div class="col colName">Semestre:</div>
     <div class="col colName">Año:</div>
-    <div class="col colName"></div>
     <div class="w-100"></div>
     <div class="col"><input type="text" id="txtBusqueda" class="form-control"></div>
     <div class="col"><select id="slMateria" name="slMateria" class="custom-select">
@@ -45,7 +44,6 @@
     <div class="col"><select name="slDocente" class="custom-select">
 	 		 	<option value="0" class="dropdown-item">Todos</option> 
 	 			 </select></div>
-	 			  <div class="col"><button class="btn btn-primary btn-add" >Añadir curso</button></div>	
 	</div>
 </div> 
 	<div id="TableCursos">
@@ -62,15 +60,15 @@
 	        <tbody id="grilla">
 	            <tr>
 			      <th scope="row">1</th>
-			      <td>Materia1</td>
-			      <td>Semestre1</td>
+			      <td>Laboratorio III</td>
+			      <td>Primer</td>
 			      <td>2019</td>
 			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
 	   			 </tr>
  	             <tr>
 			      <th scope="row">2</th>
-			      <td>Materia2</td>
-			      <td>Semestre2</td>
+			      <td>Laboratorio IV</td>
+			      <td>Segundo</td>
 			      <td>2019</td>
 			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
 	   			 </tr>

@@ -19,6 +19,10 @@ function mostrarModal(){
 	$("#ModalRegistro").modal('show');
 }
 
+function mostrarAlumnos(){
+	$("#ModalAlumnosCurso").modal('show');
+}
+
 function filtrarTabla(){
 	// Variables
 	var input, filter, table, tr, td, i ;

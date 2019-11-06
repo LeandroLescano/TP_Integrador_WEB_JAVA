@@ -19,7 +19,7 @@
 </head>
 <jsp:include page="ModalPersona.html"></jsp:include>
 <body onresize="cantidadPaginas()">
-<jsp:include page="NavBarAdmin.html"></jsp:include>
+<jsp:include page="NavBarProfesor.html"></jsp:include>
 <div style="height: 85vh">
 <div class="container" style="height: 100%">
 <div id="Titulo">
@@ -33,7 +33,11 @@
 	            <tr>
 	                <th scope="col" class="colLegajo">Legajo</th>
 	                <th scope="col" class="colApeNom">Apellido y nombre</th>
-	                <th scope="col" class="colNota">Nota</th>
+	                <th scope="col" class="colNota">Par. 1</th>
+	                <th scope="col" class="colNota">Rec. 1</th>
+	                <th scope="col" class="colNota">Par. 2</th>
+	                <th scope="col" class="colNota">Rec. 2</th>
+	                <th scope="col" class="colNotaF">Nota final</th>
 	                <th scope="col" class="colEstado">Estado</th>
 	            </tr>
 	        </thead>
@@ -41,7 +45,11 @@
 	            <tr>
 			      <th scope="row">1000</th>
 			      <td>Perez, Juan</td>
+			      <td><input type="text" class="form-control border form-nota" value="4"></td>
+			      <td><input type="text" class="form-control border form-nota" value="8"></td>
 			      <td><input type="text" class="form-control border form-nota" value="10"></td>
+			      <td><input type="text" class="form-control border form-nota" value=""></td>
+			      <td><input type="text" class="form-control border form-nota" value="9"></td>
 				  <td>
 					<select class="custom-select" style="width: 200px; margin-top: 8px;">
 		 		 	<option value="0" class="dropdown-item">Regular</option> 

@@ -19,7 +19,15 @@ font-family: 'Merriweather Sans', sans-serif;
 }
 
 .selected {
-	background-color: silver;
+	background-color: #5aaaff;
+	color: white;
+}
+
+.selected td {
+	color: white;
+}
+.selected td:hover {
+	color: black;
 }
 
 .tdDesc {
@@ -44,6 +52,10 @@ td {
 	vertical-align: middle !important;
 }
 
+.colNota {
+    width: 20px;
+}
+
 .colName {
 	height: 25px;
 }
@@ -52,7 +64,7 @@ td {
 	width: 100px;
 }
 
-.colEstado, .colNota, .colDetalles{
+.colEstado, .colDetalles{
 	width: 300px;
 }
 

@@ -32,7 +32,7 @@
                 <th scope="col">Legajo</th>
                 <th scope="col">Apellido y nombre</th>
                 <th scope="col">Dirección</th>
-                <th scope="col">Email</th>
+                <th scope="col">E-mail</th>
                 <th scope="col">Teléfono</th>
                 <th scope="col" id="colAcciones">Acciones</th>
             </tr>
