@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="Negocio.AlumnoNegocio" %>
-<%@page import="Dominio.Alumno" %>
+<%@page import="Dominio.Persona" %>
 <%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
@@ -63,14 +63,14 @@
 			      <td>Laboratorio III</td>
 			      <td>Primer</td>
 			      <td>2019</td>
-			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
+			      <td><a href="./AlumnosCurso.jsp" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
 	   			 </tr>
  	             <tr>
 			      <th scope="row">2</th>
 			      <td>Laboratorio IV</td>
 			      <td>Segundo</td>
 			      <td>2019</td>
-			      <td><a href="#" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
+			      <td><a href="./AlumnosCurso.jsp" id="IDCURSO" onclick="mostrarAlumnos(this.id)" class="btn btn-primary">Ver alumnos</a></td>
 	   			 </tr>
 	        </tbody>
 	    </table>

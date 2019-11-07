@@ -70,7 +70,7 @@
 		      <td>Segundo semestre</td>
 		      <td>2019</td>
 		      <td>Fernández Claudio</td><!-- Realizarlo con un link para poder ver detalles del profesor -->
-		      <td><a href="#" onclick="mostrarAlumnos()" class="btn btn-primary">Ver alumnos</a></td>
+		      <td><a href="" onclick="mostrarAlumnos()" class="btn btn-primary">Ver alumnos</a></td>
    			 </tr>
              <tr>
 		      <th scope="row">2</th>
@@ -78,7 +78,7 @@
 		      <td>Primer semestre</td>
 		      <td>2019</td>
 		      <td>Fernández Claudio</td><!-- Realizarlo con un link para poder ver detalles del profesor -->
-		      <td><a href="#" onclick="mostrarAlumnos()" class="btn btn-primary">Ver alumnos</a></td>
+		      <td><a href="" onclick="mostrarAlumnos()" class="btn btn-primary">Ver alumnos</a></td>
    			 </tr>
         </tbody>
     </table>

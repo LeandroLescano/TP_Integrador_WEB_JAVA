@@ -1,6 +1,6 @@
 package Negocio;
 
-import Dominio.Alumno;
+import Dominio.Persona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import AccesoDatos.AccesoDatosManager;
 
 public class AlumnoNegocio {
 		
-	public ArrayList<Alumno> listarAlumnos()
+	public ArrayList<Persona> listarAlumnos()
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -18,14 +18,14 @@ public class AlumnoNegocio {
 		catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}
-		ArrayList<Alumno> lista = new ArrayList<Alumno>();
+		ArrayList<Persona> lista = new ArrayList<Persona>();
 		AccesoDatosManager accesoDatos = new AccesoDatosManager();
 		String listar = "SELECT * FROM ALUMNOS";
 		ResultSet rs = accesoDatos.executeConsulta(listar);
 		try {
 			while(rs.next())
 			{
-				Alumno a = new Alumno();
+				Persona a = new Persona();
 				a.setLegajo(rs.getInt("legajo"));
 				a.setApellido(rs.getString("apellido"));
 				a.setNombre(rs.getString("nombre"));
@@ -38,7 +38,7 @@ public class AlumnoNegocio {
 		return lista;
 	}
 	
-	public Alumno obtenerAlumno() {
+	public Persona obtenerAlumno() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
@@ -51,7 +51,7 @@ public class AlumnoNegocio {
 		try {
 			while(rs.next())
 			{
-				Alumno a = new Alumno();
+				Persona a = new Persona();
 				a.setLegajo(rs.getInt("legajo"));
 				a.setApellido(rs.getString("apellido"));
 				a.setNombre(rs.getString("nombre"));

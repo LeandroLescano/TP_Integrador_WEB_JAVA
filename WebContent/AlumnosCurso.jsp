@@ -23,7 +23,7 @@
 <div style="height: 85vh">
 <div class="container" style="height: 100%">
 <div id="Titulo">
-	<span><button id="btnVolver" class="btn btn-primary" style="float: right;" onclick="ocultarAlumnos()">Volver a Mis cursos</button></span>
+	<span><a id="btnVolver" href="./MisCursos.jsp" class="btn btn-primary" style="float: right;" onclick="ocultarAlumnos()">Volver a Mis cursos</a></span>
 	<h2>Curso X - Alumnos </h2>
 </div>     
 <form id="FormNotas" method="get" action="servletNotas">

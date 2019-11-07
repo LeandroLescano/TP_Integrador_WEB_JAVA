@@ -112,9 +112,9 @@
    			 </tr>
 			             <tr>
 		      <th scope="row">1006</th>
-		      <td>Brizzi, Maria</td>
+		      <td>Herrera, Tamara</td>
 		      <td>Avenida 231</td>
-		      <td>marialaprofe@profesor.com</td>
+		      <td>tamaralaprofe@profesor.com</td>
 		      <td>159544567</td>
 		                  <td>
               <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
@@ -124,9 +124,9 @@
    			 </tr>
 			             <tr>
 		      <th scope="row">1007</th>
-		      <td>Arnedo, Brian</td>
+		      <td>Rodriguez, Javier</td>
 		      <td>calle 444</td>
-		      <td>brianelprofe@profesor.com</td>
+		      <td>javierelprofe@profesor.com</td>
 		      <td>159994567</td>
 		                  <td>
               <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>

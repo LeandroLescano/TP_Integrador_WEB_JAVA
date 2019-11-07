@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Dominio.Alumno;
+import Dominio.Persona;
 import Negocio.AlumnoNegocio;
 
 /**
@@ -50,10 +50,10 @@ public class servletAlumno extends HttpServlet {
 		if(request.getParameter("btnActualizar") != null)
 		{			
 			AlumnoNegocio negocioA = new AlumnoNegocio();
-			ArrayList<Alumno> listado = negocioA.listarAlumnos();
+			ArrayList<Persona> listado = negocioA.listarAlumnos();
 			String tabla ="";
 			int Tipo = Integer.parseInt(request.getParameter("tipos"));
-			for(Alumno s : listado)
+			for(Persona s : listado)
 			{
 					tabla += "<tr>" + 
 				   	"<th class='thID' scope='row'>" + s.getLegajo() + "</th>" + 
