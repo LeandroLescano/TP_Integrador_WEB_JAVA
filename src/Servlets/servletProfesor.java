@@ -16,14 +16,14 @@ import Negocio.PersonaNegocio;
 /**
  * Servlet implementation class servletSeguro
  */
-@WebServlet("/servletAlumno")
-public class servletAlumno extends HttpServlet {
+@WebServlet("/servletProfesor")
+public class servletProfesor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public servletAlumno() {
+    public servletProfesor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,8 +33,16 @@ public class servletAlumno extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//LISTAR PROFESORES
+		if(request.getParameter("btnVer") != null)
+		{	
+//			PersonaNegocio negocioP = new PersonaNegocio();
+			
+//			Persona persona = negocioP.obtenerPersona(, 'P');
+		}
+		else {
 		PersonaNegocio negocioP = new PersonaNegocio();
-		ArrayList<Persona> listado = negocioP.listarPersonas('A');
+		ArrayList<Persona> listado = negocioP.listarPersonas('P');
 		String tabla = "";
 		for(Persona p : listado)
 		{
@@ -53,17 +61,18 @@ public class servletAlumno extends HttpServlet {
 			      "<td>" + p.getMail() + "</td>" +
 			      "<td>" + p.getTelefono() + "</td>"+ 
 			      "<td>" + 
-	              "<button type='button' class='btn btn-primary btn-icon' id='btnVer" + p.getLegajo() + "'><img src='https://i.ibb.co/yNgpRb4/eye.png' height='30' width='30' /></button>" +
+	              "<button type='button' class='btn btn-primary btn-icon' name='btnVer' onclick='mostrarProfesor("+ p.getLegajo() +")' id='btnVer" + p.getLegajo() + "'><img src='https://i.ibb.co/yNgpRb4/eye.png' height='30' width='30' /></button>" +
 	              "<button type='button' class='btn btn-success btn-icon' id='btnEditar" + p.getLegajo() + "'><img src='https://i.ibb.co/7Yj831F/edit.png' height='30' width='30'/></button>" +
 	              "<button type='button' class='btn btn-danger btn-icon' id='btnEliminar" + p.getLegajo() + "'><img src='https://i.ibb.co/JK4T4ZR/delete.png' height='30' width='30' /></button>" +
 	            "</td>" + 
 	   			 "</tr>";
 		}	
 
-		request.setAttribute("tabla", tabla);
+		 request.setAttribute("tabla", tabla);
 	
-	 RequestDispatcher rd = request.getRequestDispatcher("/Alumnos.jsp");		 
-	 rd.forward(request, response);
+		 RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
+		 rd.forward(request, response);
+		}
 		 
 	}
 
@@ -73,11 +82,11 @@ public class servletAlumno extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//LISTAR PROFESORES Y ALUMNOS
-		if(request.getParameter("btnActualizar") != null)
+		if(request.getParameter("btnListar") != null)
 		{			
 			PersonaNegocio negocioP = new PersonaNegocio();
-			ArrayList<Persona> listado = negocioP.listarPersonas('A');
-			String tabla ="";
+			ArrayList<Persona> listado = negocioP.listarPersonas('P');
+			String tabla = "";
 			for(Persona p : listado)
 			{
 //					tabla += "<tr>" + 
@@ -92,7 +101,6 @@ public class servletAlumno extends HttpServlet {
 		            tabla += "<tr>" + 
 				      "<th scope='row'>" + p.getLegajo ()+ "</th>" + 
 				      "<td>" + p.getApellido() + ", " + p.getNombre()  + "</td>" +
-				      "<td>" + p.getDomicilio().getCalle() + "</td>" +
 				      "<td>" + p.getMail() + "</td>" +
 				      "<td>" + p.getTelefono() + "</td>"+ 
 				      "<td>" + 
@@ -105,8 +113,8 @@ public class servletAlumno extends HttpServlet {
 
 			request.setAttribute("tabla", tabla);
 		} 
-
-		 RequestDispatcher rd = request.getRequestDispatcher("/Alumnos.jsp");		 
+		
+		 RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
 		 rd.forward(request, response);
 		 
 		

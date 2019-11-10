@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList" %>
+<%@page import="Dominio.Persona" %>
+<%@page import="Negocio.PersonaNegocio" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -26,114 +29,25 @@
 	<h2>Profesores</h2>
 </div>
 <button id="btnAgregar" class="btn btn-primary btn-add" onclick="mostrarModal()" data-toggle="modal" data-target=".bd-example-modal-lg">Añadir profesor</button>	 			 
- <table id="Gridview" class="table table-hover">
+ <table id="Gridview" class="table table-hover" style="table-layout: fixed;">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Legajo</th>
+                <th scope="col" class="colLegajo">Legajo</th>
                 <th scope="col">Apellido y nombre</th>
-                <th scope="col">Dirección</th>
                 <th scope="col">E-mail</th>
-                <th scope="col">Teléfono</th>
+                <th scope="col" class="colTelefono">Teléfono</th>
                 <th scope="col" id="colAcciones">Acciones</th>
             </tr>
         </thead>
         <tbody id="grilla">
-            <tr>
-		      <th scope="row">1000</th>
-		      <td>Fernández, Claudio</td>
-		      <td>Avenida 123</td>
-		      <td>claudio@profesor.com</td>
-		      <td>159999999</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon"  id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon"  id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1001</th>
-		      <td>Sar, Maximiliano</td>
-		      <td>Avenida 231</td>
-		      <td>maxielprofe@profesor.com</td>
-		      <td>159994567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1002</th>
-		      <td>Natale, Damian</td>
-		      <td>Calle 654</td>
-		      <td>damielprofe@profesor.com</td>
-		      <td>159894567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1003</th>
-		      <td>Simon, Angel</td>
-		      <td>calle 555</td>
-		      <td>simonelprofe@profesor.com</td>
-		      <td>154994567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1004</th>
-		      <td>Lupani, Cecilia</td>
-		      <td>Avenida 999</td>
-		      <td>cecilialaprofe@profesor.com</td>
-		      <td>159594567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1005</th>
-		      <td>Gerosa, Adrian</td>
-		      <td>Avenida 231</td>
-		      <td>adrianelprofe@profesor.com</td>
-		      <td>153294567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1006</th>
-		      <td>Herrera, Tamara</td>
-		      <td>Avenida 231</td>
-		      <td>tamaralaprofe@profesor.com</td>
-		      <td>159544567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
-			             <tr>
-		      <th scope="row">1007</th>
-		      <td>Rodriguez, Javier</td>
-		      <td>calle 444</td>
-		      <td>javierelprofe@profesor.com</td>
-		      <td>159994567</td>
-		                  <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
+        		<%
+			String listadoProfesores = null;
+			if(request.getAttribute("tabla")!=null)
+			{
+				listadoProfesores = (String)request.getAttribute("tabla");
+			}		
+		%>
+        <%=listadoProfesores %>
         </tbody>
     </table>
 </div>
@@ -141,6 +55,7 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+
 	var screenH = window.innerHeight;
 	var cantPags;
 	if(screenH < 615){
@@ -183,6 +98,12 @@ $(document).ready(function(){
 	    $('#myInput').trigger('focus')
 	});
 });
+
+function mostrarProfesor(legajo){
+	$("#txtNombre").val()
+	
+	mostrarModal();
+}
 
 </script>
 </html>

@@ -30,6 +30,12 @@ font-family: 'Merriweather Sans', sans-serif;
 	color: black;
 }
 
+.tdDom {
+	width: 100px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .tdDesc {
 	text-align: left;
     max-width: 500px;
@@ -60,6 +66,14 @@ td {
 	height: 25px;
 }
 
+.colTelefono {
+    width: 110px;
+}
+
+.colLegajo {
+	width: 80px;
+}
+
 .colLegajo {
 	width: 100px;
 }
@@ -69,7 +83,7 @@ td {
 }
 
 #colAcciones {
-	width: 200px;
+	width: 150px;
 }
 
 .dataTables_filter{

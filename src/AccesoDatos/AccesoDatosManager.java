@@ -3,6 +3,7 @@ package AccesoDatos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AccesoDatosManager {
@@ -12,33 +13,53 @@ public class AccesoDatosManager {
 	public static String pass = "root";
 	public static String dbName = "gestionadministrativa";
 	public static String timeZone = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static Connection cn = null;
+	private static ResultSet rs = null;
+	private static Statement st = null;
+	
+	public void abrirConexion()
+	{
+		try {
+			cn = DriverManager.getConnection(host+dbName+timeZone,user,pass);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void cerrarConexion() {
+		try {
+			if(rs != null) rs.close();
+			if(st != null) st.close();
+			if(cn != null) cn.close();		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public int executeAccion(String query)
 	{
-		Connection cn = null;
 		int filas = 0;
 		try
 		{
-			cn = DriverManager.getConnection(host+dbName+timeZone,user,pass);
-			Statement st= cn.createStatement();
+			st= cn.createStatement();
 			filas = st.executeUpdate(query);
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+	
 		return filas;
 	}
 	
 	public ResultSet executeConsulta(String query)
 	{
-		Connection cn = null;
-		ResultSet rs = null;
 		try
 		{
 			cn = DriverManager.getConnection(host+dbName+timeZone,user,pass);
-			Statement st= cn.createStatement();
+			Statement st = cn.createStatement();
 			rs = st.executeQuery(query);
 		}
 		catch (Exception e)
@@ -48,5 +69,6 @@ public class AccesoDatosManager {
 		}
 		return rs;
 	}
+	
 	
 }

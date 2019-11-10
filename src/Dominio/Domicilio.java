@@ -1,24 +1,24 @@
 package Dominio;
 
-public class Direccion {
+public class Domicilio {
 
 	private int ID;	
 	private String Calle;
-	private String Localidad;
+	private Localidad Localidad;
 	private Provincia Provincia;
 	
-	public Direccion() {
+	public Domicilio() {
 		
 	}
-	
-	public Direccion(int iD, String calle, String localidad, Dominio.Provincia provincia) {
+		
+	public Domicilio(int iD, String calle, Localidad localidad, Provincia provincia) {
 		super();
 		ID = iD;
 		Calle = calle;
 		Localidad = localidad;
 		Provincia = provincia;
 	}
-	
+
 	public int getID() {
 		return ID;
 	}
@@ -31,10 +31,13 @@ public class Direccion {
 	public void setCalle(String calle) {
 		Calle = calle;
 	}
-	public String getLocalidad() {
+
+	public Localidad getLocalidad() {
 		return Localidad;
 	}
-	public void setLocalidad(String localidad) {
+
+
+	public void setLocalidad(Localidad localidad) {
 		Localidad = localidad;
 	}
 	public Provincia getProvincia() {

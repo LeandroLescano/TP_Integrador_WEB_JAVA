@@ -29,27 +29,22 @@
  <table id="Gridview" class="table table-hover">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Legajo</th>
+                <th scope="col" class="colLegajo">Legajo</th>
                 <th scope="col">Apellido y nombre</th>
-                <th scope="col">Dirección</th>
                 <th scope="col">E-mail</th>
-                <th scope="col">Teléfono</th>
+                <th scope="col" class="colTelefono">Teléfono</th>
                 <th scope="col" id="colAcciones">Acciones</th>
             </tr>
         </thead>
         <tbody id="grilla">
-            <tr>
-		      <th scope="row">1000</th>
-		      <td>Perez, Mario</td>
-		      <td>Avenida 1234</td>
-		      <td>mario@alumno.com</td>
-		      <td>1566667777</td>
-		      <td>
-              <button type="button" class="btn btn-primary btn-icon" id="btnVer"><img src="https://i.ibb.co/yNgpRb4/eye.png" height="30" width="30" /></button>
-              <button type="button" class="btn btn-success btn-icon" id="btnEditar"><img src="https://i.ibb.co/7Yj831F/edit.png" height="30" width="30"/></button>
-            	<button type="button" class="btn btn-danger btn-icon" id="btnEliminar"><img src="https://i.ibb.co/JK4T4ZR/delete.png" height="30" width="30" /></button>
-            </td>
-   			 </tr>
+        		<%
+			String listadoAlumnos = null;
+			if(request.getAttribute("tabla")!=null)
+			{
+				listadoAlumnos = (String)request.getAttribute("tabla");
+			}		
+		%>
+        <%=listadoAlumnos %>
         </tbody>
     </table>
 </div>
