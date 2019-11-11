@@ -8,8 +8,9 @@ import Dominio.TipoPersona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import AccesoDatos.AccesoDatosManager;
 
 public class PersonaNegocio {
@@ -45,13 +46,18 @@ public class PersonaNegocio {
 		try {	
 			accesoDatos.abrirConexion();
 			ResultSet rs = accesoDatos.executeConsulta(listar);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy"); 
 				while(rs.next())
 				{
 					Persona p = new Persona();
 					p.setLegajo(rs.getInt("Legajo"));
 					p.setApellido(rs.getString("Apellido"));
 					p.setNombre(rs.getString("Nombre"));
-					p.setFechNac(rs.getDate("FechaNacimiento"));
+					try {
+						p.setFechNac(dateFormat.parse(rs.getDate("FechaNacimiento").toString()));
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 					p.setEstado(rs.getBoolean("Estado"));
 					if(rs.getString("Mail") != null){
 						p.setMail(rs.getString("Mail"));
@@ -75,7 +81,7 @@ public class PersonaNegocio {
 					d.setCalle(rs.getString("Calle"));
 					Localidad l = new Localidad();
 					l.setID(rs.getInt("IDLocalidad"));
-					l.setNombre("Localidad");
+					l.setNombre(rs.getString("Localidad"));
 					d.setLocalidad(l);
 					Provincia prov = new Provincia();
 					prov.setID(rs.getInt("IDProvincia"));
@@ -157,7 +163,7 @@ public class PersonaNegocio {
 				d.setCalle(rs.getString("Calle"));
 				Localidad l = new Localidad();
 				l.setID(rs.getInt("IDLocalidad"));
-				l.setNombre("Localidad");
+				l.setNombre(rs.getString("Localidad"));
 				d.setLocalidad(l);
 				Provincia prov = new Provincia();
 				prov.setID(rs.getInt("IDProvincia"));

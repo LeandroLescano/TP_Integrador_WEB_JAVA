@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,15 +33,6 @@ public class servletProfesor extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//LISTAR PROFESORES
-		if(request.getParameter("btnVer") != null)
-		{	
-//			PersonaNegocio negocioP = new PersonaNegocio();
-			
-//			Persona persona = negocioP.obtenerPersona(, 'P');
-		}
-		else {
 		PersonaNegocio negocioP = new PersonaNegocio();
 		ArrayList<Persona> listado = negocioP.listarPersonas('P');
 		String tabla = "";
@@ -73,16 +65,24 @@ public class servletProfesor extends HttpServlet {
 		 RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
 		 rd.forward(request, response);
 		}
-		 
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//LISTAR PROFESORES Y ALUMNOS
-		if(request.getParameter("btnListar") != null)
+		if(request.getParameter("legajo") != null){
+			
+			int legajo = Integer.parseInt(request.getParameter("legajo"));
+			PersonaNegocio negocioP = new PersonaNegocio();
+			Persona p = negocioP.obtenerPersona(legajo, 'P');
+			String json = new Gson().toJson(p);
+			
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		else if(request.getParameter("btnListar") != null) //LISTAR PROFESORES Y ALUMNOS
 		{			
 			PersonaNegocio negocioP = new PersonaNegocio();
 			ArrayList<Persona> listado = negocioP.listarPersonas('P');
@@ -112,10 +112,10 @@ public class servletProfesor extends HttpServlet {
 			}	
 
 			request.setAttribute("tabla", tabla);
+			RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
+			rd.forward(request, response);
 		} 
 		
-		 RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
-		 rd.forward(request, response);
 		 
 		
 	}

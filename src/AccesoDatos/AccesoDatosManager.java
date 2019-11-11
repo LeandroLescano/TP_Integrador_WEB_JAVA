@@ -22,7 +22,6 @@ public class AccesoDatosManager {
 		try {
 			cn = DriverManager.getConnection(host+dbName+timeZone,user,pass);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,7 +32,6 @@ public class AccesoDatosManager {
 			if(st != null) st.close();
 			if(cn != null) cn.close();		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
