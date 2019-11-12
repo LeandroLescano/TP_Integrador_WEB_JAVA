@@ -33,6 +33,7 @@ public class servletProfesor extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		PersonaNegocio negocioP = new PersonaNegocio();
 		ArrayList<Persona> listado = negocioP.listarPersonas('P');
 		String tabla = "";
@@ -46,20 +47,27 @@ public class servletProfesor extends HttpServlet {
 //		 		 	"<option value='0' class='dropdown-item'>Regular</option>" + 
 //		 		 	"<option value='1' class='dropdown-item'>Libre</option>" + 
 //		 			 "/select></td></tr>";
-				
-	            tabla += "<tr>" + 
-			      "<th scope='row'>" + p.getLegajo ()+ "</th>" + 
-			      "<td>" + p.getApellido() + ", " + p.getNombre()  + "</td>" +
-			      "<td>" + p.getMail() + "</td>" +
-			      "<td>" + p.getTelefono() + "</td>"+ 
-			      "<td>" + 
-	              "<button type='button' class='btn btn-primary btn-icon' name='btnVer' onclick='mostrarProfesor("+ p.getLegajo() +")' id='btnVer" + p.getLegajo() + "'><img src='https://i.ibb.co/yNgpRb4/eye.png' height='30' width='30' /></button>" +
-	              "<button type='button' class='btn btn-success btn-icon' id='btnEditar" + p.getLegajo() + "'><img src='https://i.ibb.co/7Yj831F/edit.png' height='30' width='30'/></button>" +
-	              "<button type='button' class='btn btn-danger btn-icon' id='btnEliminar" + p.getLegajo() + "'><img src='https://i.ibb.co/JK4T4ZR/delete.png' height='30' width='30' /></button>" +
-	            "</td>" + 
-	   			 "</tr>";
+				if(p.isEstado())
+				{				
+		            tabla += "<tr>" + 
+				      "<th scope='row'>" + p.getLegajo ()+ "</th>" + 
+				      "<td>" + p.getApellido() + ", " + p.getNombre()  + "</td>" +
+				      "<td>" + p.getMail() + "</td>" +
+				      "<td>" + p.getTelefono() + "</td>"+ 
+				      "<td>" + 
+		              "<button type='button' class='btn btn-primary btn-icon' onclick='mostrarPersona("+ p.getLegajo() +", \"P\")' id='btnVer" + p.getLegajo() + "'><img src='https://i.ibb.co/yNgpRb4/eye.png' height='30' width='30' /></button>" +
+		              "<button type='button' class='btn btn-success btn-icon' onclick='editarPersona("+ p.getLegajo() +", \"P\")' id='btnEditar" + p.getLegajo() + "'><img src='https://i.ibb.co/7Yj831F/edit.png' height='30' width='30'/></button>" +
+		              "<button type='button' class='btn btn-danger btn-icon' onclick='eliminarProfesor("+ p.getLegajo() +", \"P\")' id='btnEliminar" + p.getLegajo() + "'><img src='https://i.ibb.co/JK4T4ZR/delete.png' height='30' width='30' /></button>" +
+		            "</td>" + 
+		   			 "</tr>";
+				}
 		}	
 
+		if(request.getAttribute("Result") != null)
+		{
+			request.setAttribute("ResultToast", request.getAttribute("Result") );
+			request.setAttribute("Result", null);
+		}
 		 request.setAttribute("tabla", tabla);
 	
 		 RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
@@ -82,41 +90,27 @@ public class servletProfesor extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		else if(request.getParameter("btnListar") != null) //LISTAR PROFESORES Y ALUMNOS
-		{			
+		else if(request.getParameter("nuevo") != null){
 			PersonaNegocio negocioP = new PersonaNegocio();
-			ArrayList<Persona> listado = negocioP.listarPersonas('P');
-			String tabla = "";
-			for(Persona p : listado)
-			{
-//					tabla += "<tr>" + 
-//				   	"<th class='thID' scope='row'>" + p.getLegajo() + "</th>" + 
-//				   "<td class ='tdDesc'>" + p.getApellido() + ", " + p.getNombre()  + "</td>" + 
-//				      "<td><input type='text' class='form-control border' value='10' style='width: 40px; padding: 5px;'></td>" + 
-//					  "<td><select name='tipos' class='custom-select' style='width: 200px; margin-top: 8px;'>" +
-//			 		 	"<option value='0' class='dropdown-item'>Regular</option>" + 
-//			 		 	"<option value='1' class='dropdown-item'>Libre</option>" + 
-//			 			 "/select></td></tr>";
-					
-		            tabla += "<tr>" + 
-				      "<th scope='row'>" + p.getLegajo ()+ "</th>" + 
-				      "<td>" + p.getApellido() + ", " + p.getNombre()  + "</td>" +
-				      "<td>" + p.getMail() + "</td>" +
-				      "<td>" + p.getTelefono() + "</td>"+ 
-				      "<td>" + 
-		              "<button type='button' class='btn btn-primary btn-icon' id='btnVer" + p.getLegajo() + "'><img src='https://i.ibb.co/yNgpRb4/eye.png' height='30' width='30' /></button>" +
-		              "<button type='button' class='btn btn-success btn-icon' id='btnEditar" + p.getLegajo() + "'><img src='https://i.ibb.co/7Yj831F/edit.png' height='30' width='30'/></button>" +
-		              "<button type='button' class='btn btn-danger btn-icon' id='btnEliminar" + p.getLegajo() + "'><img src='https://i.ibb.co/JK4T4ZR/delete.png' height='30' width='30' /></button>" +
-		            "</td>" + 
-		   			 "</tr>";
-			}	
-
-			request.setAttribute("tabla", tabla);
-			RequestDispatcher rd = request.getRequestDispatcher("/Profesores.jsp");		 
-			rd.forward(request, response);
-		} 
-		
-		 
+			int nuevoLegajo = negocioP.nuevoLegajo('P');
+			String json = new Gson().toJson(nuevoLegajo);
+			
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		else if(request.getParameter("btnEliminar") != null){
+			int legajo = Integer.parseInt(request.getParameter("Legajo"));
+			PersonaNegocio negocioP = new PersonaNegocio();
+			if(negocioP.eliminarPersona(legajo, 'P')) {
+				request.setAttribute("Result", "Eliminado");
+			}
+			else {
+				request.setAttribute("Result", "Error");
+			}
+				
+			 doGet(request, response);
+		}	
 		
 	}
 

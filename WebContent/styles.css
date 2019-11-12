@@ -8,6 +8,15 @@ p, a, h1, h2, td, tr {
 font-family: 'Merriweather Sans', sans-serif;
 }
 
+.toast-header {
+	border-bottom: 1px solid rgb(255, 255, 255) !important;
+}
+
+.toast , .toast-header {
+	background-color: #0069d9 !important;
+	color:white !important;
+}
+
 .container { 
 	position: relative;
 	margin-top: 10px;

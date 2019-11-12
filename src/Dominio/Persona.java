@@ -1,13 +1,13 @@
 package Dominio;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Persona {
 
 	private int Legajo;
 	private String Apellido;
 	private String Nombre;
-	private Date FechNac;
+	private LocalDate FechNac;
 	private String Mail;
 	private String Telefono;
 	private Domicilio Domicilio;
@@ -18,10 +18,8 @@ public class Persona {
 	{
 		
 	}
-	
 
-
-	public Persona(int legajo, String apellido, String nombre, Date fechNac, String mail, String telefono,
+	public Persona(int legajo, String apellido, String nombre, LocalDate fechNac, String mail, String telefono,
 			Domicilio domicilio, TipoPersona tipo, boolean estado) {
 		super();
 		Legajo = legajo;
@@ -69,11 +67,11 @@ public class Persona {
 		Nombre = nombre;
 	}
 
-	public Date getFechNac() {
+	public LocalDate getFechNac() {
 		return FechNac;
 	}
 
-	public void setFechNac(Date fechNac) {
+	public void setFechNac(LocalDate fechNac) {
 		FechNac = fechNac;
 	}
 

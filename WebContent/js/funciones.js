@@ -1,3 +1,52 @@
+
+function mostrarPersona(legajo, tipo){
+	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
+		$("#txtLegajo").val(legajo);
+		$("#txtNombre").val(responseJson.Nombre);
+		$("#dtpFechNac").val(responseJson.FechNac.day + "/" + responseJson.FechNac.month + "/" + responseJson.FechNac.year);
+		$("#txtMail").val(responseJson.Mail);
+		$("#txtTelefono").val(responseJson.Telefono);
+		$("#txtApellido").val(responseJson.Apellido);
+		$("#txtCalle").val(responseJson.Domicilio.Calle);
+		$("#txtProvincia").val(responseJson.Domicilio.Provincia.ID);
+		$("#txtLocalidad").val(responseJson.Domicilio.Localidad.Nombre);
+		if(tipo == "P"){
+			$("#TituloModal").html("Profesor/a: " + responseJson.Apellido + ", " + responseJson.Nombre);			
+		}
+		else{
+			$("#TituloModal").html("Alumno/a: " + responseJson.Apellido + ", " + responseJson.Nombre);
+		}
+	});
+	
+	$("#txtNombre").prop('disabled', true);
+	$("#dtpFechNac").prop('disabled', true);
+	$("#txtMail").prop('disabled', true);
+	$("#txtTelefono").prop('disabled', true);
+	$("#txtApellido").prop('disabled', true);
+	$("#txtCalle").prop('disabled', true);
+	$("#txtProvincia").prop('disabled', true);
+	$("#txtLocalidad").prop('disabled', true);
+ 	$("#btnAñadir").prop('hidden', true);
+	
+	mostrarModal();
+}
+
+function editarPersona(legajo, tipo){
+	mostrarPersona(legajo, tipo);
+	
+	$("#txtNombre").prop('disabled', false);
+	$("#dtpFechNac").prop('disabled', false);
+	$("#txtMail").prop('disabled', false);
+	$("#txtTelefono").prop('disabled', false);
+	$("#txtApellido").prop('disabled', false);
+	$("#txtCalle").prop('disabled', false);
+	$("#txtProvincia").prop('disabled', false);
+	$("#txtLocalidad").prop('disabled', false);
+ 	$("#btnAñadir").prop('hidden', false);
+	
+	mostrarModal();
+}
+
 function cantidadPaginas(){
 	var screenH = window.innerHeight;
 	var cantPags;
@@ -18,6 +67,14 @@ function cantidadPaginas(){
 function mostrarModal(){
 	$("#ModalRegistro").modal('show');
 }
+
+function nuevoProfesor(){
+	$.post("servletProfesor",{"nuevo": "1"}, function(responseJson) {
+		$("#txtLegajo").val(responseJson);
+	});
+	$("#ModalRegistro").modal('show');
+}
+
 
 function mostrarAlumnos(){
 	$("#ModalAlumnosCurso").modal('show');

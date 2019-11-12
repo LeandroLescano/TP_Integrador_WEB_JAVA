@@ -19,6 +19,10 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+<link href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+<script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
@@ -45,8 +49,18 @@
                                             <input type="email" aria-describedby="emailHelp" class="form-control" id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="txtCalle" class="col-form-label">Dirección:</label>
-                                            <input type="text" class="form-control" id="txtCalle" placeholder="Calle 123" tabindex="6">
+                                            <label for="txtProvincia" class="col-form-label">Provincia:</label>
+                                            <select id="txtProvincia" class="form-control">
+								 		 	<%
+		 	 		 							    ProvinciaNegocio negocioP = new ProvinciaNegocio();
+		 	 		 	 	 		 			   ArrayList<Provincia> prov = negocioP.listarProvincias();
+		 	 		 	 	 		 			   for (Provincia p : prov)
+		 	 		 	 	 		 			   {
+							 	 		 			%><option value="<%=p.getID()%>"> <%=p.getNombre()%> </option>
+											   		<%
+											   			}
+											   		%>
+								 			 </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -73,19 +87,8 @@
                                             <input type='text' class="form-control" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="txtProvincia" class="col-form-label">Provincia:</label>
-                                            <!--<input type="text" class="form-control" id="txtProvincia" placeholder="Buenos Aires" tabindex="8" >-->
-                                            <select id="txtProvincia" class="form-control">
-								 		 	<%
-		 	 		 							    ProvinciaNegocio negocioP = new ProvinciaNegocio();
-		 	 		 	 	 		 			   ArrayList<Provincia> prov = negocioP.listarProvincias();
-		 	 		 	 	 		 			   for (Provincia p : prov)
-		 	 		 	 	 		 			   {
-							 	 		 			%><option value="<%=p.getID()%>"> <%=p.getNombre()%> </option>
-											   		<%
-											   			}
-											   		%>
-								 			 </select>
+                                            <label for="txtCalle" class="col-form-label">Dirección:</label>
+                                            <input type="text" class="form-control" id="txtCalle" placeholder="Calle 123" tabindex="6">
                                         </div>
                                     </div>
                                 </div>
@@ -99,13 +102,14 @@
         </div>
         <!--  FIN MODAL  -->
 <body onresize="cantidadPaginas()">
+<jsp:include page="ModalEliminarPersona.html"></jsp:include>
 <jsp:include page="NavBarAdmin.html"></jsp:include>
 <div style="height: 85vh">
 <div class="container" style="height: 100%">
 <div id="Titulo">
 	<h2>Profesores</h2>
 </div>
-<button id="btnAgregar" class="btn btn-primary btn-add" onclick="mostrarModal()" data-toggle="modal" data-target=".bd-example-modal-lg">Añadir profesor</button>	 			 
+<button id="btnAgregar" class="btn btn-primary btn-add" onclick="nuevoProfesor()" data-toggle="modal" data-target=".bd-example-modal-lg">Añadir profesor</button>	 			 
  <table id="Gridview" class="table table-hover" style="table-layout: fixed;">
         <thead class="thead-dark">
             <tr>
@@ -129,8 +133,33 @@
     </table>
 </div>
 </div>
+<jsp:include page="ToastResultado.html"></jsp:include>
 </body>
 <script type="text/javascript">
+<%
+	if(request.getAttribute("ResultToast")!=null)
+	{
+		String Resultado = (String)request.getAttribute("ResultToast");
+		%>mostrarToast("<%=Resultado%>")<%
+		request.setAttribute("ResultToast", null);
+	}
+%>
+
+$(function () {
+    var hoy = new Date();
+    var dd = String(hoy.getDate()).padStart(2, '0');
+    var mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    var yyyy = hoy.getFullYear();
+
+    hoy = dd + '/' + mm + '/' + yyyy;
+
+    $('#dtpFechNac').datepicker({
+        language: "es",
+        endDate: hoy
+    });
+});
+
+
 $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;
@@ -173,34 +202,29 @@ $(document).ready(function(){
 	$('#myModal').on('shown.bs.modal', function () {
 	    $('#myInput').trigger('focus')
 	});
+
 });
 
-function mostrarProfesor(legajo){
+function mostrarToast(R){
+	if(R == "Eliminado"){
+		$("#toastTitle").html("Eliminado");
+		$("#toastMsj").html("Se ha eliminado el registro exitosamente.");
+		$(".toast").toast('show');	
+	}
+	else{
+		$("#toastTitle").html("Error");
+		$("#toastMsj").html("Ha ocurrido un error al momento de eliminar el registro.");
+		$(".toast").toast('show');
+	}
+}
+
+function eliminarProfesor(legajo){
 	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
-		$("#txtLegajo").val(legajo);
-		$("#txtNombre").val(responseJson.Nombre);
-		$("#dtpFechNac").val(responseJson.FechNac);
-		$("#txtMail").val(responseJson.Mail);
-		$("#txtTelefono").val(responseJson.Telefono);
-		$("#txtApellido").val(responseJson.Apellido);
-		$("#txtCalle").val(responseJson.Domicilio.Calle);
-		$("#txtProvincia").val(responseJson.Domicilio.Provincia.ID);
-		$("#txtLocalidad").val(responseJson.Domicilio.Localidad.Nombre);
-		$("#TituloModal").html("Profesor/a: " + responseJson.Apellido + ", " + responseJson.Nombre);
+		$("#Legajo").val(legajo);
+		$("#MensajeEliminar").html("¿Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
 	});
 	
-	$("#txtLegajo").prop('readonly', true);
-	$("#txtNombre").prop('readonly', true);
-	$("#dtpFechNac").prop('readonly', true);
-	$("#txtMail").prop('readonly', true);
-	$("#txtTelefono").prop('readonly', true);
-	$("#txtApellido").prop('readonly', true);
-	$("#txtCalle").prop('readonly', true);
-	$("#txtProvincia").prop('disabled', true);
-	$("#txtLocalidad").prop('readonly', true);
- 	$("#btnAñadir").prop('hidden', true);
-	
-	mostrarModal();
+	$("#ModalEliminar").modal('show');
 }
 
 </script>

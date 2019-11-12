@@ -8,9 +8,8 @@ import Dominio.TipoPersona;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import AccesoDatos.AccesoDatosManager;
 
 public class PersonaNegocio {
@@ -46,18 +45,13 @@ public class PersonaNegocio {
 		try {	
 			accesoDatos.abrirConexion();
 			ResultSet rs = accesoDatos.executeConsulta(listar);
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy"); 
 				while(rs.next())
 				{
 					Persona p = new Persona();
 					p.setLegajo(rs.getInt("Legajo"));
 					p.setApellido(rs.getString("Apellido"));
 					p.setNombre(rs.getString("Nombre"));
-					try {
-						p.setFechNac(dateFormat.parse(rs.getDate("FechaNacimiento").toString()));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
+					p.setFechNac(rs.getDate("FechaNacimiento").toLocalDate());
 					p.setEstado(rs.getBoolean("Estado"));
 					if(rs.getString("Mail") != null){
 						p.setMail(rs.getString("Mail"));
@@ -139,7 +133,7 @@ public class PersonaNegocio {
 				p.setLegajo(rs.getInt("ID"));
 				p.setApellido(rs.getString("Apellido"));
 				p.setNombre(rs.getString("Nombre"));
-				p.setFechNac(rs.getDate("FechaNacimiento"));
+				p.setFechNac(rs.getDate("FechaNacimiento").toLocalDate());
 				p.setEstado(rs.getBoolean("Estado"));
 				if(rs.getString("Mail") != null){
 					p.setMail(rs.getString("Mail"));
@@ -183,5 +177,66 @@ public class PersonaNegocio {
 		
 		return null;
 	}
-		
+	
+	public boolean eliminarPersona(int ID, char Tipo) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String eliminar;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		if(Tipo == 'P') {	
+			eliminar = "UPDATE PROFESORES SET ESTADO = 0 WHERE LEGAJO = " + ID; 
+		}
+		else {
+			eliminar = "UPDATE ALUMNOS SET ESTADO = 0 WHERE LEGAJO = " + ID; 
+		}
+		try {
+			accesoDatos.abrirConexion();
+			if(accesoDatos.executeAccion((eliminar)) > 0){
+				return true;			
+			}
+			else{
+				return false;
+			}
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}		
+	}
+	
+	
+	public int nuevoLegajo(char Tipo) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String nuevoLegajo;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		if(Tipo == 'P') {	
+			nuevoLegajo = "SELECT MAX(LEGAJO)+1 as legajo FROM PROFESORES"; 
+		}
+		else {
+			nuevoLegajo = "SELECT MAX(LEGAJO)+1 as legajo FROM ALUMNOS"; 
+		}
+		try {
+			accesoDatos.abrirConexion();
+			ResultSet rs = accesoDatos.executeConsulta(nuevoLegajo);
+			while(rs.next())
+			{
+				return rs.getInt("legajo");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}
+		return -1;	
+	}
 }
