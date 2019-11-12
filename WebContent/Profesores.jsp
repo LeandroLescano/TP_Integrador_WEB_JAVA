@@ -58,7 +58,7 @@
 		 	 		 	 	 		 			   {
 							 	 		 			%><option value="<%=p.getID()%>"> <%=p.getNombre()%> </option>
 											   		<%
-											   			}
+		 	 		 	 	 		 			   }
 											   		%>
 								 			 </select>
                                         </div>
@@ -74,7 +74,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
-                                            <input type="text" class="form-control" id="txtLocalidad" placeholder="Tigre" tabindex="7" >
+                                            <select id="txtLocalidad" class="form-control">
+								 			 </select>
+
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -202,6 +204,10 @@ $(document).ready(function(){
 	$('#myModal').on('shown.bs.modal', function () {
 	    $('#myInput').trigger('focus')
 	});
+	
+	$("#txtProvincia").change(function() {
+		listarLocalidades($("#txtProvincia").val());
+		});
 
 });
 
@@ -216,15 +222,6 @@ function mostrarToast(R){
 		$("#toastMsj").html("Ha ocurrido un error al momento de eliminar el registro.");
 		$(".toast").toast('show');
 	}
-}
-
-function eliminarProfesor(legajo){
-	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
-		$("#Legajo").val(legajo);
-		$("#MensajeEliminar").html("¿Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
-	});
-	
-	$("#ModalEliminar").modal('show');
 }
 
 </script>

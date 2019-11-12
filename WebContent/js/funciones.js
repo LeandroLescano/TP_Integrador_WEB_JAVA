@@ -75,9 +75,17 @@ function nuevoProfesor(){
 	$("#ModalRegistro").modal('show');
 }
 
-
 function mostrarAlumnos(){
 	$("#ModalAlumnosCurso").modal('show');
+}
+
+function eliminarProfesor(legajo){
+	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
+		$("#Legajo").val(legajo);
+		$("#MensajeEliminar").html("¿Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
+	});
+	
+	$("#ModalEliminar").modal('show');
 }
 
 function filtrarTabla(){
@@ -102,4 +110,10 @@ function filtrarTabla(){
 	        }
 	    }
 }
+}
+
+function listarLocalidades(idProv){
+	$.post("servletProfesor",{"provincia": idProv}, function(responseJson) {
+		$("#txtLocalidad").html(responseJson);
+	});
 }

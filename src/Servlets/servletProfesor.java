@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dominio.Localidad;
 import Dominio.Persona;
+import Negocio.LocalidadNegocio;
 import Negocio.PersonaNegocio;
 
 /**
@@ -95,6 +97,19 @@ public class servletProfesor extends HttpServlet {
 			int nuevoLegajo = negocioP.nuevoLegajo('P');
 			String json = new Gson().toJson(nuevoLegajo);
 			
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+		else if(request.getParameter("provincia") != null){
+			int IDProv = Integer.parseInt(request.getParameter("provincia"));
+			LocalidadNegocio negocioL = new LocalidadNegocio();
+			ArrayList<Localidad> listado = negocioL.listarLocalidad(IDProv);
+			String options = "";
+			for(Localidad l : listado) {
+				options += "<option value='" + l.getID() + "'> " + l.getNombre() + "</option>";
+			}
+			String json = new Gson().toJson(options);
 		    response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
