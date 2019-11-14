@@ -52,12 +52,27 @@ public class AccesoDatosManager {
 		return filas;
 	}
 	
+	public int executeAccionReturn(String query)
+	{
+		try
+		{
+			st= cn.createStatement();
+			return st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return -1;
+	
+	}
+	
 	public ResultSet executeConsulta(String query)
 	{
 		try
 		{
 			cn = DriverManager.getConnection(host+dbName+timeZone,user,pass);
-			Statement st = cn.createStatement();
+			st = cn.createStatement();
 			rs = st.executeQuery(query);
 		}
 		catch (Exception e)

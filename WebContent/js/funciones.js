@@ -69,7 +69,7 @@ function mostrarModal(){
 }
 
 function nuevoProfesor(){
-	$.post("servletProfesor",{"nuevo": "1"}, function(responseJson) {
+	$.post("servletProfesor",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
 	$("#ModalRegistro").modal('show');
@@ -82,7 +82,7 @@ function mostrarAlumnos(){
 function eliminarProfesor(legajo){
 	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
 		$("#Legajo").val(legajo);
-		$("#MensajeEliminar").html("¿Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
+		$("#MensajeEliminar").html("&#191Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
 	});
 	
 	$("#ModalEliminar").modal('show');

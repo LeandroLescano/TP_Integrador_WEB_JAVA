@@ -40,5 +40,26 @@ public class DomicilioNegocio {
 		
 		return null;
 	}
+	
+	public int agregarDomicilio(Domicilio d) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String agregar;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		agregar = "INSERT INTO DOMICILIOS (CALLE, IDLOCALIDAD, IDPROVINCIA)"
+				+ "VALUES ('"+ d.getCalle() + "', "+ d.getLocalidad().getID()+ ", " + d.getProvincia().getID() + ")";			
+		try {
+			accesoDatos.abrirConexion();
+			return accesoDatos.executeAccionReturn(agregar);
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}	
+	}
 		
 }

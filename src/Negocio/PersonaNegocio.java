@@ -208,6 +208,38 @@ public class PersonaNegocio {
 		}		
 	}
 	
+	public boolean agregarPersona(Persona p) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String agregar;
+		String FechaNac = p.getFechNac().toString();
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		if(p.getTipo().getID() == 1) {	
+			agregar = "INSERT INTO PROFESORES (APELLIDO, NOMBRE, IDDOMICILIO, IDTIPO, MAIL, TELEFONO, FECHANACIMIENTO) "
+ 					+ "VALUES ('"+p.getApellido() + "', '"+ p.getNombre() + "', " + p.getDomicilio().getID() + ", 1, '" + p.getMail() + "', '" + p.getTelefono() + "', '" + FechaNac + "')";
+		}
+		else {
+			agregar = "INSERT INTO ALUMNOS (APELLIDO, NOMBRE, IDDOMICILIO, IDTIPO, MAIL, TELEFONO, FECHANACIMIENTO) "
+ 					+ "VALUES ('"+p.getApellido() + "', '"+ p.getNombre() + "', " + p.getDomicilio().getID() + ", 2, '" + p.getMail() + "', '" + p.getTelefono() + "', '" + FechaNac + "')"; 
+		}
+		try {
+			accesoDatos.abrirConexion();
+			if(accesoDatos.executeAccion((agregar)) > 0){
+				return true;			
+			}
+			else{
+				return false;
+			}
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}		
+	}
 	
 	public int nuevoLegajo(char Tipo) {
 		try {

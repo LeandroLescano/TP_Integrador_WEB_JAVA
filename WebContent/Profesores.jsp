@@ -36,21 +36,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <form id="FormAgregar" method="post" action="servletProfesor">
                     <div class="modal-body">
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtLegajo" class="col-form-label">Legajo:</label>
-                                            <input type="text" readonly class="form-control" id="txtLegajo" placeholder="1000">
+                                            <input type="text" readonly class="form-control" name="txtLegajo" id="txtLegajo" placeholder="1000">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="txtMail" class="col-form-label">Mail:</label>
-                                            <input type="email" aria-describedby="emailHelp" class="form-control" id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
+                                            <input type="email" aria-describedby="emailHelp" class="form-control" name="txtMail" id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
                                         </div>
                                         <div class="form-group">
                                             <label for="txtProvincia" class="col-form-label">Provincia:</label>
-                                            <select id="txtProvincia" class="form-control">
+                                            <select id="txtProvincia" name="txtProvincia" class="form-control" tabindex="6">
 								 		 	<%
 		 	 		 							    ProvinciaNegocio negocioP = new ProvinciaNegocio();
 		 	 		 	 	 		 			   ArrayList<Provincia> prov = negocioP.listarProvincias();
@@ -66,15 +67,15 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtApellido" class="col-form-label">Apellido:</label>
-                                            <input type="text" class="form-control" id="txtApellido" placeholder="Gomez" tabindex="1">
+                                            <input type="text" class="form-control" name="txtApellido" id="txtApellido" placeholder="Gomez" tabindex="1">
                                         </div>
                                         <div class="form-group">
                                             <label for="txtTelefono" class="col-form-label">Telefono:</label>
-                                            <input type="text" class="form-control" id="txtTelefono" placeholder="12345678" tabindex="4" >
+                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="12345678" tabindex="4" >
                                         </div>
                                         <div class="form-group">
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
-                                            <select id="txtLocalidad" class="form-control">
+                                            <select id="txtLocalidad" name="txtLocalidad" class="form-control" tabindex="7">
 								 			 </select>
 
                                         </div>
@@ -82,23 +83,24 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtNombre" class="col-form-label">Nombre:</label>
-                                            <input type="text" class="form-control" id="txtNombre" placeholder="Juan" tabindex="2">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Juan" tabindex="2">
                                         </div>
                                         <div class="form-group">
                                             <label for="dtpFechNac" class="col-form-label">Fecha de nacimiento:</label>
-                                            <input type='text' class="form-control" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" />
+                                            <input type='text' class="form-control" name="dtpFechNac" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" />
                                         </div>
                                         <div class="form-group">
                                             <label for="txtCalle" class="col-form-label">Dirección:</label>
-                                            <input type="text" class="form-control" id="txtCalle" placeholder="Calle 123" tabindex="6">
+                                            <input type="text" class="form-control" name="txtCalle" id="txtCalle" placeholder="Calle 123" tabindex="8">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                     <div class="modal-footer">
                         <button type="button" id="btnCancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" id="btnAñadir" class="btn btn-primary" disabled tabindex="9">Añadir</button>
+                        <button type="submit" id="btnAñadir" name="btnAñadir" class="btn btn-primary" tabindex="9">Añadir</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -214,14 +216,21 @@ $(document).ready(function(){
 function mostrarToast(R){
 	if(R == "Eliminado"){
 		$("#toastTitle").html("Eliminado");
-		$("#toastMsj").html("Se ha eliminado el registro exitosamente.");
-		$(".toast").toast('show');	
+		$("#toastMsj").html("Se ha eliminado a un profesor exitosamente.");
+	}
+	else if (R == "Agregado"){
+		$("#toastTitle").html("Nuevo profesor");
+		$("#toastMsj").html("Se ha agregado a un profesor exitosamente.");
+	}
+	else if (R == "ErrorE"){
+		$("#toastTitle").html("Error");
+		$("#toastMsj").html("Ha ocurrido un error al momento de eliminar a un profesor.");
 	}
 	else{
 		$("#toastTitle").html("Error");
-		$("#toastMsj").html("Ha ocurrido un error al momento de eliminar el registro.");
-		$(".toast").toast('show');
+		$("#toastMsj").html("Ha ocurrido un error al momento de agregar a un profesor.");
 	}
+	$(".toast").toast('show');
 }
 
 </script>

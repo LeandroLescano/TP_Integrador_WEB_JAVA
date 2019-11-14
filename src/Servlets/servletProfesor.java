@@ -1,6 +1,8 @@
 package Servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
@@ -11,10 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dominio.Domicilio;
 import Dominio.Localidad;
 import Dominio.Persona;
+import Dominio.TipoPersona;
+import Negocio.DomicilioNegocio;
 import Negocio.LocalidadNegocio;
 import Negocio.PersonaNegocio;
+import Negocio.ProvinciaNegocio;
 
 /**
  * Servlet implementation class servletSeguro
@@ -65,10 +71,15 @@ public class servletProfesor extends HttpServlet {
 				}
 		}	
 
-		if(request.getAttribute("Result") != null)
+		if(request.getAttribute("Eliminar") != null)
 		{
-			request.setAttribute("ResultToast", request.getAttribute("Result") );
-			request.setAttribute("Result", null);
+			request.setAttribute("ResultToast", request.getAttribute("Eliminar") );
+			request.setAttribute("Eliminar", null);
+		}
+		else if(request.getAttribute("Agregar") != null)
+		{
+			request.setAttribute("ResultToast", request.getAttribute("Agregar") );
+			request.setAttribute("Agregar", null);
 		}
 		 request.setAttribute("tabla", tabla);
 	
@@ -81,6 +92,8 @@ public class servletProfesor extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// === DEOLVER TODOS LOS DATOS DE UN PROFESOR
+		
 		if(request.getParameter("legajo") != null){
 			
 			int legajo = Integer.parseInt(request.getParameter("legajo"));
@@ -92,7 +105,10 @@ public class servletProfesor extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
-		else if(request.getParameter("nuevo") != null){
+		
+		// === DEVOLVER NUEVO ID
+		
+		else if(request.getParameter("nuevoLegajo") != null){
 			PersonaNegocio negocioP = new PersonaNegocio();
 			int nuevoLegajo = negocioP.nuevoLegajo('P');
 			String json = new Gson().toJson(nuevoLegajo);
@@ -101,6 +117,44 @@ public class servletProfesor extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
+		
+		// === AGREGAR PROFESOR
+		
+		else if(request.getParameter("btnAñadir") != null){
+			LocalidadNegocio negocioL = new LocalidadNegocio();
+			ProvinciaNegocio negocioP = new ProvinciaNegocio();
+			DomicilioNegocio negocioD = new DomicilioNegocio();
+			PersonaNegocio negocioPer = new PersonaNegocio();
+			TipoPersona tp = new TipoPersona();
+			Domicilio nuevoD = new Domicilio();
+			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			nuevoD.setCalle(request.getParameter("txtCalle"));
+			nuevoD.setLocalidad(negocioL.obtenerLocalidad(Integer.parseInt(request.getParameter("txtLocalidad"))));
+			nuevoD.setProvincia(negocioP.obtenerProvincia(Integer.parseInt(request.getParameter("txtProvincia"))));
+			nuevoD.setID(negocioD.agregarDomicilio(nuevoD));
+			Persona nueva = new Persona();
+			nueva.setApellido(request.getParameter("txtApellido"));
+			nueva.setNombre(request.getParameter("txtNombre"));
+			nueva.setMail(request.getParameter("txtMail"));
+			nueva.setTelefono(request.getParameter("txtTelefono"));
+			nueva.setFechNac(LocalDate.parse(request.getParameter("dtpFechNac"), dateFormat));
+			tp.setID(1);
+			tp.setTipo("Profesor");
+			nueva.setTipo(tp);
+			nueva.setDomicilio(nuevoD);	
+			
+			if(negocioPer.agregarPersona(nueva)) {
+				request.setAttribute("Agregar", "Agregado");
+			}
+			else {
+				request.setAttribute("Agregar", "ErrorA");
+			}
+			
+			doGet(request, response);
+		}
+		
+		// === LISTAR LAS LOCALIDADES DE UNA DETERMINADA PROVINCIA
+		
 		else if(request.getParameter("provincia") != null){
 			int IDProv = Integer.parseInt(request.getParameter("provincia"));
 			LocalidadNegocio negocioL = new LocalidadNegocio();
@@ -114,14 +168,17 @@ public class servletProfesor extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		}
+		
+		// === ELIMINAR PROFESOR
+		
 		else if(request.getParameter("btnEliminar") != null){
 			int legajo = Integer.parseInt(request.getParameter("Legajo"));
 			PersonaNegocio negocioP = new PersonaNegocio();
 			if(negocioP.eliminarPersona(legajo, 'P')) {
-				request.setAttribute("Result", "Eliminado");
+				request.setAttribute("Eliminar", "Eliminado");
 			}
 			else {
-				request.setAttribute("Result", "Error");
+				request.setAttribute("Eliminar", "ErrorE");
 			}
 				
 			 doGet(request, response);
