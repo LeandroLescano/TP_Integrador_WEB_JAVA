@@ -92,7 +92,7 @@ public class servletProfesor extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// === DEOLVER TODOS LOS DATOS DE UN PROFESOR
+		// === DEVOLVER TODOS LOS DATOS DE UN PROFESOR
 		
 		if(request.getParameter("legajo") != null){
 			
@@ -118,37 +118,33 @@ public class servletProfesor extends HttpServlet {
 		    response.getWriter().write(json);
 		}
 		
-		// === AGREGAR PROFESOR
+		// === AGREGAR O MODIFICAR PROFESOR
 		
-		else if(request.getParameter("btnAñadir") != null){
-			LocalidadNegocio negocioL = new LocalidadNegocio();
-			ProvinciaNegocio negocioP = new ProvinciaNegocio();
-			DomicilioNegocio negocioD = new DomicilioNegocio();
+		else if(request.getParameter("btnAgregar") != null){
 			PersonaNegocio negocioPer = new PersonaNegocio();
-			TipoPersona tp = new TipoPersona();
-			Domicilio nuevoD = new Domicilio();
-			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			nuevoD.setCalle(request.getParameter("txtCalle"));
-			nuevoD.setLocalidad(negocioL.obtenerLocalidad(Integer.parseInt(request.getParameter("txtLocalidad"))));
-			nuevoD.setProvincia(negocioP.obtenerProvincia(Integer.parseInt(request.getParameter("txtProvincia"))));
-			nuevoD.setID(negocioD.agregarDomicilio(nuevoD));
-			Persona nueva = new Persona();
-			nueva.setApellido(request.getParameter("txtApellido"));
-			nueva.setNombre(request.getParameter("txtNombre"));
-			nueva.setMail(request.getParameter("txtMail"));
-			nueva.setTelefono(request.getParameter("txtTelefono"));
-			nueva.setFechNac(LocalDate.parse(request.getParameter("dtpFechNac"), dateFormat));
-			tp.setID(1);
-			tp.setTipo("Profesor");
-			nueva.setTipo(tp);
-			nueva.setDomicilio(nuevoD);	
-			
-			if(negocioPer.agregarPersona(nueva)) {
-				request.setAttribute("Agregar", "Agregado");
+			if(request.getParameter("btnAgregar").equals("Agregar")) {				
+				Persona nueva = new Persona();
+				cargarDatos(nueva, request, 'A');
+				
+				if(negocioPer.agregarPersona(nueva)) {
+					request.setAttribute("Agregar", "Agregado");
+				}
+				else {
+					request.setAttribute("Agregar", "ErrorA");
+				}
 			}
 			else {
-				request.setAttribute("Agregar", "ErrorA");
-			}
+				Persona modif = negocioPer.obtenerPersona(Integer.parseInt(request.getParameter("txtLegajo")), 'P');
+				modif.setLegajo(Integer.parseInt(request.getParameter("txtLegajo")));
+				cargarDatos(modif, request, 'M');
+				
+				if(negocioPer.modificarPersona(modif)) {
+					request.setAttribute("Modificar", "Modificado");
+				}
+				else {
+					request.setAttribute("Modificar", "ErrorM");
+				}			
+			}	
 			
 			doGet(request, response);
 		}
@@ -182,8 +178,37 @@ public class servletProfesor extends HttpServlet {
 			}
 				
 			 doGet(request, response);
-		}	
+		}
 		
+		
+	}
+	
+	private void cargarDatos(Persona p, HttpServletRequest request, char Tipo) {
+		LocalidadNegocio negocioL = new LocalidadNegocio();
+		ProvinciaNegocio negocioP = new ProvinciaNegocio();
+		DomicilioNegocio negocioD = new DomicilioNegocio();
+		TipoPersona tp = new TipoPersona();
+		Domicilio dom = new Domicilio();
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		dom.setCalle(request.getParameter("txtCalle"));
+		dom.setLocalidad(negocioL.obtenerLocalidad(Integer.parseInt(request.getParameter("txtLocalidad"))));
+		dom.setProvincia(negocioP.obtenerProvincia(Integer.parseInt(request.getParameter("txtProvincia"))));
+		if(Tipo == 'A') {
+			dom.setID(negocioD.agregarDomicilio(dom));			
+		}
+		else {
+			dom.setID(p.getDomicilio().getID());
+			negocioD.modificarDomicilio(dom);
+		}
+		p.setApellido(request.getParameter("txtApellido"));
+		p.setNombre(request.getParameter("txtNombre"));
+		p.setMail(request.getParameter("txtMail"));
+		p.setTelefono(request.getParameter("txtTelefono"));
+		p.setFechNac(LocalDate.parse(request.getParameter("dtpFechNac"), dateFormat));
+		tp.setID(1);
+		tp.setTipo("Profesor");
+		p.setTipo(tp);
+		p.setDomicilio(dom);
 	}
 
 }

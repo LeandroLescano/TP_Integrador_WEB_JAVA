@@ -1,21 +1,37 @@
 
 function mostrarPersona(legajo, tipo){
-	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
+	var servlet;
+	if(tipo == "P"){	
+		servlet = "servletProfesor";
+	}
+	else{
+		servlet = "servletAlumno";
+	}
+	$.post(servlet ,{"legajo": legajo}, function(responseJson) {
 		$("#txtLegajo").val(legajo);
 		$("#txtNombre").val(responseJson.Nombre);
-		$("#dtpFechNac").val(responseJson.FechNac.day + "/" + responseJson.FechNac.month + "/" + responseJson.FechNac.year);
+		var dia = responseJson.FechNac.day;
+		var mes = responseJson.FechNac.month;
+		if(responseJson.FechNac.day < 10) dia = "0" + responseJson.FechNac.day;
+		if(responseJson.FechNac.month < 10) mes = "0" + responseJson.FechNac.month;
+		$("#dtpFechNac").val(dia + "/" + mes + "/" + responseJson.FechNac.year);
 		$("#txtMail").val(responseJson.Mail);
 		$("#txtTelefono").val(responseJson.Telefono);
 		$("#txtApellido").val(responseJson.Apellido);
 		$("#txtCalle").val(responseJson.Domicilio.Calle);
 		$("#txtProvincia").val(responseJson.Domicilio.Provincia.ID);
-		$("#txtLocalidad").val(responseJson.Domicilio.Localidad.Nombre);
+		listarLocalidades($("#txtProvincia").val());
+		//$("#txtLocalidad>option:eq("+responseJson.Domicilio.Localidad.ID+")").prop("selected", true);
+		var valueLocalidad =  responseJson.Domicilio.Localidad.ID;
+		$("#SelectLocalidad").val(responseJson.Domicilio.Localidad.ID)
+		$("#txtLocalidad option[value =' "+ valueLocalidad +"']").prop("selected", true);
 		if(tipo == "P"){
-			$("#TituloModal").html("Profesor/a: " + responseJson.Apellido + ", " + responseJson.Nombre);			
+			$("#TituloModal").html("Profesor/a: " + responseJson.Apellido + ", " + responseJson.Nombre);	
 		}
 		else{
 			$("#TituloModal").html("Alumno/a: " + responseJson.Apellido + ", " + responseJson.Nombre);
 		}
+
 	});
 	
 	$("#txtNombre").prop('disabled', true);
@@ -26,7 +42,7 @@ function mostrarPersona(legajo, tipo){
 	$("#txtCalle").prop('disabled', true);
 	$("#txtProvincia").prop('disabled', true);
 	$("#txtLocalidad").prop('disabled', true);
- 	$("#btnAñadir").prop('hidden', true);
+ 	$("#btnAgregar").prop('hidden', true);
 	
 	mostrarModal();
 }
@@ -42,9 +58,17 @@ function editarPersona(legajo, tipo){
 	$("#txtCalle").prop('disabled', false);
 	$("#txtProvincia").prop('disabled', false);
 	$("#txtLocalidad").prop('disabled', false);
- 	$("#btnAñadir").prop('hidden', false);
-	
-	mostrarModal();
+ 	$("#btnAgregar").prop('hidden', false);
+ 	
+ 	$("#btnAgregar").val("Modificar");
+ 	$("#btnAgregar").text("Modificar");
+ 	
+ 	
+ 	
+	$("#ModalRegistro").on('shown', function(){
+		$("#txtLocalidad option[value =' "+ $("#SelectLocalidad").val() +"']").prop("selected", true);
+		
+	}); 
 }
 
 function cantidadPaginas(){
@@ -72,6 +96,17 @@ function nuevoProfesor(){
 	$.post("servletProfesor",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
+ 	$("#btnAgregar").val("Agregar");
+ 	$("#btnAgregar").text("Agregar");
+	$("#ModalRegistro").modal('show');
+}
+
+function nuevoAlumno(){
+	$.post("servletAlumno",{"nuevoLegajo": "1"}, function(responseJson) {
+		$("#txtLegajo").val(responseJson);
+	});
+ 	$("#btnAgregar").val("Agregar");
+ 	$("#btnAgregar").text("Agregar");
 	$("#ModalRegistro").modal('show');
 }
 
@@ -83,6 +118,15 @@ function eliminarProfesor(legajo){
 	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
 		$("#Legajo").val(legajo);
 		$("#MensajeEliminar").html("&#191Desea eliminar al profesor: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
+	});
+	
+	$("#ModalEliminar").modal('show');
+}
+
+function eliminarAlumno(legajo){
+	$.post("servletAlumno",{"legajo": legajo}, function(responseJson) {
+		$("#Legajo").val(legajo);
+		$("#MensajeEliminar").html("&#191Desea eliminar al alumno: " + responseJson.Apellido + ", " + responseJson.Nombre + " - Legajo: "+ legajo +"?")
 	});
 	
 	$("#ModalEliminar").modal('show');

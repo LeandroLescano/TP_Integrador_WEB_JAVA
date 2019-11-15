@@ -98,7 +98,7 @@
                             </div>
                     <div class="modal-footer">
                         <button type="button" id="btnCancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="btnAñadir" name="btnAñadir" class="btn btn-primary" tabindex="9">Añadir</button>
+                        <button type="submit" id="btnAgregar" name="btnAgregar" class="btn btn-primary" tabindex="9">Añadir</button>
                     </div>
                     </form>
                 </div>
@@ -106,7 +106,7 @@
         </div>
         <!--  FIN MODAL  -->
 <body onresize="cantidadPaginas()">
-<jsp:include page="ModalEliminarPersona.html"></jsp:include>
+<jsp:include page="ModalEliminarProfesor.html"></jsp:include>
 <jsp:include page="NavBarAdmin.html"></jsp:include>
 <div style="height: 85vh">
 <div class="container" style="height: 100%">
@@ -138,6 +138,7 @@
 </div>
 </div>
 <jsp:include page="ToastResultado.html"></jsp:include>
+ <input type="hidden" id="SelectLocalidad" value="">
 </body>
 <script type="text/javascript">
 <%
@@ -206,6 +207,12 @@ $(document).ready(function(){
 	$('#myModal').on('shown.bs.modal', function () {
 	    $('#myInput').trigger('focus')
 	});
+	
+
+	$("#ModalRegistro").on('shown', function(){
+		$("#txtLocalidad option[value =' "+ $("#SelectLocalidad").val() +"']").prop("selected", true);
+		
+	}); 
 	
 	$("#txtProvincia").change(function() {
 		listarLocalidades($("#txtProvincia").val());

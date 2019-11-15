@@ -61,5 +61,26 @@ public class DomicilioNegocio {
 			accesoDatos.cerrarConexion();
 		}	
 	}
+	
+	public int modificarDomicilio(Domicilio d) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String modificar;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		modificar = "UPDATE DOMICILIOS SET CALLE = '"+ d.getCalle() + "', IDLOCALIDAD = "+ d.getLocalidad().getID()+ ", IDPROVINCIA =" + d.getProvincia().getID() + " WHERE ID = " + d.getID();		
+		try {
+			accesoDatos.abrirConexion();
+			return accesoDatos.executeAccionReturn(modificar);
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}	
+	}
+		
 		
 }

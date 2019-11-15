@@ -241,6 +241,39 @@ public class PersonaNegocio {
 		}		
 	}
 	
+	public boolean modificarPersona(Persona p) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String modificar;
+		String FechaNac = p.getFechNac().toString();
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		if(p.getTipo().getID() == 1) {	
+			modificar = "UPDATE PROFESORES SET APELLIDO='"+p.getApellido() + "', NOMBRE ='"+ p.getNombre() + "', IDDOMICILIO=" + p.getDomicilio().getID() + ", "
+					+ "MAIL='" + p.getMail() + "', TELEFONO='" + p.getTelefono() + "', FECHANACIMIENTO='" + FechaNac + "' WHERE LEGAJO = "+ p.getLegajo();
+		}
+		else {
+			modificar = "UPDATE ALUMNOS SET APELLIDO='"+p.getApellido() + "', NOMBRE ='"+ p.getNombre() + "', IDDOMICILIO=" + p.getDomicilio().getID() + ", "
+					+ "MAIL='" + p.getMail() + "', TELEFONO='" + p.getTelefono() + "', FECHANACIMIENTO='" + FechaNac + "' WHERE LEGAJO = "+ p.getLegajo(); 
+		}
+		try {
+			accesoDatos.abrirConexion();
+			if(accesoDatos.executeAccion((modificar)) > 0){
+				return true;			
+			}
+			else{
+				return false;
+			}
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}		
+	}
+	
 	public int nuevoLegajo(char Tipo) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
