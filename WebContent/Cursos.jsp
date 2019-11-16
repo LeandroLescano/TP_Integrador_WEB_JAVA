@@ -62,9 +62,9 @@
                                         <div class="form-group">
                                             <label for="txtAño" class="col-form-label">Año:</label>
                                             <select id="slAño" name="slAño" class="custom-select">
-									 		 	<option value="1" class="dropdown-item">2019</option>
-									 		 	<option value="2" class="dropdown-item">2018</option>
-									 		 	<option value="2" class="dropdown-item">2017</option> 
+									 		 	<option value="2019" class="dropdown-item">2019</option>
+									 		 	<option value="2018" class="dropdown-item">2018</option>
+									 		 	<option value="2017" class="dropdown-item">2017</option> 
 									 			 </select>
                                         </div>
                                     </div>
@@ -98,8 +98,8 @@
                                         <div class="form-group">
                                             <label for="slSemestre" class="col-form-label">Semestre:</label>
                                             <select name="slSemestre" class="custom-select">
-									 		 	<option value="1" class="dropdown-item">Primer</option> 
-									 		 	<option value="2" class="dropdown-item">Segundo</option>
+									 		 	<option value="Primer" class="dropdown-item">Primer</option> 
+									 		 	<option value="Segundo" class="dropdown-item">Segundo</option>
 								 			 </select>
                                         </div>
                                         <div class="form-group">
@@ -181,7 +181,7 @@
 	 		 	<option value="1" class="dropdown-item">Primer</option>
 	 		 	<option value="2" class="dropdown-item">Segundo</option> 
 	 			 </select></div>
-    <div class="col"><select id="slAño" name="slAño" class="custom-select">
+    <div class="col"><select id="slAñoF" name="slAñoF" class="custom-select">
 	 		 	<option value="-1" class="dropdown-item">Todos</option>
 	 		 	<option value="1" class="dropdown-item">2019</option>
 	 		 	<option value="2" class="dropdown-item">2018</option>
@@ -230,16 +230,16 @@ $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;
 	if(screenH < 615){
-		cantPags = 4;
+		cantPags = 3;
 	}
 	else if(screenH < 680){
-		cantPags = 5;
+		cantPags = 4;
 	}
 	else if(screenH < 740){
-		cantPags = 6;
+		cantPags = 5;
 	}
 	else{
-		cantPags = 7;
+		cantPags = 6;
 	}
 	
 	CurrentItem = document.getElementById("mnCursos");
@@ -307,9 +307,9 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#slAño").on( 'change', function () {
-		if($("#slAño").val() > -1){
-			$('#Gridview').DataTable().column(3).search( $("#slAño option:selected").text() ).draw();	
+	$("#slAñoF").on( 'change', function () {
+		if($("#slAñoF").val() > -1){
+			$('#Gridview').DataTable().column(3).search( $("#slAñoF option:selected").text() ).draw();	
 		}
 		else{
 			$('#Gridview').DataTable().column(3).search("").draw();		

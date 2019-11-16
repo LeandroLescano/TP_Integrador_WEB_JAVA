@@ -118,7 +118,7 @@ function nuevoCurso(){
 	$("#ModalRegistro").modal('show');	
 }
 
-function mostrarAlumnos(){
+function mostrarAlumnos(IDCurso){
 	$("#ModalAlumnosCurso").modal('show');
 }
 
