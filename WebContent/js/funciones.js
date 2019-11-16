@@ -110,6 +110,14 @@ function nuevoAlumno(){
 	$("#ModalRegistro").modal('show');
 }
 
+function nuevoCurso(){
+	$.post("servletCurso",{"nuevoID": "1"}, function(responseJson) {
+		$("#txtNumero").val(responseJson);
+	});
+
+	$("#ModalRegistro").modal('show');	
+}
+
 function mostrarAlumnos(){
 	$("#ModalAlumnosCurso").modal('show');
 }

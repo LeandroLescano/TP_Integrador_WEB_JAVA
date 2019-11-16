@@ -23,7 +23,7 @@ import Negocio.PersonaNegocio;
 import Negocio.ProvinciaNegocio;
 
 /**
- * Servlet implementation class servletSeguro
+ * Servlet implementation class servletProfesor
  */
 @WebServlet("/servletProfesor")
 public class servletProfesor extends HttpServlet {

@@ -130,7 +130,7 @@ public class PersonaNegocio {
 			while(rs.next())
 			{
 				Persona p = new Persona();
-				p.setLegajo(rs.getInt("ID"));
+				p.setLegajo(rs.getInt("Legajo"));
 				p.setApellido(rs.getString("Apellido"));
 				p.setNombre(rs.getString("Nombre"));
 				p.setFechNac(rs.getDate("FechaNacimiento").toLocalDate());

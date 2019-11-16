@@ -47,11 +47,13 @@
 
                                         <div class="form-group">
                                             <label for="txtMail" class="col-form-label">Mail:</label>
-                                            <input type="email" aria-describedby="emailHelp" class="form-control" name="txtMail" id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
+                                            <input type="email" aria-describedby="emailHelp" class="form-control" name="txtMail" required id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
                                         </div>
                                         <div class="form-group">
                                             <label for="txtProvincia" class="col-form-label">Provincia:</label>
                                             <select id="txtProvincia" name="txtProvincia" class="form-control" tabindex="6">
+                                            <!--<input list="Provincias-list" id="txtProvincia" value="" class="form-control">
+                                            <datalist id="Provincias-list">-->
 								 		 	<%
 		 	 		 							    ProvinciaNegocio negocioP = new ProvinciaNegocio();
 		 	 		 	 	 		 			   ArrayList<Provincia> prov = negocioP.listarProvincias();
@@ -61,7 +63,8 @@
 											   		<%
 		 	 		 	 	 		 			   }
 											   		%>
-								 			 </select>
+											   		</select>
+								 			<!--</datalist> --> 
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -77,7 +80,9 @@
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
                                             <select id="txtLocalidad" name="txtLocalidad" class="form-control" tabindex="7">
 								 			 </select>
-
+                                            <!--<input list="localidades-list" id="txtLocalidad" value="" class="form-control">
+                                            <datalist id="Localidades-list">
+								 			 </datalist>-->
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -217,6 +222,16 @@ $(document).ready(function(){
 	$("#txtProvincia").change(function() {
 		listarLocalidades($("#txtProvincia").val());
 		});
+	
+	//$("#txtProvincia").on("input", function(){
+	//	var options = $("#Provincias-list")[0].options;
+	//	for (var i=0;i<options.length;i++){
+	//	if (options[i].value == $(this).val()){
+	//		listarLocalidades($("#txtProvincia").attr('data-id'));
+	//		break;
+	//		}
+	//	}
+	//	});
 
 });
 

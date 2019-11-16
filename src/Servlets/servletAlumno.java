@@ -24,7 +24,7 @@ import Negocio.PersonaNegocio;
 import Negocio.ProvinciaNegocio;
 
 /**
- * Servlet implementation class servletSeguro
+ * Servlet implementation class servletAlumno
  */
 @WebServlet("/servletAlumno")
 public class servletAlumno extends HttpServlet {
