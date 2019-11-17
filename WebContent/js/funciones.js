@@ -119,6 +119,10 @@ function nuevoCurso(){
 }
 
 function mostrarAlumnos(IDCurso){
+	$.post("servletCurso",{"listarAlumnosCurso": IDCurso}, function(responseJson) {
+		$("#grillaAlumnosCurso").html(responseJson);
+	});
+	
 	$("#ModalAlumnosCurso").modal('show');
 }
 

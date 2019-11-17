@@ -150,6 +150,26 @@ public class servletCurso extends HttpServlet {
 			 doGet(request, response);
 		}
 		
+		// === LISTAR ALUMNOS POR CURSO
+		
+		else if (request.getParameter("listarAlumnosCurso") != null){
+			CursoNegocio negocioC = new CursoNegocio();
+			String tablaAlum = "";
+			int IDCurso = Integer.parseInt(request.getParameter("listarAlumnosCurso"));
+			ArrayList<Persona> listadoAlumnos = negocioC.listarAlumnosCurso(IDCurso);
+			for (Persona p : listadoAlumnos) {
+				tablaAlum += "<tr>" + 
+						"<th scope='row'>"+ p.getLegajo()+"</th>" + 
+						"<td>"+p.getApellido()+", " + p.getNombre()+"</td>" + 
+						"</tr>";
+			}
+			String json = new Gson().toJson(tablaAlum);
+			
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);	
+		}
+		
 		
 	}
 	

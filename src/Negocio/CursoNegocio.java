@@ -59,7 +59,6 @@ public class CursoNegocio {
 				c.setMateria(negocioM.obtenerMateria(rs.getInt("IDMateria")));
 				c.setProfesor(negocioP.obtenerPersona(rs.getInt("IDProfesor"), 'P'));
 				c.setSemestre(rs.getString("Semestre"));
-				c.setAlumnos(listarAlumnosCurso(c.getID()));
 				listado.add(c);
 			}
 			return listado;
@@ -108,7 +107,7 @@ public class CursoNegocio {
 		return null;
 	}
 	
-	private ArrayList<Persona> listarAlumnosCurso(int IDCurso) {
+	public ArrayList<Persona> listarAlumnosCurso(int IDCurso) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}
