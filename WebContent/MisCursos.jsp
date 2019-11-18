@@ -80,6 +80,15 @@
 </div>
 </body>
 <script type="text/javascript">
+<%
+String nombreProfesor = null;
+if(request.getAttribute("NombreP")!=null)
+{
+	nombreProfesor = (String)request.getAttribute("NombreP");
+	%> $("#NombreProfesor").html("<%=nombreProfesor%>")<%
+}		
+%>
+
 	$(document).ready(function(){
 		var screenH = window.innerHeight;
 		var cantPags;

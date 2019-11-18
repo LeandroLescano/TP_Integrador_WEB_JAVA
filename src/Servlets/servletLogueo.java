@@ -60,8 +60,7 @@ public class servletLogueo extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("IDProfesor", IDProfesor);
 				
-				 RequestDispatcher rd = request.getRequestDispatcher("/servletMisCursos");		 
-				 rd.forward(request, response);
+				 response.sendRedirect("/TP_Integrador_Lescano/servletMisCursos");
 			}
 		}
 		

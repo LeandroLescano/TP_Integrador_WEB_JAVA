@@ -46,6 +46,8 @@ public class servletMisCursos extends HttpServlet {
 		CursoNegocio negocioC = new CursoNegocio();
 		HttpSession session = request.getSession();
 		int IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());
+		PersonaNegocio negocioP = new PersonaNegocio();
+		String nombreProfesor = negocioP.obtenerNombre(IDProfesor, 'P');
 		ArrayList<Curso> listado = negocioC.listarCursos(IDProfesor);
 		String tabla = "";
 		for(Curso c : listado)
@@ -69,6 +71,7 @@ public class servletMisCursos extends HttpServlet {
 			request.setAttribute("ResultToast", request.getAttribute("Agregar") );
 			request.setAttribute("Agregar", null);
 		}
+		 request.setAttribute("NombreP", nombreProfesor);
 		 request.setAttribute("tabla", tabla);
 	
 		 RequestDispatcher rd = request.getRequestDispatcher("/MisCursos.jsp");		 
@@ -84,8 +87,6 @@ public class servletMisCursos extends HttpServlet {
 		// === LISTAR ALUMNOS POR CURSO
 		
 		if (request.getParameter("setIDCurso") != null) {
-//			HttpSession session = request.getSession();
-//			int IDProfesor =  (int) session.getAttribute("IDProfesor");
 			AlumnoNegocio negocioA = new AlumnoNegocio();
 			String tabla = "";
 			ArrayList<Alumno> listado = negocioA.listarAlumnos(Integer.parseInt(request.getParameter("setIDCurso"))); 

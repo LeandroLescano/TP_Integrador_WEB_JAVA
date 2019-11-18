@@ -178,6 +178,41 @@ public class PersonaNegocio {
 		return null;
 	}
 	
+	public String obtenerNombre(int ID, char Tipo) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String listar;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		if(Tipo == 'P') {
+			listar = "SELECT APELLIDO, NOMBRE FROM PROFESORES WHERE LEGAJO = " + ID;  
+		}
+		else {
+			listar = "SELECT APELLIDO, NOMBRE FROM ALUMNOS WHERE LEGAJO = " + ID; 
+		}
+		try {
+			accesoDatos.abrirConexion();
+			ResultSet rs = accesoDatos.executeConsulta(listar);
+			while(rs.next())
+			{
+				Persona p = new Persona();
+				p.setApellido(rs.getString("Apellido"));
+				p.setNombre(rs.getString("Nombre"));
+				return p.getApellido() + ", " + p.getNombre();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}
+		
+		return null;
+	}
+	
 	public boolean eliminarPersona(int ID, char Tipo) 
 	{
 		try {
