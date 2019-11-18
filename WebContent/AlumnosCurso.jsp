@@ -42,21 +42,14 @@
 	            </tr>
 	        </thead>
 	        <tbody id="grilla">
-	            <tr>
-			      <th scope="row">1000</th>
-			      <td>Perez, Juan</td>
-			      <td><input type="text" class="form-control border form-nota" value="4"></td>
-			      <td><input type="text" class="form-control border form-nota" value="8"></td>
-			      <td><input type="text" class="form-control border form-nota" value="10"></td>
-			      <td><input type="text" class="form-control border form-nota" value=""></td>
-			      <td><input type="text" class="form-control border form-nota" value="9"></td>
-				  <td>
-					<select class="custom-select" style="width: 200px; margin-top: 8px;">
-		 		 	<option value="0" class="dropdown-item">Regular</option> 
-		 		 	<option value="1" class="dropdown-item">Libre</option> 
-		 			 </select>
-				  </td>
-	   			 </tr>
+        		<%
+			String listadoAlumnos = null;
+			if(request.getAttribute("tabla")!=null)
+			{
+				listadoAlumnos = (String)request.getAttribute("tabla");
+			}		
+				%>
+		        <%=listadoAlumnos %>
 	        </tbody>
 	    </table>
   </form>

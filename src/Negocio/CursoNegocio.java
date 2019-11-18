@@ -68,7 +68,41 @@ public class CursoNegocio {
 		finally {
 			accesoDatos.cerrarConexion();
 		}
-		
+		return null;
+	}
+	
+	public ArrayList<Curso> listarCursos(int IDProfesor) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		PersonaNegocio negocioP = new PersonaNegocio();
+		MateriaNegocio negocioM = new MateriaNegocio();
+		ArrayList<Curso> listado = new ArrayList<Curso>();
+		String listar = "SELECT * FROM CURSOS WHERE IDPROFESOR = " + IDProfesor;
+		try {
+			accesoDatos.abrirConexion();
+			ResultSet rs = accesoDatos.executeConsulta(listar);
+			while(rs.next())
+			{
+				Curso c = new Curso();
+				c.setID(rs.getInt("ID"));
+				c.setAño(rs.getInt("Año"));
+				c.setMateria(negocioM.obtenerMateria(rs.getInt("IDMateria")));
+				c.setProfesor(negocioP.obtenerPersona(rs.getInt("IDProfesor"), 'P'));
+				c.setSemestre(rs.getString("Semestre"));
+				listado.add(c);
+			}
+			return listado;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}
 		return null;
 	}
 	

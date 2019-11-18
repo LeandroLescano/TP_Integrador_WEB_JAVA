@@ -50,18 +50,18 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" style="padding: 0px;" class="col-md-6">
                     <div id="login-box" style="padding: 0px;" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
+                        <form id="login-form" class="form" action="servletLogueo" method="post">
                             <h3 class="text-center fadeIn second">Iniciar sesión</h3>
                             <div class="form-group  fadeIn third">
-                                <label for="username">E-mail:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                <label for="txtEmail">E-mail:</label><br>
+                                <input type="text" name="txtEmail" id="txtEmail" class="form-control">
                             </div>
                             <div class="form-group  fadeIn fourth">
-                                <label for="password">Contraseña:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <label for="txtContraseña">Contraseña:</label><br>
+                                <input type="text" name="txtContraseña" id="txtContraseña" class="form-control">
                             </div>
                             <div class="form-group  fadeIn fourth">
-                                <input type="submit" name="submit" class="btn btn-primary btn-md" value="Ingresar">
+                                <input type="submit" name="btnIngresar" class="btn btn-primary btn-md" value="Ingresar">
                             </div>
                         </form>
                     </div>

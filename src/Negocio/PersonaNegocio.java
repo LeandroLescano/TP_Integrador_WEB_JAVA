@@ -304,4 +304,35 @@ public class PersonaNegocio {
 		}
 		return -1;	
 	}
+
+	public int validarIngreso(String email, String contra) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String Usuario;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		Usuario = "SELECT CONTRASEÑA, IDPROFESOR FROM USUARIOS WHERE EMAIL = '" + email + "'"; 
+		try {
+			accesoDatos.abrirConexion();
+			ResultSet rs = accesoDatos.executeConsulta(Usuario);
+			while(rs.next())
+			{
+				if(contra.equals(rs.getString("Contraseña"))) {
+					return rs.getInt("IDProfesor");
+				}
+				else {
+					return -1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}
+		return -1;
+	}
 }

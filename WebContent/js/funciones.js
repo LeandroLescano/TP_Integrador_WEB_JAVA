@@ -126,6 +126,11 @@ function mostrarAlumnos(IDCurso){
 	$("#ModalAlumnosCurso").modal('show');
 }
 
+function mostrarMisAlumnos(IDCurso){
+	$.post("servletMisCursos",{"setIDCurso": IDCurso}, function(responseJson) {
+	});
+}
+
 function eliminarProfesor(legajo){
 	$.post("servletProfesor",{"legajo": legajo}, function(responseJson) {
 		$("#Legajo").val(legajo);

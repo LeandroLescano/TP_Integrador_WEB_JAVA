@@ -11,10 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import Dominio.Alumno;
 import Dominio.Curso;
 import Dominio.Localidad;
 import Dominio.Persona;
+import Negocio.AlumnoNegocio;
 import Negocio.CursoNegocio;
 import Negocio.LocalidadNegocio;
 import Negocio.MateriaNegocio;
@@ -119,37 +122,6 @@ public class servletCurso extends HttpServlet {
 			doGet(request, response);
 		}
 		
-		// === LISTAR LAS LOCALIDADES DE UNA DETERMINADA PROVINCIA
-		
-		else if(request.getParameter("provincia") != null){
-			int IDProv = Integer.parseInt(request.getParameter("provincia"));
-			LocalidadNegocio negocioL = new LocalidadNegocio();
-			ArrayList<Localidad> listado = negocioL.listarLocalidad(IDProv);
-			String options = "";
-			for(Localidad l : listado) {
-				options += "<option value='" + l.getID() + "'> " + l.getNombre() + "</option>";
-			}
-			String json = new Gson().toJson(options);
-		    response.setContentType("application/json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(json);
-		}
-		
-		// === ELIMINAR PROFESOR
-		
-		else if(request.getParameter("btnEliminar") != null){
-			int legajo = Integer.parseInt(request.getParameter("Legajo"));
-			PersonaNegocio negocioP = new PersonaNegocio();
-			if(negocioP.eliminarPersona(legajo, 'P')) {
-				request.setAttribute("Eliminar", "Eliminado");
-			}
-			else {
-				request.setAttribute("Eliminar", "ErrorE");
-			}
-				
-			 doGet(request, response);
-		}
-		
 		// === LISTAR ALUMNOS POR CURSO
 		
 		else if (request.getParameter("listarAlumnosCurso") != null){
@@ -169,7 +141,6 @@ public class servletCurso extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);	
 		}
-		
 		
 	}
 	
