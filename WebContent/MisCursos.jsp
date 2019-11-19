@@ -93,16 +93,16 @@ if(request.getAttribute("NombreP")!=null)
 		var screenH = window.innerHeight;
 		var cantPags;
 		if(screenH < 615){
-			cantPags = 4;
+			cantPags = 3;
 		}
 		else if(screenH < 680){
-			cantPags = 5;
+			cantPags = 4;
 		}
 		else if(screenH < 740){
-			cantPags = 6;
+			cantPags = 5;
 		}
 		else{
-			cantPags = 7;
+			cantPags = 6;
 		}
 		
 		CurrentItem = document.getElementById("mnMisCursos");

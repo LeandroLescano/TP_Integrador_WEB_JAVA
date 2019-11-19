@@ -44,9 +44,9 @@
 	        <tbody id="grilla">
         		<%
 			String listadoAlumnos = null;
-			if(request.getAttribute("tabla")!=null)
+			if(request.getAttribute("tablaAlumnosCurso")!=null)
 			{
-				listadoAlumnos = (String)request.getAttribute("tabla");
+				listadoAlumnos = (String)request.getAttribute("tablaAlumnosCurso");
 			}		
 				%>
 		        <%=listadoAlumnos %>
@@ -61,16 +61,16 @@ $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;
 	if(screenH < 615){
-		cantPags = 4;
+		cantPags = 3;
 	}
 	else if(screenH < 680){
-		cantPags = 5;
+		cantPags = 4;
 	}
 	else if(screenH < 740){
-		cantPags = 6;
+		cantPags = 5;
 	}
 	else{
-		cantPags = 7;
+		cantPags = 6;
 	}
 
 

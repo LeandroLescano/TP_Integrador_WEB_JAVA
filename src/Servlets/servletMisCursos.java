@@ -45,7 +45,12 @@ public class servletMisCursos extends HttpServlet {
 		
 		CursoNegocio negocioC = new CursoNegocio();
 		HttpSession session = request.getSession();
-		int IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());
+		int IDProfesor = -1;
+		if(session.getAttribute("IDProfesor") == null) {
+			response.sendRedirect("/Inicio.jsp");
+		}
+		else {
+			IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());			
 		PersonaNegocio negocioP = new PersonaNegocio();
 		String nombreProfesor = negocioP.obtenerNombre(IDProfesor, 'P');
 		ArrayList<Curso> listado = negocioC.listarCursos(IDProfesor);
@@ -77,12 +82,12 @@ public class servletMisCursos extends HttpServlet {
 		 RequestDispatcher rd = request.getRequestDispatcher("/MisCursos.jsp");		 
 		 rd.forward(request, response);
 		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 
 		// === LISTAR ALUMNOS POR CURSO
 		
@@ -117,25 +122,14 @@ public class servletMisCursos extends HttpServlet {
 						"</td>" + 
 						" </tr>";
 			}
-			request.setAttribute("tabla", tabla);
+			request.setAttribute("tablaAlumnosCurso", tabla);
 			
-			 RequestDispatcher rd = request.getRequestDispatcher("/AlumnosCurso.jsp");		 
-			 rd.forward(request, response);
+			//response.sendRedirect("/TP_Integrador_Lescano/AlumnosCurso.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/AlumnosCurso.jsp");		 
+			rd.forward(request, response);
 		}
 		
 		
-	}
-	
-	private String[] cargarDatos(Curso c, HttpServletRequest request) {
-		MateriaNegocio negocioM = new MateriaNegocio();
-		PersonaNegocio negocioP = new PersonaNegocio();
-		c.setID(Integer.parseInt(request.getParameter("txtNumero")));
-		c.setAño(Integer.parseInt(request.getParameter("slAño")));
-		c.setMateria(negocioM.obtenerMateria(Integer.parseInt(request.getParameter("slMateria"))));
-		c.setProfesor(negocioP.obtenerPersona(Integer.parseInt(request.getParameter("slProfesor")), 'P'));
-		c.setSemestre(request.getParameter("slSemestre"));
-		String LegajosHidden = request.getParameter("LegajosAlumnos");
-		return LegajosHidden.split(",");		
 	}
 
 }
