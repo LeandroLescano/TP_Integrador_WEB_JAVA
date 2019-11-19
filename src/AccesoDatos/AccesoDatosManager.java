@@ -10,7 +10,7 @@ public class AccesoDatosManager {
 
 	public static String host = "jdbc:mysql://localhost:3306/";
 	public static String user = "root";
-	public static String pass = "ROOT";
+	public static String pass = "root";
 	public static String dbName = "gestionadministrativa";
 	public static String timeZone = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static Connection cn = null;

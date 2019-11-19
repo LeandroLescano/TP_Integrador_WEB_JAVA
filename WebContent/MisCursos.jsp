@@ -52,6 +52,7 @@
 	 			 </select></div>
 	</div>
 </div> 
+    <form id="FormAlumnos" method="post" action="servletMisCursos">
 	<div id="TableCursos">
 	 <table id="Gridview" class="table table-hover">
 	        <thead class="thead-dark">
@@ -76,6 +77,8 @@
 	        </tbody>
 	    </table>
     </div>
+	<input type="hidden" value="" name="CursoSelect" id="CursoSelect">
+    </form>
 </div>
 </div>
 </body>
@@ -110,6 +113,11 @@ if(request.getAttribute("NombreP")!=null)
 		$("#TableAlumnosCurso").hide();
 		$("#TituloAlumnos").hide();
 		$("#btnVolver").hide();
+		
+		$(".btn-primary").on("click", function(){
+			var button = $(this);
+			$("#CursoSelect").val(button.val());
+		});
 		
 		$('#Gridview').DataTable({
 			"ordering":false,

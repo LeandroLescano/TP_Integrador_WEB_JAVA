@@ -11,15 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import Dominio.Alumno;
 import Dominio.Curso;
-import Dominio.Localidad;
 import Dominio.Persona;
-import Negocio.AlumnoNegocio;
 import Negocio.CursoNegocio;
-import Negocio.LocalidadNegocio;
 import Negocio.MateriaNegocio;
 import Negocio.PersonaNegocio;
 

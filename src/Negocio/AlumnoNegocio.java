@@ -21,10 +21,8 @@ public class AlumnoNegocio {
 		AccesoDatosManager accesoDatos = new AccesoDatosManager();
 		PersonaNegocio negocioP = new PersonaNegocio();
 		ArrayList<Alumno> listado = new ArrayList<Alumno>();
-		String listar = "SELECT A.Legajo, A.NotaFinal, A.Situacion, A.Par1, A.Rec1, A.Par2, A.Rec2, AC.IDCurso FROM ALUMNOS AS A " + 
-				"INNER JOIN alumnos_x_curso AS AC ON AC.IDAlumno = A.LEGAJO " + 
-				"INNER JOIN cursos as C on C.ID = AC.IDCurso " + 
-				"WHERE IDCurso = " + IDCurso;
+		String listar = "SELECT IDAlumno, NotaFinal, Situacion, Par1, Rec1, Par2, Rec2, IDCurso FROM ALUMNOS_X_CURSO " + 
+						"WHERE IDCurso = " + IDCurso;
 		try {
 			accesoDatos.abrirConexion();
 			ResultSet rs = accesoDatos.executeConsulta(listar);
@@ -37,7 +35,7 @@ public class AlumnoNegocio {
 				a.setRecuperatorio2(rs.getFloat("Rec2"));
 				a.setNotaFinal(rs.getFloat("NotaFinal"));
 				a.setSituacion(rs.getString("Situacion"));
-				Persona p = negocioP.obtenerPersona(rs.getInt("Legajo"), 'A');
+				Persona p = negocioP.obtenerPersona(rs.getInt("IDAlumno"), 'A');
 				a.setApellido(p.getApellido());
 				a.setNombre(p.getNombre());
 				a.setDomicilio(p.getDomicilio());
