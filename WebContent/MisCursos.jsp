@@ -22,7 +22,6 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
-<meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
 <body>

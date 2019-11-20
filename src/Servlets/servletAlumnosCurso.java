@@ -9,12 +9,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import Dominio.Alumno;
 import Negocio.AlumnoNegocio;
+import Negocio.PersonaNegocio;
 
 /**
  * Servlet implementation class servletAlumnosCurso
@@ -35,57 +39,75 @@ public class servletAlumnosCurso extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int IDCurso = -1;	
 		HttpSession session = request.getSession();
-		IDCurso = Integer.parseInt((String) session.getAttribute("IDCurso"));
-		AlumnoNegocio negocioA = new AlumnoNegocio();
-		String tabla = "";
-		ArrayList<Alumno> listado = negocioA.listarAlumnos(IDCurso); 
-		for(Alumno a : listado) {
-			String Par1 = "", Par2 = "", Rec1 = "", Rec2 = "", NF = "";
-			String[] Notas = {Par1, Par2, Rec1, Rec2, NF};
-			Notas = chequearNotas(Notas, a);
-					
-			tabla += "<tr>" + 
-					"<th scope='row'>1000</th>" + 
-					"<td>"+ a.getApellido() +", " +a.getNombre()+"</td>" + 
-					"<td><input type='text' class='form-control border form-nota' value='"+Notas[0]+"'></td>" + 
-					"<td><input type='text' class='form-control border form-nota' value='"+Notas[1]+"'></td>" + 
-					"<td><input type='text' class='form-control border form-nota' value='"+Notas[2]+"'></td>" + 
-					"<td><input type='text' class='form-control border form-nota' value='"+Notas[3]+"'></td>" + 
-					"<td><input type='text' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
-					"<td>" +
-					"<select class='custom-select' style='width: 200px; margin-top: 8px;'>";
-					if(a.getSituacion() == "Regular") {
-						tabla +="<option value='0' class='dropdown-item'>Sin definir</option>" + 
-								"<option value='1' selected class='dropdown-item'>Regular</option>" + 
-								"<option value='2' class='dropdown-item'>Libre</option>"; 
-					}
-					else if(a.getSituacion() == "Libre"){
-						tabla +="<option value='0' class='dropdown-item'>Sin definir</option>" +
-								"<option value='0' class='dropdown-item'>Regular</option>" + 
-								"<option value='1' selected class='dropdown-item'>Libre</option>"; 
-					}
-					else {
-						tabla +="<option value='0' selected class='dropdown-item'>Sin definir</option>" +
-								"<option value='0' class='dropdown-item'>Regular</option>" + 
-								"<option value='1' class='dropdown-item'>Libre</option>"; 
-					}
-					tabla +="</select>" + 
-					"</td>" + 
-					" </tr>";
+		int IDProfesor = -1;
+		if(session.getAttribute("IDProfesor") == null) {
+			response.sendRedirect("/Inicio.jsp");
 		}
-		request.setAttribute("tablaAlumnosCurso", tabla);
-		
-		 RequestDispatcher rd = request.getRequestDispatcher("/AlumnosCurso.jsp");		 
-		 rd.forward(request, response);
+		else {
+			IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());			
+			PersonaNegocio negocioP = new PersonaNegocio();
+			
+			int IDCurso = -1;	
+			IDCurso = Integer.parseInt((String) session.getAttribute("IDCurso"));
+			AlumnoNegocio negocioA = new AlumnoNegocio();
+			String nombreProfesor = negocioP.obtenerNombre(IDProfesor, 'P');
+			String tabla = "";
+			ArrayList<Alumno> listado = negocioA.listarAlumnos(IDCurso); 
+			for(Alumno a : listado) {
+				String Par1 = "", Par2 = "", Rec1 = "", Rec2 = "", NF = "";
+				String[] Notas = {Par1, Par2, Rec1, Rec2, NF};
+				Notas = chequearNotas(Notas, a);
+						
+				tabla += "<tr>" + 
+						"<th scope='row'>1000</th>" + 
+						"<td>"+ a.getApellido() +", " +a.getNombre()+"</td>" + 
+						"<td><input type='text' class='form-control border form-nota' value='"+Notas[0]+"'></td>" + 
+						"<td><input type='text' class='form-control border form-nota' value='"+Notas[1]+"'></td>" + 
+						"<td><input type='text' class='form-control border form-nota' value='"+Notas[2]+"'></td>" + 
+						"<td><input type='text' class='form-control border form-nota' value='"+Notas[3]+"'></td>" + 
+						"<td><input type='text' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
+						"<td>" +
+						"<select class='custom-select' style='width: 200px; margin-top: 8px;'>";
+						if(a.getSituacion() == "Regular") {
+							tabla +="<option value='0' class='dropdown-item'>Sin definir</option>" + 
+									"<option value='1' selected class='dropdown-item'>Regular</option>" + 
+									"<option value='2' class='dropdown-item'>Libre</option>"; 
+						}
+						else if(a.getSituacion() == "Libre"){
+							tabla +="<option value='0' class='dropdown-item'>Sin definir</option>" +
+									"<option value='0' class='dropdown-item'>Regular</option>" + 
+									"<option value='1' selected class='dropdown-item'>Libre</option>"; 
+						}
+						else {
+							tabla +="<option value='0' selected class='dropdown-item'>Sin definir</option>" +
+									"<option value='0' class='dropdown-item'>Regular</option>" + 
+									"<option value='1' class='dropdown-item'>Libre</option>"; 
+						}
+						tabla +="</select>" + 
+						"</td>" + 
+						" </tr>";
+			}
+			request.setAttribute("tablaAlumnosCurso", tabla);
+			 request.setAttribute("NombreP", nombreProfesor);
+			 request.setAttribute("CursoActual", IDCurso);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/AlumnosCurso.jsp");		 
+			rd.forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("Notas") != null) {
+			String Notas = request.getParameter("Notas");
+			for(int x=1; x < 5; x++) {
+				Notas.toString();
+			}
+		}
 		
 	}
 	
