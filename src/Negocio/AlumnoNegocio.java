@@ -29,6 +29,7 @@ public class AlumnoNegocio {
 			while(rs.next())
 			{
 				Alumno a = new Alumno();
+				a.setLegajo(rs.getInt("IDAlumno"));
 				a.setParcial1(rs.getFloat("Par1"));
 				a.setParcial2(rs.getFloat("Par2"));
 				a.setRecuperatorio1(rs.getFloat("Rec1"));
@@ -54,6 +55,32 @@ public class AlumnoNegocio {
 		}
 		
 		return null;
+	}
+
+	public boolean cargarNotas(Alumno a, int IDCurso) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		String modificar;
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+			modificar = "UPDATE ALUMNOS_X_CURSO SET Par1="+ a.getParcial1() + ", Rec1="+ a.getRecuperatorio1() + ", Par2=" + a.getParcial2() + ", "
+						+ "Rec2=" + a.getRecuperatorio2() + ", NotaFinal=" + a.getNotaFinal() + ", SITUACION='" + a.getSituacion() + "' WHERE IDALUMNO = "+ a.getLegajo()
+						+ " AND IDCURSO = " + IDCurso; 
+		try {
+			accesoDatos.abrirConexion();
+			if(accesoDatos.executeAccion((modificar)) > 0){
+				return true;			
+			}
+			else{
+				return false;
+			}
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}	
 	}
 	
 //	public Alumno obtenerAlumno(int ID) {

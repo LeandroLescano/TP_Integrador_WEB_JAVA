@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import Dominio.Alumno;
 import Negocio.AlumnoNegocio;
@@ -42,7 +40,7 @@ public class servletAlumnosCurso extends HttpServlet {
 		HttpSession session = request.getSession();
 		int IDProfesor = -1;
 		if(session.getAttribute("IDProfesor") == null) {
-			response.sendRedirect("/Inicio.jsp");
+			response.sendRedirect("./Inicio.jsp");
 		}
 		else {
 			IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());			
@@ -60,15 +58,15 @@ public class servletAlumnosCurso extends HttpServlet {
 				Notas = chequearNotas(Notas, a);
 						
 				tabla += "<tr>" + 
-						"<th scope='row'>1000</th>" + 
+						"<th scope='row'>"+a.getLegajo()+"</th>" + 
 						"<td>"+ a.getApellido() +", " +a.getNombre()+"</td>" + 
-						"<td><input type='text' class='form-control border form-nota' value='"+Notas[0]+"'></td>" + 
-						"<td><input type='text' class='form-control border form-nota' value='"+Notas[1]+"'></td>" + 
-						"<td><input type='text' class='form-control border form-nota' value='"+Notas[2]+"'></td>" + 
-						"<td><input type='text' class='form-control border form-nota' value='"+Notas[3]+"'></td>" + 
-						"<td><input type='text' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
+						"<td><input type='text' name='Par1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[0]+"'></td>" + 
+						"<td><input type='text' name='Rec1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[1]+"'></td>" + 
+						"<td><input type='text' name='Par2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[2]+"'></td>" + 
+						"<td><input type='text' name='Rec2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[3]+"'></td>" + 
+						"<td><input type='text' name='NotF-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
 						"<td>" +
-						"<select class='custom-select' style='width: 200px; margin-top: 8px;'>";
+						"<select class='custom-select' name='Situ-"+a.getLegajo()+"'  style='width: 200px; margin-top: 8px;'>";
 						if(a.getSituacion() == "Regular") {
 							tabla +="<option value='0' class='dropdown-item'>Sin definir</option>" + 
 									"<option value='1' selected class='dropdown-item'>Regular</option>" + 
@@ -102,12 +100,41 @@ public class servletAlumnosCurso extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getParameter("Notas") != null) {
-			String Notas = request.getParameter("Notas");
-			for(int x=1; x < 5; x++) {
-				Notas.toString();
+		if(request.getParameter("btnCargar") != null) {
+			int IDCurso = -1;	
+			HttpSession session = request.getSession();
+			IDCurso = Integer.parseInt((String) session.getAttribute("IDCurso"));
+			AlumnoNegocio negocioA = new AlumnoNegocio();
+			ArrayList<Alumno> listado = negocioA.listarAlumnos(IDCurso);
+			for(Alumno a : listado) {
+				Alumno aCargar = cargarDatos(a.getLegajo(), request);
+				aCargar.setLegajo(a.getLegajo());
+				if(negocioA.cargarNotas(aCargar, IDCurso)) {
+					
+				}
 			}
+			
+			doGet(request, response);
 		}
+		
+	}
+	
+	private Alumno cargarDatos(int Legajo, HttpServletRequest request) {
+		Alumno a = new Alumno();
+		if(request.getParameter("Par1-"+Legajo) != null && request.getParameter("Par1-"+Legajo).length() > 0)
+				a.setParcial1(Float.parseFloat(request.getParameter("Par1-"+Legajo)));
+		if(request.getParameter("Par2-"+Legajo) != null && request.getParameter("Par2-"+Legajo).length() > 0)
+			a.setParcial2(Float.parseFloat(request.getParameter("Par2-"+Legajo)));
+		if(request.getParameter("Rec1-"+Legajo) != null && request.getParameter("Rec1-"+Legajo).length() > 0)
+			a.setRecuperatorio1(Float.parseFloat(request.getParameter("Rec1-"+Legajo)));
+		if(request.getParameter("Rec2-"+Legajo) != null && request.getParameter("Rec2-"+Legajo).length() > 0)
+			a.setRecuperatorio2(Float.parseFloat(request.getParameter("Rec2-"+Legajo)));
+		if(request.getParameter("NotF-"+Legajo) != null && request.getParameter("NotF-"+Legajo).length() > 0)
+			a.setNotaFinal(Float.parseFloat(request.getParameter("NotF-"+Legajo)));
+		if(request.getParameter("Situ-"+Legajo) != null && request.getParameter("Situ-"+Legajo).length() > 0)
+			a.setSituacion(request.getParameter("Situ-"+Legajo));
+		
+		return a;
 		
 	}
 	
@@ -119,18 +146,18 @@ public class servletAlumnosCurso extends HttpServlet {
 			Notas[0] = String.valueOf(a.getParcial1());
 		}
 		
-		if(a.getParcial2() % 1 == 0 && a.getParcial2() > 0) {
-			Notas[1] = String.valueOf((int) a.getParcial2());
-		}
-		else if (a.getParcial2() > 0){
-			Notas[1] = String.valueOf(a.getParcial2());
-		}
-		
 		if(a.getRecuperatorio1() % 1 == 0 && a.getRecuperatorio1() > 0) {
-			Notas[2] = String.valueOf((int) a.getRecuperatorio1());
+			Notas[1] = String.valueOf((int) a.getRecuperatorio1());
 		}
 		else if (a.getRecuperatorio1() > 0){
-			Notas[2] = String.valueOf(a.getRecuperatorio1());
+			Notas[1] = String.valueOf(a.getRecuperatorio1());
+		}
+		
+		if(a.getParcial2() % 1 == 0 && a.getParcial2() > 0) {
+			Notas[2] = String.valueOf((int) a.getParcial2());
+		}
+		else if (a.getParcial2() > 0){
+			Notas[2] = String.valueOf(a.getParcial2());
 		}
 		
 		if(a.getRecuperatorio2() % 1 == 0 && a.getRecuperatorio2() > 0) {

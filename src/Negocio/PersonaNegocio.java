@@ -276,8 +276,7 @@ public class PersonaNegocio {
 		}		
 	}
 	
-	public boolean modificarPersona(Persona p) 
-	{
+	public boolean modificarPersona(Persona p) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}

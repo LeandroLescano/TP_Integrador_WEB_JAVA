@@ -35,7 +35,7 @@
 	<h2 id="TitleCurso">Curso X - Alumnos </h2>
 </div>     
 <form id="FormNotas" method="post" action="servletAlumnosCurso">
-	<input class="btn btn-primary" value="Cargar notas" name="btnCargar" onclick="cargarNotas()" style="float: right; margin-bottom: 5px;">
+	<input type="submit" class="btn btn-primary" value="Cargar notas" name="btnCargar" style="float: right; margin-bottom: 5px;">
 	<table id="GridAlumnos" class="table table-hover">
 	        <thead class="thead-dark">
 	            <tr>
