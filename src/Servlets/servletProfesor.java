@@ -53,14 +53,6 @@ public class servletProfesor extends HttpServlet {
 		String tabla = "";
 		for(Persona p : listado)
 		{
-//				tabla += "<tr>" + 
-//			   	"<th class='thID' scope='row'>" + p.getLegajo() + "</th>" + 
-//			   "<td class ='tdDesc'>" + p.getApellido() + ", " + p.getNombre()  + "</td>" + 
-//			      "<td><input type='text' class='form-control border' value='10' style='width: 40px; padding: 5px;'></td>" + 
-//				  "<td><select name='tipos' class='custom-select' style='width: 200px; margin-top: 8px;'>" +
-//		 		 	"<option value='0' class='dropdown-item'>Regular</option>" + 
-//		 		 	"<option value='1' class='dropdown-item'>Libre</option>" + 
-//		 			 "/select></td></tr>";
 				if(p.isEstado())
 				{				
 		            tabla += "<tr>" + 
@@ -173,6 +165,19 @@ public class servletProfesor extends HttpServlet {
 		    response.getWriter().write(json);
 		}
 		
+		else if(request.getParameter("Localidades") != null){
+			LocalidadNegocio negocioL = new LocalidadNegocio();
+			ArrayList<Localidad> listado = negocioL.listarLocalidades();
+			String options = "";
+			for(Localidad l : listado) {
+				options += "<option value='" + l.getID() + "'> " + l.getNombre() + "</option>";
+			}
+			String json = new Gson().toJson(options);
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+
 		// === ELIMINAR PROFESOR
 		
 		else if(request.getParameter("btnEliminar") != null){

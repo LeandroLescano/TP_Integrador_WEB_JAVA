@@ -25,6 +25,16 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+<%
+session = request.getSession();
+if(session.getAttribute("IDProfesor") == null) {
+	response.sendRedirect("./Inicio.jsp");
+}
+
+if(request.getAttribute("tabla") ==null){
+	response.sendRedirect("./servletMisCursos");
+}
+%>
 </head>
 <body onresize="cantidadPaginas()">
 <jsp:include page="NavBarProfesor.html"></jsp:include>

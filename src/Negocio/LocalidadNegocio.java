@@ -69,4 +69,36 @@ public class LocalidadNegocio {
 		
 		return null;
 	}
+	
+	public ArrayList<Localidad> listarLocalidades(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		AccesoDatosManager accesoDatos = new AccesoDatosManager();
+		ArrayList<Localidad> listado = new ArrayList<Localidad>();
+		String listar = "SELECT DISTINCT L.ID, L.NOMBRE from domicilios as D " + 
+				"INNER JOIN LOCALIDADES AS L ON L.ID = D.IDLocalidad";
+		try {
+			accesoDatos.abrirConexion();
+			ResultSet rs = accesoDatos.executeConsulta(listar);
+			while(rs.next())
+			{
+				Localidad l = new Localidad();
+				l.setID(rs.getInt("id"));
+				l.setNombre(rs.getString("nombre"));
+				listado.add(l);
+			}
+			return listado;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			accesoDatos.cerrarConexion();
+		}
+		
+		return null;
+	}
 }

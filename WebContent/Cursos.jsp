@@ -5,6 +5,7 @@
 <%@page import="Negocio.PersonaNegocio" %>
 <%@page import="Negocio.CursoNegocio" %>
 <%@page import="Negocio.MateriaNegocio" %>
+<%@page import="javax.servlet.http.HttpServletResponse" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -27,6 +28,17 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+<%
+session = request.getSession();
+if(session.getAttribute("MailUsuario") == null) {
+	response.sendRedirect("./Inicio.jsp");
+}
+
+if(request.getAttribute("tabla") == null){
+	response.sendRedirect("./servletCurso");
+}
+
+%>
 </head>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -88,7 +100,9 @@
 									    	PersonaNegocio negocioP = new PersonaNegocio();
 										   	ArrayList<Persona> profesores = negocioP.listarPersonas('P');
 									  	 	for (Persona p : profesores){
-												%><option value="<%=p.getLegajo()%>"><%=p.getLegajo()%> - <%=p.getApellido()%>, <%=p.getNombre()%> </option><%
+									  	 		if(p.isEstado()){
+													%><option value="<%=p.getLegajo()%>"><%=p.getLegajo()%> - <%=p.getApellido()%>, <%=p.getNombre()%> </option><%		
+									  	 		}
 										   	}
 									 		%> 
 								 			 </select>
@@ -123,12 +137,14 @@
 									    	negocioP = new PersonaNegocio();
 										   	ArrayList<Persona> alumnos = negocioP.listarPersonas('A');
 									  	 	for (Persona a : alumnos){
+									  	 		if(a.isEstado()){
 									            %><tr>
 											      <th scope="row"><%=a.getLegajo() %></th>
 											      <td><%=a.getApellido()%>, <%=a.getNombre() %></td>
 									   			 </tr>
 												<%
-										   	}
+										   		}
+									  	 	}
 									 		%> 
 							        </tbody>
 							    </table>
@@ -193,8 +209,10 @@
 		    	negocioP = new PersonaNegocio();
 			   	profesores = negocioP.listarPersonas('P');
 		  	 	for (Persona p : profesores){
+	  	 		if(p.isEstado()){
 					%><option value="<%=p.getLegajo()%>"><%=p.getLegajo()%> - <%=p.getApellido()%>, <%=p.getNombre()%> </option><%
-			   	}
+			   		}
+ 	  	 		}
 		 		%> 
 	 			 </select></div>
 	 			  <div class="col"><button class="btn btn-primary btn-add" onclick="nuevoCurso()" >Añadir curso</button></div>	
@@ -217,7 +235,7 @@
 			if(request.getAttribute("tabla")!=null)
 			{
 				listadoCursos = (String)request.getAttribute("tabla");
-			}		
+			}
 		%>
         <%=listadoCursos%>
         </tbody>
@@ -228,12 +246,10 @@
 <script type="text/javascript">
 <%
 String mailUsuario = null;
-if(request.getAttribute("Mail")!=null)
-{
+if(request.getAttribute("Mail")!=null){
 	mailUsuario = (String)request.getAttribute("Mail");
 	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
-	
-}		
+}
 %>
 
 $(document).ready(function(){

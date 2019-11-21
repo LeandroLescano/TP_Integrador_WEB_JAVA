@@ -1,8 +1,10 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="Dominio.Persona" %>
 <%@page import="Dominio.Provincia" %>
+<%@page import="Dominio.Localidad" %>
 <%@page import="Negocio.PersonaNegocio" %>
 <%@page import="Negocio.ProvinciaNegocio" %>
+<%@page import="Negocio.LocalidadNegocio" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,6 +27,17 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+<%
+session = request.getSession();
+if(session.getAttribute("MailUsuario") == null) {
+	response.sendRedirect("./Inicio.jsp");
+}
+
+if(request.getAttribute("tabla") ==null){
+	response.sendRedirect("./servletProfesor");
+}
+
+%>
 </head>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -79,6 +92,15 @@
                                         <div class="form-group">
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
                                             <select id="txtLocalidad" name="txtLocalidad" class="form-control" tabindex="7">
+                                            							 		 	<%
+		 	 		 							    LocalidadNegocio negocioL = new LocalidadNegocio();
+		 	 		 	 	 		 			   ArrayList<Localidad> loc = negocioL.listarLocalidades();
+		 	 		 	 	 		 			   for (Localidad l : loc)
+		 	 		 	 	 		 			   {
+							 	 		 			%><option value="<%=l.getID()%>"> <%=l.getNombre()%> </option>
+											   		<%
+		 	 		 	 	 		 			   }
+											   		%>
 								 			 </select>
                                             <!--<input list="localidades-list" id="txtLocalidad" value="" class="form-control">
                                             <datalist id="Localidades-list">
@@ -143,7 +165,6 @@
 </div>
 </div>
 <jsp:include page="ToastResultado.html"></jsp:include>
- <input type="hidden" id="SelectLocalidad" value="">
 </body>
 <script type="text/javascript">
 <%
@@ -216,10 +237,6 @@ $(document).ready(function(){
 	 	}
 	});
 
-	//$('#myModal').on('shown.bs.modal', function () {
-	//    $('#myInput').trigger('focus')
-	//});
-	
 
 	$("#ModalRegistro").on('shown', function(){
 		$("#txtLocalidad option[value =' "+ $("#SelectLocalidad").val() +"']").prop("selected", true);
@@ -229,17 +246,17 @@ $(document).ready(function(){
 	$("#txtProvincia").change(function() {
 		listarLocalidades($("#txtProvincia").val());
 		});
-	
-	//$("#txtProvincia").on("input", function(){
-	//	var options = $("#Provincias-list")[0].options;
-	//	for (var i=0;i<options.length;i++){
-	//	if (options[i].value == $(this).val()){
-	//		listarLocalidades($("#txtProvincia").attr('data-id'));
-	//		break;
-	//		}
-	//	}
-	//	});
 
+	$("#ModalRegistro").on("hidden.bs.modal", function(){
+		listarLocalidadesUsadas();
+	});
+	
+	$("#txtLocalidad").focus(function(){
+		var ValueActual = $("#txtLocalidad").val();
+		listarLocalidades($("#txtProvincia").val());	
+		$("#txtLocalidad").val(ValueActual);
+	});
+	
 });
 
 function mostrarToast(R){

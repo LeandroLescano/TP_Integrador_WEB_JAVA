@@ -3,6 +3,8 @@
 <%@page import="Dominio.Provincia" %>
 <%@page import="Negocio.PersonaNegocio" %>
 <%@page import="Negocio.ProvinciaNegocio" %>
+<%@page import="Dominio.Localidad" %>
+<%@page import="Negocio.LocalidadNegocio" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,6 +27,17 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+<%
+session = request.getSession();
+if(session.getAttribute("MailUsuario") == null) {
+	response.sendRedirect("./Inicio.jsp");
+}
+
+if(request.getAttribute("tabla") ==null){
+	response.sendRedirect("./servletAlumno");
+}
+
+%>
 </head>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -76,6 +89,15 @@
                                         <div class="form-group">
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
                                             <select id="txtLocalidad" name="txtLocalidad" class="form-control" tabindex="7">
+                                            <%
+	 	 		 							    LocalidadNegocio negocioL = new LocalidadNegocio();
+	 	 		 	 	 		 			   ArrayList<Localidad> loc = negocioL.listarLocalidades();
+	 	 		 	 	 		 			   for (Localidad l : loc)
+	 	 		 	 	 		 			   {
+						 	 		 			%><option value="<%=l.getID()%>"> <%=l.getNombre()%> </option>
+										   		<%
+	 	 		 	 	 		 			   }
+									   		%>
 								 			 </select>
 
                                         </div>
@@ -211,8 +233,8 @@ $(document).ready(function(){
 	});
 	
 
-	$('#myModal').on('shown.bs.modal', function () {
-	    $('#myInput').trigger('focus')
+	$("#ModalRegistro").on("hidden.bs.modal", function(){
+		listarLocalidadesUsadas();
 	});
 	
 

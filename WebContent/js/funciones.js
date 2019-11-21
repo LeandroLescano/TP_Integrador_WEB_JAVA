@@ -7,6 +7,8 @@ function mostrarPersona(legajo, tipo){
 	else{
 		servlet = "servletAlumno";
 	}
+	var valueLocalidad;
+	
 	$.post(servlet ,{"legajo": legajo}, function(responseJson) {
 		$("#txtLegajo").val(legajo);
 		$("#txtNombre").val(responseJson.Nombre);
@@ -20,11 +22,7 @@ function mostrarPersona(legajo, tipo){
 		$("#txtApellido").val(responseJson.Apellido);
 		$("#txtCalle").val(responseJson.Domicilio.Calle);
 		$("#txtProvincia").val(responseJson.Domicilio.Provincia.ID);
-		listarLocalidades($("#txtProvincia").val());
-		//$("#txtLocalidad>option:eq("+responseJson.Domicilio.Localidad.ID+")").prop("selected", true);
-		var valueLocalidad =  responseJson.Domicilio.Localidad.ID;
-		$("#SelectLocalidad").val(responseJson.Domicilio.Localidad.ID)
-		$("#txtLocalidad option[value =' "+ valueLocalidad +"']").prop("selected", true);
+		$("#txtLocalidad").val(responseJson.Domicilio.Localidad.ID);
 		if(tipo == "P"){
 			$("#TituloModal").html("Profesor/a: " + responseJson.Apellido + ", " + responseJson.Nombre);	
 		}
@@ -34,14 +32,7 @@ function mostrarPersona(legajo, tipo){
 
 	});
 	
-	$("#txtNombre").prop('disabled', true);
-	$("#dtpFechNac").prop('disabled', true);
-	$("#txtMail").prop('disabled', true);
-	$("#txtTelefono").prop('disabled', true);
-	$("#txtApellido").prop('disabled', true);
-	$("#txtCalle").prop('disabled', true);
-	$("#txtProvincia").prop('disabled', true);
-	$("#txtLocalidad").prop('disabled', true);
+	deshabilitarCampos();
  	$("#btnAgregar").prop('hidden', true);
 	
 	mostrarModal();
@@ -50,14 +41,7 @@ function mostrarPersona(legajo, tipo){
 function editarPersona(legajo, tipo){
 	mostrarPersona(legajo, tipo);
 	
-	$("#txtNombre").prop('disabled', false);
-	$("#dtpFechNac").prop('disabled', false);
-	$("#txtMail").prop('disabled', false);
-	$("#txtTelefono").prop('disabled', false);
-	$("#txtApellido").prop('disabled', false);
-	$("#txtCalle").prop('disabled', false);
-	$("#txtProvincia").prop('disabled', false);
-	$("#txtLocalidad").prop('disabled', false);
+	habilitarCampos();
  	$("#btnAgregar").prop('hidden', false);
  	
  	$("#btnAgregar").val("Modificar");
@@ -93,20 +77,28 @@ function mostrarModal(){
 }
 
 function nuevoProfesor(){
+	listarLocalidades(1);
+	habilitarCampos();
+	limpiarCampos();
 	$.post("servletProfesor",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
+	$("#TituloModal").html("A&#241adir profesor");
 	$("#ModalRegistro").modal('show');
 }
 
 function nuevoAlumno(){
+	listarLocalidades(1);
+	habilitarCampos();
+	limpiarCampos();
 	$.post("servletAlumno",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
+	$("#TituloModal").html("A&#241adir alumno");
 	$("#ModalRegistro").modal('show');
 }
 
@@ -180,4 +172,44 @@ function listarLocalidades(idProv){
 	$.post("servletProfesor",{"provincia": idProv}, function(responseJson) {
 		$("#txtLocalidad").html(responseJson);
 	});
+}
+
+function listarLocalidadesUsadas(){
+	$.post("servletProfesor",{"Localidades": 1}, function(responseJson) {
+		$("#txtLocalidad").html(responseJson);
+	});
+}
+
+function habilitarCampos(){
+	$("#txtNombre").prop('disabled', false);
+	$("#dtpFechNac").prop('disabled', false);
+	$("#txtMail").prop('disabled', false);
+	$("#txtTelefono").prop('disabled', false);
+	$("#txtApellido").prop('disabled', false);
+	$("#txtCalle").prop('disabled', false);
+	$("#txtProvincia").prop('disabled', false);
+	$("#txtLocalidad").prop('disabled', false);
+}
+
+function deshabilitarCampos(){
+	$("#txtNombre").prop('disabled', true);
+	$("#dtpFechNac").prop('disabled', true);
+	$("#txtMail").prop('disabled', true);
+	$("#txtTelefono").prop('disabled', true);
+	$("#txtApellido").prop('disabled', true);
+	$("#txtCalle").prop('disabled', true);
+	$("#txtProvincia").prop('disabled', true);
+	$("#txtLocalidad").prop('disabled', true);
+}
+
+function limpiarCampos(){
+	$("#txtNombre").val('');
+	$("#dtpFechNac").val('');
+	$("#txtMail").val('');
+	$("#txtTelefono").val('');
+	$("#txtApellido").val('');
+	$("#txtCalle").val('');
+	$("#txtProvincia").val(1);
+	$("#txtLocalidad").val('');
+	
 }
