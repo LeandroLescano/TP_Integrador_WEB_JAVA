@@ -51,8 +51,14 @@ public class servletLogueo extends HttpServlet {
 			}
 			else if(IDUsuario == 0) {
 				session.setAttribute("MailUsuario", Email);
-				response.sendRedirect("./servletCurso");
+				response.sendRedirect("./servletProfesor");
 			}
+		}
+		if(request.getParameter("btnSalir") != null) {
+			HttpSession session = request.getSession();
+			session.removeAttribute("IDProfesor");
+			session.removeAttribute("MailUsuario");
+			response.sendRedirect("./Inicio.jsp");
 		}
 		
 		

@@ -55,7 +55,7 @@ public class servletCurso extends HttpServlet {
 		      "<td>" + c.getSemestre() + "</td>" +
 		      "<td>" + c.getAño() + "</td>"+ 
 		      "<td>" + c.getProfesor().getLegajo() + " - " + c.getProfesor().getApellido() + ", " +  c.getProfesor().getNombre() +"</td>" + 
-		      "<td><a href='' onclick='mostrarAlumnos("+c.getID()+")' class='btn btn-primary'>Ver alumnos</a></td>" +
+		      "<td><button onclick='mostrarAlumnos("+c.getID()+")' data-toggle='modal' class='btn btn-primary'>Ver alumnos</button></td>" +
    			 "</tr>";
 		}	
 

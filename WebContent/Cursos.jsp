@@ -207,7 +207,7 @@
                 <th scope="col">Materia</th>
                 <th scope="col">Semestre</th>
                 <th scope="col">Año</th>
-                <th scope="col">Profeosr</th>
+                <th scope="col">Profesor</th>
                 <th scope="col" id="colAcciones">Alumnos</th>
             </tr>
         </thead>
@@ -289,8 +289,24 @@ $(document).ready(function(){
 				}
 	 	}
     } );
-	
-    var table = $('#GridAlumnos').DataTable();
+    
+    $('#GridVerAlumnos').DataTable( {
+		"ordering":false,
+		"bInfo": false,
+		"lengthChange": false,
+		"pageLength": 100,
+		"dom": 'rti',
+		"oLanguage": {
+			   "sSearch": "Busqueda:",
+			 },
+	 	"language": {
+			   "zeroRecords": "No se encontraron registros coincidentes",
+				"paginate": {
+				       "next": "Siguiente",
+					   "previous": "Previo"
+				}
+	 	}
+    } );
     
     $('#GridAlumnos tbody').on( 'click', 'tr', function () {
         $(this).toggleClass('selected');
@@ -298,6 +314,8 @@ $(document).ready(function(){
        $("#txtAlumnos").val(table.rows('.selected').data().length);
        $("#LegajosAlumnos").val(table.rows(['.selected']).data().pluck(0).toArray());
     } );
+    
+    var table = $('#GridAlumnos').DataTable();
     
 	$("#slMateria").on( 'change', function () {
  		if($("#slMateria").val() > -1){

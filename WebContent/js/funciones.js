@@ -123,7 +123,10 @@ function mostrarAlumnos(IDCurso){
 		$("#grillaAlumnosCurso").html(responseJson);
 	});
 	
+	var table = $("#GridVerAlumnos").DataTable();
+	$("#TituloModalVer").html("Alumnos inscriptos en el curso - " + IDCurso);
 	$("#ModalAlumnosCurso").modal('show');
+	$("#CantAlumnosVer").html("Cantidad: " + table.rows().data().length);
 }
 
 function mostrarMisAlumnos(IDCurso){
