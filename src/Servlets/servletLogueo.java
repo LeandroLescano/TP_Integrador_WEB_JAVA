@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import Negocio.PersonaNegocio;
 
 /**
@@ -42,12 +43,15 @@ public class servletLogueo extends HttpServlet {
 			String Email = request.getParameter("txtEmail");
 			String Contra = request.getParameter("txtContraseña");
 			PersonaNegocio negocioP = new PersonaNegocio();
-			int IDProfesor = negocioP.validarIngreso(Email, Contra);
-			if(IDProfesor != -1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("IDProfesor", IDProfesor);
-				
+			int IDUsuario = negocioP.validarIngreso(Email, Contra);
+			HttpSession session = request.getSession();
+			if(IDUsuario > 0) {
+				session.setAttribute("IDProfesor", IDUsuario);
 				 response.sendRedirect("/TP_Integrador_Lescano/servletMisCursos");
+			}
+			else if(IDUsuario == 0) {
+				session.setAttribute("MailUsuario", Email);
+				response.sendRedirect("./servletCurso");
 			}
 		}
 		

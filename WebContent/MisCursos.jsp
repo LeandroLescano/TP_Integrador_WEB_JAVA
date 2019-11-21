@@ -1,8 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <%@page import="Negocio.PersonaNegocio" %>
 <%@page import="Dominio.Persona" %>
 <%@page import="java.util.ArrayList" %>
+<%@page import="Negocio.MateriaNegocio" %>
+<%@page import="Dominio.Materia" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,7 @@
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
-<body>
+<body onresize="cantidadPaginas()">
 <jsp:include page="NavBarProfesor.html"></jsp:include>
 <div style="height: 85vh">
 <div class="container" style="height: 100%;">
@@ -41,13 +43,24 @@
     <div class="col"><input type="text" id="txtBusqueda" class="form-control"></div>
     <div class="col"><select id="slMateria" name="slMateria" class="custom-select">
 	 		 	<option value="-1" class="dropdown-item">Todas</option> 
-	 		 	<option value="0" class="dropdown-item">Laboratorio IV</option>
+				<%
+		    	MateriaNegocio negocioM = new MateriaNegocio();
+			   	ArrayList<Materia> materias = negocioM.listarMaterias();
+		  	 	for (Materia m : materias){
+					%><option value="<%=m.getID()%>"> <%=m.getNombre()%> </option><%
+			   	}
+		 		%>
 	 			 </select></div>
-    <div class="col"><select name="slSemestre" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todos</option> 
+    <div class="col"><select id="slSemestre" name="slSemestre" class="custom-select">
+	 		 	<option value="-1" class="dropdown-item">Todos</option>
+	 		 	<option value="1" class="dropdown-item">Primer</option>
+	 		 	<option value="2" class="dropdown-item">Segundo</option> 
 	 			 </select></div>
-    <div class="col"><select name="slDocente" class="custom-select">
-	 		 	<option value="0" class="dropdown-item">Todos</option> 
+    <div class="col"><select id="slAño" name="slAño" class="custom-select">
+	 		 	<option value="-1" class="dropdown-item">Todos</option>
+	 		 	<option value="1" class="dropdown-item">2019</option>
+	 		 	<option value="2" class="dropdown-item">2018</option>
+	 		 	<option value="2" class="dropdown-item">2017</option> 
 	 			 </select></div>
 	</div>
 </div> 
@@ -135,51 +148,45 @@ if(request.getAttribute("NombreP")!=null)
 					},
 		 	}
 		});
-		$('#GridAlumnos').DataTable({
-			"ordering":false,
-			"bInfo": false,
-			"lengthChange": false,
-			"pageLength": cantPags,
-			"dom":'rtip',
-			"oLanguage": {
-				   "sSearch": "Busqueda:",
-				 },
-		 	"language": {
-				   "zeroRecords": "No se encontraron registros coincidentes",
-					"paginate": {
-					       "next": "Siguiente",
-						   "previous": "Previo"
-					},
-		 	}
+		
+		$("#txtBusqueda").on( 'keyup', function () {
+			$('#Gridview').DataTable().search( this.value ).draw();
 		});
+		
+		$("#slMateria").on( 'change', function () {
+	 		if($("#slMateria").val() > -1){
+				$('#Gridview').DataTable().column(1).search( $("#slMateria option:selected").text() ).draw();	
+			}
+			else{
+				$('#Gridview').DataTable().column(1).search("").draw();		
+			}
+		});
+		
+		$("#slSemestre").on( 'change', function () {
+			if($("#slSemestre").val() > -1){
+				$('#Gridview').DataTable().column(2).search( $("#slSemestre option:selected").text()).draw();	
+			}
+			else{
+				$('#Gridview').DataTable().column(2).search("").draw();		
+			}
+		});
+		
+		$("#slAño").on( 'change', function () {
+			if($("#slAño").val() > -1){
+				$('#Gridview').DataTable().column(3).search( $("#slAño option:selected").text() ).draw();	
+			}
+			else{
+				$('#Gridview').DataTable().column(3).search("").draw();		
+			}
+		});
+		
 	});
 	
 	function mostrarAlumnos(IDCurso){
-		//TablaCurso = document.getElementById("TableCursos");
-		//TablaCurso.className ="table table-hover slideOutLeft";
-		
-		//TablaAlumn = document.getElementById("TableAlumnosCurso");
-		//$("#TableAlumnosCurso").show(400);
-		//TablaAlumn.className = "table table-hover slideInRight";
-		//$("#TituloCursos").hide()
-		//$("#TituloAlumnos").show();
-		//$("#btnVolver").show();
-		//cambiarEstadoFiltros(true);
 		$.post("servletCurso",{"setIDCurso": IDCurso}, function(responseJson) {
 			
 		});
 		
-	}
-	
-	function ocultarAlumnos(){
-		TablaCurso = document.getElementById("TableCursos");
-		TablaCurso.className = "table table-hover slideInLeft";
-		
-		TablaAlumn = document.getElementById("TableAlumnosCurso");
-		TablaAlumn.className = "table table-hover slideOutRight";
-		$("#TituloAlumnos").hide()
-		$("#TituloCursos").show();
-		$("#btnVolver").hide();
 	}
 	
 	function cambiarEstadoFiltros(estado){

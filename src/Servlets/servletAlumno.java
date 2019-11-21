@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -42,7 +43,12 @@ public class servletAlumno extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("MailUsuario") == null) {
+			response.sendRedirect("./Inicio.jsp");
+		}
+		else {
+		String Mail = session.getAttribute("MailUsuario").toString();	
 		PersonaNegocio negocioP = new PersonaNegocio();
 		ArrayList<Persona> listado = negocioP.listarPersonas('A');
 		String tabla = "";
@@ -83,10 +89,12 @@ public class servletAlumno extends HttpServlet {
 			request.setAttribute("Agregar", null);
 		}
 		 request.setAttribute("tabla", tabla);
+		 request.setAttribute("Mail", Mail);
 	
 		 RequestDispatcher rd = request.getRequestDispatcher("/Alumnos.jsp");		 
 		 rd.forward(request, response);
 		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

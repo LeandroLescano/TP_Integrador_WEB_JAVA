@@ -226,6 +226,16 @@
 </div>
 </body>
 <script type="text/javascript">
+<%
+String mailUsuario = null;
+if(request.getAttribute("Mail")!=null)
+{
+	mailUsuario = (String)request.getAttribute("Mail");
+	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
+	
+}		
+%>
+
 $(document).ready(function(){
 	var screenH = window.innerHeight;
 	var cantPags;

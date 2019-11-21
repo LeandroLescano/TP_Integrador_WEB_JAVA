@@ -41,7 +41,7 @@ public class servletMisCursos extends HttpServlet {
 			HttpSession session = request.getSession();
 			int IDProfesor = -1;
 			if(session.getAttribute("IDProfesor") == null) {
-				response.sendRedirect("/Inicio.jsp");
+				response.sendRedirect("./Inicio.jsp");
 			}
 			else {
 				IDProfesor = Integer.parseInt(session.getAttribute("IDProfesor").toString());			

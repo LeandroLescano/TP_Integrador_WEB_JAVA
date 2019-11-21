@@ -348,14 +348,19 @@ public class PersonaNegocio {
 		}
 		String Usuario;
 		AccesoDatosManager accesoDatos = new AccesoDatosManager();
-		Usuario = "SELECT CONTRASEÑA, IDPROFESOR FROM USUARIOS WHERE EMAIL = '" + email + "'"; 
+		Usuario = "SELECT CONTRASEÑA, IDPROFESOR, TIPO FROM USUARIOS WHERE EMAIL = '" + email + "'"; 
 		try {
 			accesoDatos.abrirConexion();
 			ResultSet rs = accesoDatos.executeConsulta(Usuario);
 			while(rs.next())
 			{
 				if(contra.equals(rs.getString("Contraseña"))) {
-					return rs.getInt("IDProfesor");
+					if(rs.getString("Tipo").equals("Profesor")) {
+						return rs.getInt("IDProfesor");						
+					}
+					else {
+						return 0;
+					}
 				}
 				else {
 					return -1;

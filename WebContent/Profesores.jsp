@@ -147,6 +147,13 @@
 </body>
 <script type="text/javascript">
 <%
+	String mailUsuario = null;
+	if(request.getAttribute("Mail")!=null)
+	{
+		mailUsuario = (String)request.getAttribute("Mail");
+	    %>$("#MailUsuario").html("<%=mailUsuario%>");<%	
+	}		
+	
 	if(request.getAttribute("ResultToast")!=null)
 	{
 		String Resultado = (String)request.getAttribute("ResultToast");

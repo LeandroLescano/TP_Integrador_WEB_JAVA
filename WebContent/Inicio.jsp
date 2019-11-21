@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group  fadeIn fourth">
                                 <label for="txtContraseña">Contraseña:</label><br>
-                                <input type="text" name="txtContraseña" id="txtContraseña" class="form-control">
+                                <input type="password" name="txtContraseña" id="txtContraseña" class="form-control">
                             </div>
                             <div class="form-group  fadeIn fourth">
                                 <input type="submit" name="btnIngresar" class="btn btn-primary btn-md" value="Ingresar">
