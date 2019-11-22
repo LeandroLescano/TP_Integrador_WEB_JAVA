@@ -3,7 +3,7 @@ package Servlets;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -62,8 +61,14 @@ public class servletReportes extends HttpServlet {
 			}
 			AccesoDatosManager accesoDatos = new AccesoDatosManager();
 			String listar = "Select C.ID, M.Nombre," + 
-					"(Select COUNT(Situacion) from alumnos_x_curso where Situacion = 'Regular' and IDCurso = C.ID) as Regularizados, " + 
-					"(Select Count(IDAlumno) from alumnos_x_curso where IDCurso = C.ID) as CantAlumnos , " + 
+					"(Select COUNT(Situacion) from alumnos_x_curso  AS AC " + 
+					"INNER JOIN CURSOS AS CS ON CS.ID = AC.IDCURSO " + 
+					"INNER JOIN MATERIAS AS MS ON MS.ID = CS.IDMATERIA " + 
+					"WHERE MS.NOMBRE = M.NOMBRE AND Situacion = 'Regular') as Regularizados, " + 
+					"(Select Count(IDAlumno) from alumnos_x_curso AS AC " + 
+					"INNER JOIN CURSOS AS CS ON CS.ID = AC.IDCURSO " + 
+					"INNER JOIN MATERIAS AS MS ON MS.ID = CS.IDMATERIA " + 
+					"WHERE MS.NOMBRE = M.NOMBRE) as CantAlumnos , " + 
 					"((Select COUNT(Situacion) from alumnos_x_curso where Situacion = 'Regular' and IDCurso = C.ID) / (Select Count(IDAlumno) from alumnos_x_curso " + 
 					"WHERE IDCurso = C.ID))*100 as 'Porcentaje' " + 
 					"from cursos as c " + 
@@ -95,8 +100,8 @@ public class servletReportes extends HttpServlet {
 				{
 					tabla += "<tr>" + 
 						      "<td>" + rs.getString("Nombre") + "</td>" +
-						      "<td>" + rs.getInt("Regularizados") + "</td>" +
 						      "<td>" + rs.getInt("CantAlumnos") + "</td>"+ 
+						      "<td>" + rs.getInt("Regularizados") + "</td>" +
 						      "<td>" + Math.round(rs.getFloat("Porcentaje")*100.0)/100.0 + " %</td>" + 
 				   			 "</tr>";
 				}

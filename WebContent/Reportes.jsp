@@ -28,6 +28,12 @@
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
+<%
+session = request.getSession();
+if(session.getAttribute("MailUsuario") == null) {
+	response.sendRedirect("./Inicio.jsp");
+}
+%>
 <body>
 <div id="Menu">
 <jsp:include page="NavBarAdmin.html"></jsp:include>
@@ -36,11 +42,15 @@
 <div id="PanelFiltros" style="height: 62px; margin: 0 0 5px 0;">
 <form id="FormFiltro" method="get" action="servletReportes">
   <div class="row">
+    <div class="col colName">Tipo de reporte:</div>
     <div class="col colName">Materia:</div>
     <div class="col colName">Semestre:</div>
     <div class="col colName">Año:</div>
     <div class="col colName"></div>
     <div class="w-100"></div>
+    <div class="col"><select id="slTipo" name="slTipo" class="custom-select">
+	 	<option value="-1" class="dropdown-item">Regularizados</option>
+	 </select></div>
     <div class="col"><select id="slMateria" name="slMateria" class="custom-select">
     <option value="-1" class="dropdown-item">Todas</option>
 	<%
@@ -62,7 +72,7 @@
 	 		 	<option value="2" class="dropdown-item">2018</option>
 	 		 	<option value="2" class="dropdown-item">2017</option> 
 	 			 </select></div>
-	<div class="col colName"><button type="submit" name="btnFiltrar" id="btnFiltrar">Filtrar</button></div>
+	<div class="col colName" style="text-align: center;"><button type="submit" name="btnFiltrar" id="btnFiltrar" class="btn btn-primary">Filtrar</button></div>
 	</div>
 </form>
 </div>  	
@@ -81,16 +91,21 @@
 			if(request.getAttribute("tabla")!=null)
 			{
 				listadoReporte = (String)request.getAttribute("tabla");
+		        %><%=listadoReporte%><%
 			}
 		%>
-        <%=listadoReporte%>
         </tbody>
     </table>
  </div> 
 </div>  
 </body>
 <script type="text/javascript">
- <%if(request.getAttribute("Materia") != null)
+ <%
+	String mailUsuario = null;
+ 	mailUsuario = session.getAttribute("MailUsuario").toString();
+ 	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
+	 	
+ if(request.getAttribute("Materia") != null)
 	{
 		int Mat = (int)request.getAttribute("Materia");%>
 		$('#slMateria').val(<%=Mat%>);	
@@ -131,9 +146,6 @@ $(document).ready(function(){
 
 	
 });
-
-
-
 </script>
 </html>
 
