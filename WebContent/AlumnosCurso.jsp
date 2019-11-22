@@ -29,7 +29,8 @@ session = request.getSession();
 if(session.getAttribute("IDProfesor") == null) {
 	response.sendRedirect("./Inicio.jsp");
 }
-else{
+
+if(request.getAttribute("tablaAlumnosCurso")==null){
 	response.sendRedirect("./servletMisCursos");
 }
 
@@ -38,7 +39,7 @@ else{
 <jsp:include page="ModalPersona.html"></jsp:include>
 <body onresize="cantidadPaginas()">
 <jsp:include page="NavBarProfesor.html"></jsp:include>
-<div style="height: 85vh">
+<!--<div style="height: 85vh">-->
 <div class="container" style="height: 100%">
 <div id="Titulo">
 	<span><a id="btnVolver" href="./servletMisCursos" class="btn btn-primary" style="float: right;">Volver a Mis cursos</a></span>
@@ -72,7 +73,7 @@ else{
 	    </table>
   </form>
 </div>
-</div>
+<!-- </div> -->
 </body>
 <script type="text/javascript">
 <%
@@ -90,30 +91,14 @@ if(request.getAttribute("NombreP")!=null)
 %>
 
 $(document).ready(function(){
-	var screenH = window.innerHeight;
-	var cantPags;
-	if(screenH < 615){
-		cantPags = 3;
-	}
-	else if(screenH < 680){
-		cantPags = 4;
-	}
-	else if(screenH < 740){
-		cantPags = 5;
-	}
-	else{
-		cantPags = 6;
-	}
-
-
 	$("#TituloModal").html("Añadir alumno");
 	
 	$('#GridAlumnos').DataTable({
 		"ordering":false,
 		"bInfo": false,
 		"lengthChange": false,
-		"pageLength": cantPags,
-		"dom":'frtip',
+		"pageLength": -1,
+		"dom":'frti',
 		"oLanguage": {
 			   "sSearch": "Busqueda:",
 			 },
@@ -133,7 +118,7 @@ $(document).ready(function(){
 	        { "data": "Rec2" },
 	        { "data": "NF" },
 	        { "data": "Situacion" }
-	        ]
+	        	]
 	});
 });
 

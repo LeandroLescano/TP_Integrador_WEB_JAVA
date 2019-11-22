@@ -35,7 +35,10 @@ public class AlumnoNegocio {
 				a.setRecuperatorio1(rs.getFloat("Rec1"));
 				a.setRecuperatorio2(rs.getFloat("Rec2"));
 				a.setNotaFinal(rs.getFloat("NotaFinal"));
-				a.setSituacion(rs.getString("Situacion"));
+				if(rs.getString("Situacion") != null)
+					a.setSituacion(rs.getString("Situacion"));	
+				else
+					a.setSituacion("");
 				Persona p = negocioP.obtenerPersona(rs.getInt("IDAlumno"), 'A');
 				a.setApellido(p.getApellido());
 				a.setNombre(p.getNombre());
