@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,6 +53,12 @@ public class servletLogueo extends HttpServlet {
 			else if(IDUsuario == 0) {
 				session.setAttribute("MailUsuario", Email);
 				response.sendRedirect("./servletProfesor");
+			}
+			else {
+				 request.setAttribute("ErrorUsuario", 1);
+					
+				 RequestDispatcher rd = request.getRequestDispatcher("/Inicio.jsp");		 
+				 rd.forward(request, response);
 			}
 		}
 		if(request.getParameter("btnSalir") != null) {

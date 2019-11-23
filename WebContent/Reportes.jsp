@@ -28,10 +28,6 @@
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
 </head>
-<%
-session = request.getSession();
-
-%>
 <body>
 <div id="Menu">
 <jsp:include page="NavBarAdmin.html"></jsp:include>
@@ -64,11 +60,11 @@ session = request.getSession();
 	 		 	<option value="1" class="dropdown-item">Primer</option>
 	 		 	<option value="2" class="dropdown-item">Segundo</option> 
 	 			 </select></div>
-    <div class="col"><select id="slAño" name="slAño" class="custom-select">
+    <div class="col"><select id="slAnio" name="slAnio" class="custom-select">
 	 		 	<option value="-1" class="dropdown-item">Todos</option>
-	 		 	<option value="1" class="dropdown-item">2019</option>
-	 		 	<option value="2" class="dropdown-item">2018</option>
-	 		 	<option value="2" class="dropdown-item">2017</option> 
+	 		 	<option value="2019" class="dropdown-item">2019</option>
+	 		 	<option value="2018" class="dropdown-item">2018</option>
+	 		 	<option value="2017" class="dropdown-item">2017</option> 
 	 			 </select></div>
 	<div class="col colName" style="text-align: center;"><button type="submit" name="btnFiltrar" id="btnFiltrar" class="btn btn-primary">Filtrar</button></div>
 	</div>
@@ -100,6 +96,7 @@ session = request.getSession();
 <script type="text/javascript">
  <%
 	String mailUsuario = null;
+	 session = request.getSession();
 	 if(session.getAttribute("MailUsuario") == null) {
 		response.sendRedirect("./Inicio.jsp");
 	 }
@@ -121,11 +118,16 @@ session = request.getSession();
     if(request.getAttribute("Año") != null)
 	{
 		int Año = (int)request.getAttribute("Año");%>
-		$('#slAño').val(<%=Año%>);
+		$('#slAnio').val(<%=Año%>);
 	<%}
 %>
 
 $(document).ready(function(){
+	var URL = window.location.href;
+	if(URL == "http://localhost:8080/TP_Integrador_Lescano/Reportes.jsp"){
+		$("#btnFiltrar").click();
+	}
+	
 	CurrentItem = document.getElementById("mnReportes");
 	CurrentItem.className +=" active";
 

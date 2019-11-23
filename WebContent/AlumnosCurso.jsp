@@ -45,8 +45,11 @@ else if(request.getAttribute("tablaAlumnosCurso")==null){
 </div>     
 <form id="FormNotas" method="post" action="servletAlumnosCurso">
 <jsp:include page="ModalCargarNotas.html"></jsp:include>
-<!--	<input type="submit" class="btn btn-primary" value="Cargar notas" id="btnCargar" name="btnCargar" style="float: right; margin-bottom: 5px;">-->
-		<button type="button" data-toggle="modal" class="btn btn-primary" data-target="#ModalNotas" id="btnCargar" name="btnCargar" style="float: right; margin-bottom: 5px;">Cargar notas</button>
+	<button type="button" data-toggle="modal" class="btn btn-primary" data-target="#ModalNotas" id="btnCargar" name="btnCargar" style="float: right; margin-bottom: 5px;">Cargar notas</button>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="chkNotaFinal">
+    <label class="form-check-label" for="chkNotaFinal">Generar nota final automáticamente</label>
+  </div>
 	<table id="GridAlumnos" class="table table-hover">
 	        <thead class="thead-dark">
 	            <tr>
@@ -130,6 +133,8 @@ $(document).ready(function(){
 	});
 	
 	$("input").keyup(function(){
+		if($('input[type=checkbox]').prop('checked')){
+			
 		  ID = $(this).attr("name");
 		  Legajo = ID.substring(5,9);
 		  var Par1 = parseInt($("input[name='Par1-"+Legajo+"']").val());
@@ -176,6 +181,7 @@ $(document).ready(function(){
 		  else{
 			  $("input[name='NotF-"+Legajo+"']").val("");
 		  }
+		}
 		  
 		});
 	
@@ -194,8 +200,6 @@ function mostrarToast(R){
 
 function cargarNotas(){
 	var table = $('#GridAlumnos').DataTable();
-	//var Par1 = table.rows().data().pluck(2);
-	//var Par1 = table.$('input').serializeArray();
 	table.rows().invalidate();
 	var data = table.rows().data();
 	$.post("servletAlumnosCurso",{"Notas": data}, function(responseJson) {

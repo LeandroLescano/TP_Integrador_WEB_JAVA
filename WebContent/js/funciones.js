@@ -83,6 +83,19 @@ function nuevoProfesor(){
 	$.post("servletProfesor",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
+	
+    var objeto = [document.getElementById("txtNombre"),
+        document.getElementById("txtApellido"),
+        document.getElementById("txtMail"),
+        document.getElementById("txtTelefono"),
+        document.getElementById("dtpFechNac"),
+        document.getElementById("txtCalle")]
+        success = true;
+        for (var i = 0; i < 6; i++) {
+        	validarVacio(objeto[i].id);
+        	sacarFoco(objeto[i].id);
+        }
+	
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
 	$("#TituloModal").html("A&#241adir profesor");
@@ -96,6 +109,19 @@ function nuevoAlumno(){
 	$.post("servletAlumno",{"nuevoLegajo": "1"}, function(responseJson) {
 		$("#txtLegajo").val(responseJson);
 	});
+	
+    var objeto = [document.getElementById("txtNombre"),
+        document.getElementById("txtApellido"),
+        document.getElementById("txtMail"),
+        document.getElementById("txtTelefono"),
+        document.getElementById("dtpFechNac"),
+        document.getElementById("txtCalle")]
+        success = true;
+        for (var i = 0; i < 6; i++) {
+        	validarVacio(objeto[i].id);
+        	sacarFoco(objeto[i].id);
+        }
+	
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
 	$("#TituloModal").html("A&#241adir alumno");
@@ -214,3 +240,92 @@ function limpiarCampos(){
 	$("#txtLocalidad").val('');
 	
 }
+
+function sacarFoco(id) {
+    objeto = document.getElementById(id);
+    objeto.style.boxShadow = "0 0 0 0.2rem rgba(0,123,255,0)";
+};
+
+function enFoco(id) {
+    objeto = document.getElementById(id);
+    if (objeto.classList.contains("border-success")) {
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(79, 162, 51, 0.25)";
+    }
+    else if (objeto.classList.contains("border-danger")) {
+        objeto.className = "form-control border border-danger";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(255, 0, 0, 0.23)";
+    }
+    else {
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(0,123,255,.25)";
+    }
+};
+
+function validarVacio(id) {
+    objeto = document.getElementById(id);
+    valueForm = objeto.value;
+    if (valueForm != "" && valueForm.length >= 2) {
+        objeto.className = "form-control border border-success";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(79, 162, 51, 0.25)";
+    }
+    else if (valueForm == "") {
+        objeto.className = "form-control";
+        objeto.style.border = "1px solid #ced4da";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(0,123,255,.25)";
+    }
+    else {
+        objeto.className = "form-control border border-danger";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(255, 0, 0, 0.23)";
+    }
+};
+
+function validarEmail() {
+    objeto = document.getElementById("txtMail");
+    valueForm = objeto.value;
+    var patron = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+    if (valueForm.search(patron) == 0) {
+        objeto.className = "form-control border border-success";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(79, 162, 51, 0.25)";
+    } else {
+        objeto.className = "form-control border border-danger";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(255, 0, 0, 0.23)";
+    }
+};
+
+function validarNumero() {
+    objeto = document.getElementById("txtTelefono");
+    valueForm = objeto.value;
+    if (valueForm.length == 0) {
+        objeto.className = "form-control";
+        objeto.style.border = "1px solid #ced4da";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(0,123,255,.25)";
+    }
+    else if (valueForm.length < 8) {
+        objeto.className = "form-control border border-danger";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(255, 0, 0, 0.23)";
+    }
+    else {
+        objeto.className = "form-control border border-success";
+        objeto.style.boxShadow = "0 0 0 0.2rem rgba(79, 162, 51, 0.25)";
+    }
+};
+
+function habilitarAgregar() {
+    var objeto = [document.getElementById("txtNombre"),
+    document.getElementById("txtApellido"),
+    document.getElementById("txtMail"),
+    document.getElementById("txtTelefono"),
+    document.getElementById("dtpFechNac"),
+    document.getElementById("txtCalle")]
+    success = true;
+    for (var i = 0; i < 6; i++) {
+        if (!objeto[i].classList.contains("border-success")) {
+            success = false;
+        }
+    }
+    if (success) {
+        document.getElementById("btnAgregar").disabled = false;
+    }
+    else {
+        document.getElementById("btnAgregar").disabled = true;
+    }
+};

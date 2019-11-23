@@ -39,7 +39,7 @@ else if(request.getAttribute("tabla") ==null){
 
 %>
  <!--    MODAL   -->
-        <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" onchange="habilitarAgregar()" onkeyup="habilitarAgregar()">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -59,13 +59,11 @@ else if(request.getAttribute("tabla") ==null){
 
                                         <div class="form-group">
                                             <label for="txtMail" class="col-form-label">Mail:</label>
-                                            <input type="email" aria-describedby="emailHelp" class="form-control" name="txtMail" required id="txtMail" placeholder="email@ejemplo.com" tabindex="3" >
+                                            <input type="email" aria-describedby="emailHelp" class="form-control" name="txtMail" required id="txtMail" placeholder="email@ejemplo.com" tabindex="3" onkeyup="validarEmail()" onblur="sacarFoco(this.id)" >
                                         </div>
                                         <div class="form-group">
                                             <label for="txtProvincia" class="col-form-label">Provincia:</label>
                                             <select id="txtProvincia" name="txtProvincia" class="form-control" tabindex="6">
-                                            <!--<input list="Provincias-list" id="txtProvincia" value="" class="form-control">
-                                            <datalist id="Provincias-list">-->
 								 		 	<%
 		 	 		 							    ProvinciaNegocio negocioP = new ProvinciaNegocio();
 		 	 		 	 	 		 			   ArrayList<Provincia> prov = negocioP.listarProvincias();
@@ -76,22 +74,21 @@ else if(request.getAttribute("tabla") ==null){
 		 	 		 	 	 		 			   }
 											   		%>
 											   		</select>
-								 			<!--</datalist> --> 
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtApellido" class="col-form-label">Apellido:</label>
-                                            <input type="text" class="form-control" name="txtApellido" id="txtApellido" placeholder="Gomez" tabindex="1">
+                                            <input type="text" class="form-control" name="txtApellido" id="txtApellido" placeholder="Gomez" tabindex="1" onkeyup="validarVacio(this.id)" onblur="sacarFoco(this.id)" onfocus="enFoco(this.id)">
                                         </div>
                                         <div class="form-group">
                                             <label for="txtTelefono" class="col-form-label">Telefono:</label>
-                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="12345678" tabindex="4" >
+                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="12345678" tabindex="4" onkeyup="validarNumero()" onblur="sacarFoco(this.id)" onfocus="enFoco(this.id)">
                                         </div>
                                         <div class="form-group">
                                             <label for="txtLocalidad" class="col-form-label">Localidad:</label>
                                             <select id="txtLocalidad" name="txtLocalidad" class="form-control" tabindex="7">
-                                            							 		 	<%
+                                            <%
 		 	 		 							    LocalidadNegocio negocioL = new LocalidadNegocio();
 		 	 		 	 	 		 			   ArrayList<Localidad> loc = negocioL.listarLocalidades();
 		 	 		 	 	 		 			   for (Localidad l : loc)
@@ -101,30 +98,27 @@ else if(request.getAttribute("tabla") ==null){
 		 	 		 	 	 		 			   }
 											   		%>
 								 			 </select>
-                                            <!--<input list="localidades-list" id="txtLocalidad" value="" class="form-control">
-                                            <datalist id="Localidades-list">
-								 			 </datalist>-->
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtNombre" class="col-form-label">Nombre:</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Juan" tabindex="2">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Juan" tabindex="2" onkeyup="validarVacio(this.id)" onblur="sacarFoco(this.id)" onfocus="enFoco(this.id)">
                                         </div>
                                         <div class="form-group">
                                             <label for="dtpFechNac" class="col-form-label">Fecha de nacimiento:</label>
-                                            <input type='text' class="form-control" name="dtpFechNac" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" />
+                                            <input type='text' class="form-control" name="dtpFechNac" id='dtpFechNac' placeholder="DD/MM/YYYY" tabindex="5" onkeyup="validarVacio(this.id)" onchange="validarVacio(this.id)" onblur="sacarFoco(this.id)" onfocus="enFoco(this.id)" />
                                         </div>
                                         <div class="form-group">
                                             <label for="txtCalle" class="col-form-label">Dirección:</label>
-                                            <input type="text" class="form-control" name="txtCalle" id="txtCalle" placeholder="Calle 123" tabindex="8">
+                                            <input type="text" class="form-control" name="txtCalle" id="txtCalle" placeholder="Calle 123" tabindex="8" onkeyup="validarVacio(this.id)" onblur="sacarFoco(this.id)" onfocus="enFoco(this.id)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                     <div class="modal-footer">
                         <button type="button" id="btnCancelar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="btnAgregar" name="btnAgregar" class="btn btn-primary" tabindex="9">Añadir</button>
+                        <button type="submit" id="btnAgregar" name="btnAgregar" class="btn btn-primary" tabindex="9" disabled>Añadir</button>
                     </div>
                     </form>
                 </div>

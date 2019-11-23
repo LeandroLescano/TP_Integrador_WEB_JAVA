@@ -50,8 +50,8 @@ public class servletReportes extends HttpServlet {
 			if(request.getParameter("slSemestre")!= null && !request.getParameter("slSemestre").equals("-1")) {
 				semestre = Integer.parseInt(request.getParameter("slSemestre")); 				
 			}
-			if(request.getParameter("slAño") != null && !request.getParameter("slAño").equals("-1")) {
-				Año = Integer.parseInt(request.getParameter("slAño")); 				
+			if(request.getParameter("slAnio") != null && !request.getParameter("slAnio").equals("-1")) {
+				Año = Integer.parseInt(request.getParameter("slAnio")); 				
 			}
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -68,7 +68,21 @@ public class servletReportes extends HttpServlet {
 					"(Select Count(IDAlumno) from alumnos_x_curso AS AC " + 
 					"INNER JOIN CURSOS AS CS ON CS.ID = AC.IDCURSO " + 
 					"INNER JOIN MATERIAS AS MS ON MS.ID = CS.IDMATERIA " + 
-					"WHERE MS.NOMBRE = M.NOMBRE) as CantAlumnos , " + 
+					"WHERE MS.NOMBRE = M.NOMBRE ";
+					if(semestre >0) {
+						if(semestre == 1)
+							listar += "AND CS.SEMESTRE = 'Primer' ";
+						else
+							listar += "AND CS.SEMESTRE = 'Segundo' ";
+					}
+					else
+						listar += "AND CS.SEMESTRE in ('Primer', 'Segundo') ";
+					
+					if(Año > 0)
+						listar += "AND CS.AÑO = "+Año+" ";
+					else
+						listar += "AND CS.AÑO > 0 ";
+					listar += ") as CantAlumnos , " + 
 					"((Select COUNT(Situacion) from alumnos_x_curso where Situacion = 'Regular' and IDCurso = C.ID) / (Select Count(IDAlumno) from alumnos_x_curso " + 
 					"WHERE IDCurso = C.ID))*100 as 'Porcentaje' " + 
 					"from cursos as c " + 

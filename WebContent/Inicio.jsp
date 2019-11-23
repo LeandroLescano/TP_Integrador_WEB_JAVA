@@ -26,25 +26,6 @@
 		</div>
 	</div>
 </div>
-    <!--<div class="wrapper fadeInDown">
-  <div id="formContent">
-
-    <div class="fadeIn first">
-      <h3>Ingreso</h3>
-    </div>
-
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
-      <input type="submit" class="fadeIn fourth" value="Ingresar">
-    </form>
-
-    <div id="formFooter">
-    </div>
-
-  </div>
-  </div>-->
-  
       <div class="fadeInDown" id="login">
         <div class="container" style="width: 30%;background-color:white;" >
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -61,6 +42,15 @@
                                 <input type="password" name="txtContraseña" id="txtContraseña" class="form-control">
                             </div>
                             <div class="form-group  fadeIn fourth">
+                        <div>
+                        <%
+                        	if(request.getAttribute("ErrorUsuario") != null){
+                        		%>  <p>El e-mail y/o contraseña ingresados son incorrectos, por favor vuelva a intentarlo.<p><% 
+                        	}
+                        
+                        %>
+                        
+                        </div>
                                 <input type="submit" name="btnIngresar" class="btn btn-primary btn-md" value="Ingresar">
                             </div>
                         </form>
