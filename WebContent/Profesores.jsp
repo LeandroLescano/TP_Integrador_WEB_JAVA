@@ -27,18 +27,17 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+</head>
 <%
 session = request.getSession();
 if(session.getAttribute("MailUsuario") == null) {
 	response.sendRedirect("./Inicio.jsp");
 }
-
-if(request.getAttribute("tabla") ==null){
+else if(request.getAttribute("tabla") ==null){
 	response.sendRedirect("./servletProfesor");
 }
 
 %>
-</head>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -55,7 +54,7 @@ if(request.getAttribute("tabla") ==null){
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtLegajo" class="col-form-label">Legajo:</label>
-                                            <input type="text" readonly class="form-control" name="txtLegajo" id="txtLegajo" placeholder="1000">
+                                            <input type="text" disabled class="form-control" name="txtLegajo" id="txtLegajo" placeholder="1000">
                                         </div>
 
                                         <div class="form-group">
@@ -253,7 +252,7 @@ $(document).ready(function(){
 	
 	$("#txtLocalidad").focus(function(){
 		var ValueActual = $("#txtLocalidad").val();
-		listarLocalidades($("#txtProvincia").val());	
+		listarLocalidades($("#txtProvincia").val());
 		$("#txtLocalidad").val(ValueActual);
 	});
 	

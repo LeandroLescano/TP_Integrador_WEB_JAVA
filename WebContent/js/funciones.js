@@ -112,13 +112,14 @@ function nuevoCurso(){
 
 function mostrarAlumnos(IDCurso){
 	$.post("servletCurso",{"listarAlumnosCurso": IDCurso}, function(responseJson) {
-		$("#grillaAlumnosCurso").html(responseJson);
+		$("#CantAlumnosVer").html("Cantidad: " + responseJson[0]);
+		$("#grillaAlumnosCurso").html(responseJson[1]);
 	});
 	
 	var table = $("#GridVerAlumnos").DataTable();
 	$("#TituloModalVer").html("Alumnos inscriptos en el curso - " + IDCurso);
 	$("#ModalAlumnosCurso").modal('show');
-	$("#CantAlumnosVer").html("Cantidad: " + table.rows().data().length);
+
 }
 
 function mostrarMisAlumnos(IDCurso){

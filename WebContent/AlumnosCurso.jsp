@@ -29,14 +29,12 @@ session = request.getSession();
 if(session.getAttribute("IDProfesor") == null) {
 	response.sendRedirect("./Inicio.jsp");
 }
-
-if(request.getAttribute("tablaAlumnosCurso")==null){
+else if(request.getAttribute("tablaAlumnosCurso")==null){
 	response.sendRedirect("./servletMisCursos");
 }
 
 %>
 </head>
-<jsp:include page="ModalPersona.html"></jsp:include>
 <body onresize="cantidadPaginas()">
 <jsp:include page="NavBarProfesor.html"></jsp:include>
 <!--<div style="height: 85vh">-->
@@ -46,7 +44,9 @@ if(request.getAttribute("tablaAlumnosCurso")==null){
 	<h2 id="TitleCurso">Curso X - Alumnos </h2>
 </div>     
 <form id="FormNotas" method="post" action="servletAlumnosCurso">
-	<input type="submit" class="btn btn-primary" value="Cargar notas" name="btnCargar" style="float: right; margin-bottom: 5px;">
+<jsp:include page="ModalCargarNotas.html"></jsp:include>
+<!--	<input type="submit" class="btn btn-primary" value="Cargar notas" id="btnCargar" name="btnCargar" style="float: right; margin-bottom: 5px;">-->
+		<button type="button" data-toggle="modal" class="btn btn-primary" data-target="#ModalNotas" id="btnCargar" name="btnCargar" style="float: right; margin-bottom: 5px;">Cargar notas</button>
 	<table id="GridAlumnos" class="table table-hover">
 	        <thead class="thead-dark">
 	            <tr>
@@ -74,6 +74,7 @@ if(request.getAttribute("tablaAlumnosCurso")==null){
   </form>
 </div>
 <!-- </div> -->
+<jsp:include page="ToastResultado.html"></jsp:include>
 </body>
 <script type="text/javascript">
 <%
@@ -87,7 +88,14 @@ if(request.getAttribute("NombreP")!=null)
 	   %>$("#TitleCurso").html("Curso <%=cursoActual%> - Alumnos");
 	<%
 	
-}		
+}	
+
+if(request.getAttribute("ResultToast")!=null)
+{
+	String Resultado = (String)request.getAttribute("ResultToast");
+	%>mostrarToast("<%=Resultado%>")<%
+	request.setAttribute("ResultToast", null);
+}
 %>
 
 $(document).ready(function(){
@@ -120,7 +128,69 @@ $(document).ready(function(){
 	        { "data": "Situacion" }
 	        	]
 	});
+	
+	$("input").keyup(function(){
+		  ID = $(this).attr("name");
+		  Legajo = ID.substring(5,9);
+		  var Par1 = parseInt($("input[name='Par1-"+Legajo+"']").val());
+		  if(Par1 >= 6){
+			  $("input[name='Rec1-"+Legajo+"']").prop('disabled', true);
+		  }
+		  else{
+			  $("input[name='Rec1-"+Legajo+"']").prop('disabled', false);
+		  }
+		  var Rec1 = parseInt($("input[name='Rec1-"+Legajo+"']").val());
+		  var Par2 = parseInt($("input[name='Par2-"+Legajo+"']").val());
+		  if(Par2 >= 6){
+			  $("input[name='Rec2-"+Legajo+"']").prop('disabled', true);
+		  }
+		  else{
+			  $("input[name='Rec2-"+Legajo+"']").prop('disabled', false);
+		  }
+		  var Rec2 = parseInt($("input[name='Rec2-"+Legajo+"']").val());
+		  var Nota;
+		  if(isNaN(Rec1)){
+			  Rec1 = 0;
+		  }
+		  if(isNaN(Rec2)){
+			  Rec2 = 0;
+		  }
+		  if(!isNaN(Par1) && !isNaN(Par2)){
+			  
+			  if(Par1 > Rec1){
+				  Nota = Par1
+			  }
+			  else{
+				  Nota = Rec1
+			  }
+			  
+			  if(Par2 > Rec2){
+				  Nota = (Nota + Par2)/2
+			  }
+			  else{
+				  Nota = (Nota + Rec2)/2
+			  }
+			  
+			  $("input[name='NotF-"+Legajo+"']").val(Nota);
+		  }
+		  else{
+			  $("input[name='NotF-"+Legajo+"']").val("");
+		  }
+		  
+		});
+	
+	$("#btnCargarModal").click(function(){
+		$("#FormCargar").submit();
+	} )
 });
+
+function mostrarToast(R){
+	if(R == "Cargado"){
+		$("#toastTitle").html("Cargadas");
+		$("#toastMsj").html("Se han cargado las notas exitosamente.");
+	}
+	$(".toast").toast('show');
+}
 
 function cargarNotas(){
 	var table = $('#GridAlumnos').DataTable();

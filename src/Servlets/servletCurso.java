@@ -138,7 +138,8 @@ public class servletCurso extends HttpServlet {
 						"<td>"+p.getApellido()+", " + p.getNombre()+"</td>" + 
 						"</tr>";
 			}
-			String json = new Gson().toJson(tablaAlum);
+			String[] CantTabla = {String.valueOf(listadoAlumnos.size()),tablaAlum};
+			String json = new Gson().toJson(CantTabla);
 			
 		    response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");

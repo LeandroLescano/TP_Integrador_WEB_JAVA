@@ -30,9 +30,7 @@
 </head>
 <%
 session = request.getSession();
-if(session.getAttribute("MailUsuario") == null) {
-	response.sendRedirect("./Inicio.jsp");
-}
+
 %>
 <body>
 <div id="Menu">
@@ -102,8 +100,13 @@ if(session.getAttribute("MailUsuario") == null) {
 <script type="text/javascript">
  <%
 	String mailUsuario = null;
- 	mailUsuario = session.getAttribute("MailUsuario").toString();
- 	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
+	 if(session.getAttribute("MailUsuario") == null) {
+		response.sendRedirect("./Inicio.jsp");
+	 }
+	 else{
+	 	mailUsuario = session.getAttribute("MailUsuario").toString();
+	 	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
+ 	 }
 	 	
  if(request.getAttribute("Materia") != null)
 	{

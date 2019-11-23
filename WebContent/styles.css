@@ -35,7 +35,12 @@ font-family: 'Merriweather Sans', sans-serif;
 .selected td {
 	color: white;
 }
+
 .selected td:hover {
+	color: black;
+}
+
+.selected th:hover + td{
 	color: black;
 }
 
@@ -170,6 +175,12 @@ h2.active {
 	text-align: center;
 	border: #61666b !important;
 }
+
+.form-nota::-webkit-inner-spin-button, 
+.form-nota::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+  }
 
 /*input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;

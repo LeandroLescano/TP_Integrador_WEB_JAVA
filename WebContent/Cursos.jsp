@@ -28,18 +28,17 @@
 <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <meta charset="ISO-8859-1">
 <title>Gestor educativo</title>
+</head>
 <%
 session = request.getSession();
 if(session.getAttribute("MailUsuario") == null) {
 	response.sendRedirect("./Inicio.jsp");
 }
-
-if(request.getAttribute("tabla") == null){
+else if(request.getAttribute("tabla") == null){
 	response.sendRedirect("./servletCurso");
 }
 
 %>
-</head>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -242,6 +241,7 @@ if(request.getAttribute("tabla") == null){
     </table>
 </div>
 </div>
+<jsp:include page="ToastResultado.html"></jsp:include>
 </body>
 <script type="text/javascript">
 <%
@@ -250,6 +250,14 @@ if(request.getAttribute("Mail")!=null){
 	mailUsuario = (String)request.getAttribute("Mail");
 	%> $("#MailUsuario").html("<%=mailUsuario%>");<%
 }
+
+if(request.getAttribute("ResultToast")!=null)
+{
+	String Resultado = (String)request.getAttribute("ResultToast");
+	%>mostrarToast("<%=Resultado%>")<%
+	request.setAttribute("ResultToast", null);
+}
+
 %>
 
 $(document).ready(function(){
@@ -373,5 +381,17 @@ $(document).ready(function(){
 		$('#Gridview').DataTable().search( this.value ).draw();
 	});
 });
+
+function mostrarToast(R){
+	 if (R == "Agregado"){
+		$("#toastTitle").html("Nuevo curso");
+		$("#toastMsj").html("Se ha agregado un curso exitosamente.");
+	}
+	else if (R == "ErrorC"){
+		$("#toastTitle").html("Error");
+		$("#toastMsj").html("Ha ocurrido un error al momento de agregar un curso.");
+	}
+	$(".toast").toast('show');
+}
 </script>
 </html>

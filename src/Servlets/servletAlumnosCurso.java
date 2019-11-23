@@ -60,23 +60,23 @@ public class servletAlumnosCurso extends HttpServlet {
 				tabla += "<tr>" + 
 						"<th scope='row'>"+a.getLegajo()+"</th>" + 
 						"<td>"+ a.getApellido() +", " +a.getNombre()+"</td>" + 
-						"<td><input type='text' name='Par1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[0]+"'></td>";
-						if(Integer.parseInt(Notas[0]) >= 6) {
-							tabla += "<td><input type='text' name='Rec1-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[1]+"'></td>";
+						"<td><input type='number' name='Par1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[0]+"'></td>";
+						if(mayorSeis(Notas[0])) {
+							tabla += "<td><input type='number' name='Rec1-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[1]+"'></td>";
 						}
 						else {
-							tabla += "<td><input type='text' name='Rec1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[1]+"'></td>"; 
+							tabla += "<td><input type='number' name='Rec1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[1]+"'></td>"; 
+						}														
 
-						}
-						tabla += "<td><input type='text' name='Par2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[2]+"'></td>";
-						if(Integer.parseInt(Notas[2]) >= 6) {
-							tabla += "<td><input type='text' name='Rec2-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[3]+"'></td>";
+						tabla += "<td><input type='number' name='Par2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[2]+"'></td>";
+						if(mayorSeis(Notas[2])) {
+							tabla += "<td><input type='number' name='Rec2-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[3]+"'></td>";
 						}
 						else {
-							tabla += "<td><input type='text' name='Rec2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[3]+"'></td>"; 
+							tabla += "<td><input type='number' name='Rec2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[3]+"'></td>"; 
 
 						}
-						tabla +="<td><input type='text' name='NotF-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
+						tabla +="<td><input type='number' name='NotF-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
 						"<td>" +
 						"<select class='custom-select' name='Situ-"+a.getLegajo()+"'  style='width: 200px; margin-top: 8px;'>";
 						if(a.getSituacion().equals("Regular")) {
@@ -99,8 +99,14 @@ public class servletAlumnosCurso extends HttpServlet {
 						" </tr>";
 			}
 			request.setAttribute("tablaAlumnosCurso", tabla);
-			 request.setAttribute("NombreP", nombreProfesor);
-			 request.setAttribute("CursoActual", IDCurso);
+			request.setAttribute("NombreP", nombreProfesor);
+			request.setAttribute("CursoActual", IDCurso);
+			if(request.getAttribute("Cargar") != null)
+			{
+				request.setAttribute("ResultToast", request.getAttribute("Cargar") );
+				request.setAttribute("Cargar", null);
+			}
+			 
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/AlumnosCurso.jsp");		 
 			rd.forward(request, response);
@@ -125,6 +131,8 @@ public class servletAlumnosCurso extends HttpServlet {
 					
 				}
 			}
+			
+			request.setAttribute("Cargar", "Cargado");
 			
 			doGet(request, response);
 		}
@@ -187,6 +195,27 @@ public class servletAlumnosCurso extends HttpServlet {
 		}
 		
 		return Notas;
+	}
+	
+	private boolean mayorSeis(String num) {
+		if(num != "") {
+			try {
+				if(Integer.parseInt(num) >= 6) {
+					return true;				
+				}
+				else {
+					return false;
+				}		
+			} catch (NumberFormatException excepcion) {
+				if(Float.parseFloat(num) >= 6) {
+					return true;				
+				}
+				else {
+					return false;
+				}	
+	        }
+		}
+		return false;
 	}
 
 }
