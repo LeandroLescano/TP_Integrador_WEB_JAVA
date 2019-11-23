@@ -43,11 +43,9 @@ function editarPersona(legajo, tipo){
 	
 	habilitarCampos();
  	$("#btnAgregar").prop('hidden', false);
- 	
+    document.getElementById("btnAgregar").disabled = false;
  	$("#btnAgregar").val("Modificar");
  	$("#btnAgregar").text("Modificar");
- 	
- 	
  	
 	$("#ModalRegistro").on('shown', function(){
 		$("#txtLocalidad option[value =' "+ $("#SelectLocalidad").val() +"']").prop("selected", true);
@@ -112,7 +110,7 @@ function nuevoProfesor(){
         	validarVacio(objeto[i].id);
         	sacarFoco(objeto[i].id);
         }
-	
+ 	$("#btnAgregar").prop('hidden', false);
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
 	$("#TituloModal").html("A&#241adir profesor");
@@ -138,7 +136,7 @@ function nuevoAlumno(){
         	validarVacio(objeto[i].id);
         	sacarFoco(objeto[i].id);
         }
-	
+     	$("#btnAgregar").prop('hidden', false);
  	$("#btnAgregar").val("Agregar");
  	$("#btnAgregar").text("Agregar");
 	$("#TituloModal").html("A&#241adir alumno");
@@ -327,22 +325,27 @@ function validarNumero() {
 };
 
 function habilitarAgregar() {
-    var objeto = [document.getElementById("txtNombre"),
-    document.getElementById("txtApellido"),
-    document.getElementById("txtMail"),
-    document.getElementById("txtTelefono"),
-    document.getElementById("dtpFechNac"),
-    document.getElementById("txtCalle")]
-    success = true;
-    for (var i = 0; i < 6; i++) {
-        if (!objeto[i].classList.contains("border-success")) {
-            success = false;
-        }
-    }
-    if (success) {
+	if($("#btnAgregar").text() == "Modificar"){
         document.getElementById("btnAgregar").disabled = false;
-    }
-    else {
-        document.getElementById("btnAgregar").disabled = true;
-    }
+	}
+	else{		
+	    var objeto = [document.getElementById("txtNombre"),
+	    document.getElementById("txtApellido"),
+	    document.getElementById("txtMail"),
+	    document.getElementById("txtTelefono"),
+	    document.getElementById("dtpFechNac"),
+	    document.getElementById("txtCalle")]
+	    success = true;
+	    for (var i = 0; i < 6; i++) {
+	        if (!objeto[i].classList.contains("border-success")) {
+	            success = false;
+	        }
+	    }
+	    if (success) {
+	        document.getElementById("btnAgregar").disabled = false;
+	    }
+	    else {
+	        document.getElementById("btnAgregar").disabled = true;
+	    }
+	}
 };

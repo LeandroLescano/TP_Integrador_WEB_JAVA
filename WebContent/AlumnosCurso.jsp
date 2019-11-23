@@ -133,8 +133,6 @@ $(document).ready(function(){
 	});
 	
 	$("input").keyup(function(){
-		if($('input[type=checkbox]').prop('checked')){
-			
 		  ID = $(this).attr("name");
 		  Legajo = ID.substring(5,9);
 		  var Par1 = parseInt($("input[name='Par1-"+Legajo+"']").val());
@@ -153,6 +151,8 @@ $(document).ready(function(){
 			  $("input[name='Rec2-"+Legajo+"']").prop('disabled', false);
 		  }
 		  var Rec2 = parseInt($("input[name='Rec2-"+Legajo+"']").val());
+		if($('input[type=checkbox]').prop('checked')){
+			
 		  var Nota;
 		  if(isNaN(Rec1)){
 			  Rec1 = 0;

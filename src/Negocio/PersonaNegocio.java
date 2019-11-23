@@ -40,7 +40,8 @@ public class PersonaNegocio {
 					+ "INNER JOIN DOMICILIOS AS D ON D.ID = A.IDDOMICILIO "
 					+ "INNER JOIN TIPOS_PERSONA AS TP ON TP.ID = A.IDTIPO "
 					+ "INNER JOIN PROVINCIAS AS PROV ON PROV.ID = D.IDPROVINCIA "
-					+ "INNER JOIN LOCALIDADES AS L ON L.ID = D.IDLOCALIDAD"; 
+					+ "INNER JOIN LOCALIDADES AS L ON L.ID = D.IDLOCALIDAD "
+					+ "order by legajo asc"; 
 		}
 		try {	
 			accesoDatos.abrirConexion();

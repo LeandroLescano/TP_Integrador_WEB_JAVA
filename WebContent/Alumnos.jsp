@@ -54,7 +54,7 @@ else if(request.getAttribute("tabla") ==null){
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtLegajo" class="col-form-label">Legajo:</label>
-                                            <input type="text" disabled class="form-control" name="txtLegajo" id="txtLegajo" placeholder="1000">
+                                            <input type="text" readonly class="form-control" name="txtLegajo" id="txtLegajo" placeholder="1000">
                                         </div>
 
                                         <div class="form-group">
@@ -265,6 +265,14 @@ function mostrarToast(R){
 	else if (R == "Agregado"){
 		$("#toastTitle").html("Nuevo alumno");
 		$("#toastMsj").html("Se ha agregado a un alumno exitosamente.");
+	}
+	else if (R == "Modificado"){
+		$("#toastTitle").html("Profesor modificado");
+		$("#toastMsj").html("Se ha modificado a un alumno exitosamente.");
+	}
+	else if (R == "ErrorM"){
+		$("#toastTitle").html("Error");
+		$("#toastMsj").html("Ha ocurrido un error al momento de modificar a un alumno.");
 	}
 	else if (R == "ErrorE"){
 		$("#toastTitle").html("Error");

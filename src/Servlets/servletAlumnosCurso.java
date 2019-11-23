@@ -60,23 +60,23 @@ public class servletAlumnosCurso extends HttpServlet {
 				tabla += "<tr>" + 
 						"<th scope='row'>"+a.getLegajo()+"</th>" + 
 						"<td>"+ a.getApellido() +", " +a.getNombre()+"</td>" + 
-						"<td><input type='number' name='Par1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[0]+"'></td>";
+						"<td><input type='number' step='.01' name='Par1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[0]+"'></td>";
 						if(mayorSeis(Notas[0])) {
-							tabla += "<td><input type='number' name='Rec1-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[1]+"'></td>";
+							tabla += "<td><input type='number' step='.01' name='Rec1-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[1]+"'></td>";
 						}
 						else {
-							tabla += "<td><input type='number' name='Rec1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[1]+"'></td>"; 
+							tabla += "<td><input type='number' step='.01' name='Rec1-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[1]+"'></td>"; 
 						}														
 
-						tabla += "<td><input type='number' name='Par2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[2]+"'></td>";
+						tabla += "<td><input type='number' step='.01' name='Par2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[2]+"'></td>";
 						if(mayorSeis(Notas[2])) {
-							tabla += "<td><input type='number' name='Rec2-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[3]+"'></td>";
+							tabla += "<td><input type='number' step='.01' name='Rec2-"+a.getLegajo()+"' disabled class='form-control border form-nota' value='"+Notas[3]+"'></td>";
 						}
 						else {
-							tabla += "<td><input type='number' name='Rec2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[3]+"'></td>"; 
+							tabla += "<td><input type='number' step='.01' name='Rec2-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[3]+"'></td>"; 
 
 						}
-						tabla +="<td><input type='number' name='NotF-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
+						tabla +="<td><input type='number' step='.01' name='NotF-"+a.getLegajo()+"' class='form-control border form-nota' value='"+Notas[4]+"'></td>" + 
 						"<td>" +
 						"<select class='custom-select' name='Situ-"+a.getLegajo()+"'  style='width: 200px; margin-top: 8px;'>";
 						if(a.getSituacion().equals("Regular")) {

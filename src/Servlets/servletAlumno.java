@@ -80,6 +80,11 @@ public class servletAlumno extends HttpServlet {
 			request.setAttribute("ResultToast", request.getAttribute("Agregar") );
 			request.setAttribute("Agregar", null);
 		}
+		else if(request.getAttribute("Modificar") != null) {
+			request.setAttribute("ResultToast", request.getAttribute("Modificar") );
+			request.setAttribute("Modificar", null);
+		}
+		
 		 request.setAttribute("tabla", tabla);
 		 request.setAttribute("Mail", Mail);
 	

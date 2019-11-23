@@ -2,6 +2,7 @@ package AccesoDatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -57,8 +58,14 @@ public class AccesoDatosManager {
 		try
 		{
 			st= cn.createStatement();
-			return st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
 		}
+		
 		catch (Exception e)
 		{
 			e.printStackTrace();
