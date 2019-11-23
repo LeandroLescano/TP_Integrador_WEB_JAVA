@@ -37,7 +37,6 @@ if(session.getAttribute("MailUsuario") == null) {
 else if(request.getAttribute("tabla") == null){
 	response.sendRedirect("./servletCurso");
 }
-
 %>
  <!--    MODAL   -->
         <div id="ModalRegistro" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -164,7 +163,7 @@ else if(request.getAttribute("tabla") == null){
         </div>
         <!--  FIN MODAL  -->
 <jsp:include page="ModalAlumnosCurso.html"></jsp:include>
-<body>
+<body onresize="cantidadPaginasFiltro()">
 <jsp:include page="NavBarAdmin.html"></jsp:include>
 <div style="height: 85vh">
 <div class="container" style="height: 100%">

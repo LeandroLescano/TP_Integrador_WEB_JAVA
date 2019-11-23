@@ -133,10 +133,18 @@ public class servletCurso extends HttpServlet {
 			int IDCurso = Integer.parseInt(request.getParameter("listarAlumnosCurso"));
 			ArrayList<Persona> listadoAlumnos = negocioC.listarAlumnosCurso(IDCurso);
 			for (Persona p : listadoAlumnos) {
-				tablaAlum += "<tr>" + 
+				if(p.isEstado()) {				
+					tablaAlum += "<tr>" + 
 						"<th scope='row'>"+ p.getLegajo()+"</th>" + 
 						"<td>"+p.getApellido()+", " + p.getNombre()+"</td>" + 
 						"</tr>";
+				}
+				else {
+					tablaAlum += "<tr style='background-color: lightgrey'>" + 
+							"<th scope='row'>"+ p.getLegajo()+"</th>" + 
+							"<td>"+p.getApellido()+", " + p.getNombre()+"</td>" + 
+							"</tr>";
+				}
 			}
 			String[] CantTabla = {String.valueOf(listadoAlumnos.size()),tablaAlum};
 			String json = new Gson().toJson(CantTabla);

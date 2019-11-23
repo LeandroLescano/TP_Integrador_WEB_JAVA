@@ -72,6 +72,23 @@ function cantidadPaginas(){
 	}
 }
 
+function cantidadPaginasFiltro(){
+	var screenH = window.innerHeight;
+	var cantPags;
+	if(screenH < 615){
+		$('#Gridview').DataTable().page.len(4).draw();
+	}
+	else if(screenH < 680){
+		$('#Gridview').DataTable().page.len(5).draw();
+	}
+	else if(screenH < 757){
+		$('#Gridview').DataTable().page.len(6).draw();
+	}
+	else{
+		$('#Gridview').DataTable().page.len(7).draw();
+	}
+}
+
 function mostrarModal(){
 	$("#ModalRegistro").modal('show');
 }
